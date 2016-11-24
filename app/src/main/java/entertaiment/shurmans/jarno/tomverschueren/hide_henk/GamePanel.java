@@ -1,6 +1,7 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
