@@ -8,19 +8,25 @@ import android.view.SurfaceView;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
+    private MainThread  thread;
+
     public GamePanel(Context context){
 
         super(context);
 
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
+        thread = new MainThread(getHOlder(),this);
+        setFocusable(true);
     }
 
 
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
+        //we can safely start the gameloop.
+        thread.setRunning(true);
+        thread.start();
     }
 
     @Override
@@ -30,11 +36,26 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        boolean retry = true;
+        while(retry){
+            try{
+                thread.setRunning(false);
+                thread.join();
 
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            retry = false;
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
         return super.onTouchEvent(event);
+    }
+
+
+    public void update(){
+
     }
 }
