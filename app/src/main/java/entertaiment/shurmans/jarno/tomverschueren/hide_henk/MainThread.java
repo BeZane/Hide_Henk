@@ -35,7 +35,6 @@ public class MainThread extends Thread{
 
             //try looking for the canvas pixel editing
             try {
-                this.surfaceHolder.unlockCanvasAndPost(canvas);
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
                     this.gamePanel.update();

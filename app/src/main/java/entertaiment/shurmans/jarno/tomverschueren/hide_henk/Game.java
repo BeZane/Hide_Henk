@@ -11,6 +11,7 @@ import android.view.WindowManager;
 
 public class Game extends Activity {
 
+    /*
     public static int SCREEN_WIDTH =0;
     public static int SCREEN_HEIGHT = 0;
 
@@ -23,6 +24,7 @@ public class Game extends Activity {
 
 
     }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

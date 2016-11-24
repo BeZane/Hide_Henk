@@ -13,6 +13,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread  thread;
     private Background background;
+    private float WIDTH;
+    private float HEIGHT;
 
 
     public GamePanel(Context context){
@@ -26,7 +28,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //make gamePanel focusable so it can handle events
         setFocusable(true);
 
-
     }
 
 
@@ -35,6 +36,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         //we can safely start the gameloop.
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.background_ingame1));
+        WIDTH = background.getWidth();
+        HEIGHT = background.getHeight();
         thread.setRunning(true);
         thread.start();
     }
@@ -71,6 +74,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void draw(Canvas canvas){
-        background.draw(canvas);
+        final float bgScaleX = getWidth()/WIDTH;
+        final float bgScaleY = getHeight()/HEIGHT;
+        if(canvas!= null) {
+            final int savedState = canvas.save();
+            canvas.scale(bgScaleX,bgScaleY);
+            background.draw(canvas);
+            canvas.restoreToCount(savedState);
+        }
     }
 }
