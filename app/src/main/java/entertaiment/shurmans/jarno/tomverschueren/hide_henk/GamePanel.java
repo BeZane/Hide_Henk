@@ -3,7 +3,6 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -13,8 +12,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread  thread;
     private Background background;
-    private float WIDTH;
-    private float HEIGHT;
+    private float bgWidth;
+    private float bgHeight;
 
 
     public GamePanel(Context context){
@@ -36,8 +35,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         //we can safely start the gameloop.
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.background_ingame1));
-        WIDTH = background.getWidth();
-        HEIGHT = background.getHeight();
+        bgWidth = background.getWidth();
+        bgHeight = background.getHeight();
         thread.setRunning(true);
         thread.start();
     }
@@ -74,8 +73,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void draw(Canvas canvas){
-        final float bgScaleX = getWidth()/WIDTH;
-        final float bgScaleY = getHeight()/HEIGHT;
+        final float bgScaleX = getWidth()/ bgWidth;
+        final float bgScaleY = getHeight()/ bgHeight;
         if(canvas!= null) {
             final int savedState = canvas.save();
             canvas.scale(bgScaleX,bgScaleY);
