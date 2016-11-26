@@ -24,6 +24,7 @@ public class Background {
     public Background(Bitmap bitmap){
         image = bitmap;
         width = image.getWidth();
+
         height = image.getHeight();
     }
 
@@ -32,6 +33,6 @@ public class Background {
     }
 
     public void draw(Canvas canvas){
-            canvas.drawBitmap(image, x, y, null);
+        canvas.drawBitmap(image, x, y, null);
     }
 }
