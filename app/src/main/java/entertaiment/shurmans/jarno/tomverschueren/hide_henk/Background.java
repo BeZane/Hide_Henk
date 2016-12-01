@@ -35,7 +35,6 @@ public class Background {
     public Background(Bitmap bitmap){
         image = bitmap;
         width = image.getWidth();
-
         height = image.getHeight();
     }
 

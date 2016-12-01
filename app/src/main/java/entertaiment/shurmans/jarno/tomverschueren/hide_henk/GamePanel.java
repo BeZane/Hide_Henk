@@ -1,6 +1,7 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
 
 
@@ -17,10 +19,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread  thread;
     private Background background;
     private Plank plank;
-    private float BACKGROUND_WIDTH;
-    private float BACKGROUND_HEIGHT;
+    private GameStateManager gsm;
+
+    //dimensions of the screen
+    public static int HEIGHT;
+    public static int WIDTH;
     public static float SCALING_FACTOR_X = 0;
     public static float SCALING_FACTOR_Y = 0;
+
+    public static Resources RESOURCES;
 
     public GamePanel(Context context){
 
@@ -42,16 +49,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        //we can safely start the gameloop.
-        background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.background_ingame1));
-        BACKGROUND_WIDTH = background.getWidth();
-        BACKGROUND_HEIGHT = background.getHeight();
-        plank = new Plank(BitmapFactory.decodeResource(getResources(),R.drawable.plank2_resized));
+        //we can safely start the gameloop;
         thread.setRunning(true);
         thread.start();
+        plank = new Plank(BitmapFactory.decodeResource(getResources(),R.drawable.plank2_resized));
 
+
+        init();
     }
 
+    private void init(){
+        RESOURCES = getResources();
+        HEIGHT = getHeight();
+        WIDTH = getWidth();
+
+        gsm = new GameStateManager();
+    }
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
@@ -87,22 +100,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void update(){
-        background.update();
+        gsm.update();
     }
 
     @Override
     public void draw(Canvas canvas){
-        if(canvas!= null) {
-            final int savedState = canvas.save();
-            SCALING_FACTOR_X = getWidth()/BACKGROUND_WIDTH;
-            SCALING_FACTOR_Y = getHeight()/BACKGROUND_HEIGHT;
-            canvas.scale(getWidth()/BACKGROUND_WIDTH,getHeight()/BACKGROUND_HEIGHT);
-            background.draw(canvas);
-            plank.draw(canvas);
-
-
-            canvas.restoreToCount(savedState);
-        }
+        SCALING_FACTOR_X = getWidth()/BACKGROUND_WIDTH;
+        SCALING_FACTOR_Y = getHeight()/BACKGROUND_HEIGHT;
+        gsm.draw(canvas);
+        plank.draw(canvas);
     }
 
 }
