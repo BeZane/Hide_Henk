@@ -1,7 +1,10 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.RectangleObject;
 
 /**
  * Created by TomVerschueren on 24/11/2016.
@@ -37,8 +40,6 @@ public class Background {
     }
 
     public void update(){
-        width = image.getWidth();
-        height = image.getHeight();
     }
 
     public void draw(Canvas canvas){

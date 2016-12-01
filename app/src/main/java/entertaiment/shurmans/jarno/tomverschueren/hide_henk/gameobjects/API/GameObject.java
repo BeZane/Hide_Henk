@@ -12,34 +12,23 @@ import android.graphics.drawable.Drawable;
 
 public abstract class GameObject {
 
-    protected int x,y;
+    protected int x;
+    protected int y;
     protected int dx,dy;
-    protected int width, height;
+
+
+
     protected Bitmap bitmap;
+
 
     public GameObject(Bitmap bitmap){
         this.bitmap = bitmap;
-        this.width = bitmap.getWidth();
-        this.height = bitmap.getHeight();
+
     }
 
-    public int getHeight() {
-        return height;
-    }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getX() {
+    public float getX() {
         return x;
     }
 
@@ -47,7 +36,7 @@ public abstract class GameObject {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
