@@ -52,7 +52,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //we can safely start the gameloop;
         thread.setRunning(true);
         thread.start();
-        plank = new Plank(BitmapFactory.decodeResource(getResources(),R.drawable.plank2_resized));
 
 
         init();
@@ -87,15 +86,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                plank.onDrag(event.getX(),event.getY());
-                break;
-            default:
-        }
-        return super.onTouchEvent(event);
+        return gsm.onTouchEvent(event);
     }
 
 

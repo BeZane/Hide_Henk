@@ -1,6 +1,7 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates;
 
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,9 @@ public class GameStateManager {
         gameStates.get(currentState).draw(canvas);
     }
 
-
+    public boolean onTouchEvent(MotionEvent event){
+        return gameStates.get(currentState).onTouchEvent(event);
+    }
 
 
 }
