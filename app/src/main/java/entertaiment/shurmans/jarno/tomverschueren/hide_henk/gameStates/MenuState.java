@@ -36,8 +36,10 @@ public class MenuState extends GameState{
 
     public void draw(Canvas canvas){
         if(canvas!= null) {
+            GamePanel.SCALING_FACTOR_X = GamePanel.WIDTH/bgWidth;
+            GamePanel.SCALING_FACTOR_Y = GamePanel.HEIGHT/bgHeight;
             final int savedState = canvas.save();
-            canvas.scale(GamePanel.WIDTH/bgWidth,GamePanel.HEIGHT/bgHeight);
+            canvas.scale(GamePanel.SCALING_FACTOR_X,GamePanel.SCALING_FACTOR_Y);
             background.draw(canvas);
             canvas.restoreToCount(savedState);
         }
