@@ -11,20 +11,6 @@ import android.view.WindowManager;
 
 public class Game extends Activity {
 
-    /*
-    public static int SCREEN_WIDTH =0;
-    public static int SCREEN_HEIGHT = 0;
-
-    public Game(){
-        Display display  =getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        SCREEN_WIDTH = size.x;
-        SCREEN_HEIGHT = size.y;
-
-
-    }
-    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
