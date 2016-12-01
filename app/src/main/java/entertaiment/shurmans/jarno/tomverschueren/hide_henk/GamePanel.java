@@ -15,7 +15,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread  thread;
     private Background background;
     private Plank plank;
-
+    private float BACKGROUND_WIDTH;
+    private float BACKGROUND_HEIGHT;
 
     public GamePanel(Context context){
 
@@ -39,6 +40,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         //we can safely start the gameloop.
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.background_ingame1));
+        BACKGROUND_WIDTH = background.getWidth();
+        BACKGROUND_HEIGHT = background.getHeight();
         plank = new Plank(BitmapFactory.decodeResource(getResources(),R.drawable.plank2_resized));
         thread.setRunning(true);
         thread.start();
@@ -76,10 +79,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void draw(Canvas canvas){
-
         if(canvas!= null) {
             final int savedState = canvas.save();
-            canvas.scale(getWidth()/background.getWidth()*1.f, getHeight()/background.getHeight()*1.f);
+            canvas.scale(getWidth()/BACKGROUND_WIDTH,getHeight()/BACKGROUND_HEIGHT);
             background.draw(canvas);
             //just testing out a plank.
             plank.draw(canvas);

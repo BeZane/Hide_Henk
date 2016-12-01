@@ -21,6 +21,14 @@ public class Background {
         return width;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public Background(Bitmap bitmap){
         image = bitmap;
         width = image.getWidth();
@@ -29,7 +37,8 @@ public class Background {
     }
 
     public void update(){
-
+        width = image.getWidth();
+        height = image.getHeight();
     }
 
     public void draw(Canvas canvas){
