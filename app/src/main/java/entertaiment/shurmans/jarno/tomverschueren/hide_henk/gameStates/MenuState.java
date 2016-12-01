@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
@@ -18,11 +20,16 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
 
 public class MenuState extends GameState{
 
+    //layout
     private Bitmap background;
     private Bitmap menuButton;
-
     private String[] options = {"START", "STATS", "BUILDER"};
 
+
+    //music
+    private SoundPool sounds;
+
+    //tom
     private Plank plank;
 
     public MenuState(GameStateManager gsm){
@@ -34,7 +41,9 @@ public class MenuState extends GameState{
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
         menuButton = BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.menu_button);
-        plank = new Plank(BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.plank2_resized));
+        plank = new Plank(BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.plank));
+
+
     }
 
     public void update(){

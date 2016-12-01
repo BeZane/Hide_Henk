@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -26,6 +28,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static float SCALING_FACTOR_X = 0;
     public static float SCALING_FACTOR_Y = 0;
 
+    //sounds
+    private SoundPool sounds;
+    private int themeSong;
+
     public static Resources RESOURCES;
 
     public GamePanel(Context context){
@@ -42,6 +48,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //make gamePanel focusable so it can handle events
         setFocusable(true);
 
+        //sounds
+        sounds = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+        themeSong = sounds.load(context,R.raw.main_theme,1);
     }
 
 
@@ -62,6 +71,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         WIDTH = getWidth();
 
         gsm = new GameStateManager();
+
+        sounds.play(themeSong,1,1,0,-1,1);
+
     }
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -92,7 +104,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void update(){
         gsm.update();
     }
-
     @Override
     public void draw(Canvas canvas){
 

@@ -22,7 +22,7 @@ public class Builder extends GameState {
 
 
     public void init(){
-         plank = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank2);
+         plank = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
     }
 
 
@@ -32,12 +32,16 @@ public class Builder extends GameState {
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(plank, x, y, null);
+        System.out.println(y);
     }
 
     public boolean onTouchEvent(MotionEvent event){
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                x = event.getX();
+
+                break;
+            case MotionEvent.ACTION_MOVE:
+                x = event.getX() - plank.getWidth() / 2;
                 y = event.getY();
                 break;
         }
