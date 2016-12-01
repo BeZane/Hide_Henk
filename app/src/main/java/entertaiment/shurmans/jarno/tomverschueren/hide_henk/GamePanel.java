@@ -17,7 +17,6 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread  thread;
-    private Background background;
     private Plank plank;
     private GameStateManager gsm;
 
