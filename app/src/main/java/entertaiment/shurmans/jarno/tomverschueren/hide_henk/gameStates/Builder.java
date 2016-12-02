@@ -32,7 +32,6 @@ public class Builder extends GameState {
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(plank, x, y, null);
-        System.out.println(y);
     }
 
     public boolean onTouchEvent(MotionEvent event){

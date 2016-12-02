@@ -15,6 +15,7 @@ public class GameStateManager {
     public static final int MENUSTATE = 0;
     public static final int STATS = 1;
     public static final int BUILDER = 2;
+    public static final int LEVELSELECT = 3;
 
     public GameStateManager(){
 
@@ -23,6 +24,7 @@ public class GameStateManager {
         gameStates.add(new MenuState(this));
         gameStates.add(new Stats(this));
         gameStates.add(new Builder(this));
+        gameStates.add(new LevelSelect(this));
         gameStates.get(currentState).init();
     }
 

@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.AudioManager;
 import android.media.SoundPool;
 import android.view.MotionEvent;
 
@@ -72,7 +71,7 @@ public class MenuState extends GameState{
                 //check if we pressed a button in the main menu
                 if((GamePanel.WIDTH / 2 - menuButton.getWidth() / 2 < x) && (x  < GamePanel.WIDTH / 2 + menuButton.getWidth() / 2)){
                     if( y > 50 && y < menuButton.getHeight() + 50){
-                        System.out.println("START");
+                        gsm.setState(gsm.LEVELSELECT);
                     }
                     if( y > menuButton.getHeight() + 50 && y < menuButton.getHeight() * 2 + 50){
                         gsm.setState(gsm.STATS);
@@ -89,5 +88,7 @@ public class MenuState extends GameState{
         }
         return true;
     }
+
+
 
 }
