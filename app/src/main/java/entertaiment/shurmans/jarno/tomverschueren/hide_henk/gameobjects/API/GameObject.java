@@ -2,6 +2,7 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -75,6 +76,7 @@ public abstract class GameObject {
 
     public abstract void update();
     public abstract void draw(Canvas canvas);
+    public abstract boolean touches(Point point);
 
 
 

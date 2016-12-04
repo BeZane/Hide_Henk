@@ -36,7 +36,7 @@ public class BuildingState extends GameState {
         scrollBar.setHEIGHT(GamePanel.HEIGHT);
         scrollBar.setWIDTH(GamePanel.WIDTH/5);
         scrollBar.addObject(plank);
-        scrollBar.addObject(new RectanglePicture(BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.plank_button)));
+        scrollBar.addObject(new RectanglePicture(BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.menu_button)));
 
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
 
@@ -55,6 +55,6 @@ public class BuildingState extends GameState {
 
     @Override
     protected boolean onTouchEvent(MotionEvent event) {
-        return false;
-    }
+        return scrollBar.onTouchEvent(event);
+}
 }

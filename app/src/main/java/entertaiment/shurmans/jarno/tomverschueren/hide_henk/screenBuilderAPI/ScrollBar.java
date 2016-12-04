@@ -6,6 +6,8 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
@@ -18,19 +20,26 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.Game
 public class ScrollBar {
 
 
-    private List<GameObject> objects = new ArrayList<GameObject>();
+    //Resized objects to fit in the scrollbar is the first, second is unresized.
+    private HashMap<GameObject,GameObject> scrollingObjects = new HashMap<>();
     private final int SCREEN_WIDTH = GamePanel.WIDTH;
     private final int SCREEN_HEIGHT = GamePanel.HEIGHT;
     private int WIDTH;
     private int HEIGHT;
     private int shownAmount;
     private ScrollBarType type;
-
+    private static final int MAX_CLICK_DURATION = 200;
+    private long startClickTime;
+    private int dy=0;
+    private int x=0,y=0;
     //The count is how far the map is scrolled. This only used to track which items should be represented on the bar.
-    private int count;
+    private int count =0;
+    private int offset =0;
 
     private Bitmap resizeBitMap(Bitmap bitmap){
-        return Bitmap.createScaledBitmap(bitmap,WIDTH,HEIGHT/shownAmount,false);
+        System.out.println(bitmap.getHeight());
+        System.out.println(WIDTH);
+        return Bitmap.createScaledBitmap(bitmap,WIDTH,(int)(bitmap.getHeight()/((float)bitmap.getWidth()/WIDTH)),false);
 
     }
 
@@ -55,7 +64,8 @@ public class ScrollBar {
     }
 
     public void removeObject(GameObject gameObject){
-        objects.remove(gameObject);
+        //TODO: Resize object before removing
+        scrollingObjects.remove(gameObject);
     }
 
     public int getWIDTH() {
@@ -75,8 +85,9 @@ public class ScrollBar {
     }
 
     public void addObject(GameObject gameObject){
+        GameObject original = gameObject;
         gameObject.setBitmap(resizeBitMap(gameObject.getBitmap()));
-        objects.add(gameObject);
+        scrollingObjects.put(gameObject, original);
     }
 
     public void draw(Canvas canvas){
@@ -84,17 +95,59 @@ public class ScrollBar {
 
         for(int i =0;i<shownAmount;i++){
             Point point = getPoint(number);
-            System.out.print("drasewing");
-            canvas.drawBitmap(objects.get(count).getBitmap(),0,0,null);
-            count++;
+            canvas.drawBitmap(scrollingObjects.get(number).getBitmap(),point.x ,point.y - offset,null);
             number++;
+            count++;
         }
-        number = 0;
-        count = count-shownAmount;
+        count =0;
+
 
     }
 
+    public boolean isIn(int x, int y){
+        //TODO: Add other enums
+        switch (ScrollBarType.RIGHT_SIDE){
+            case RIGHT_SIDE:
+                if(x>SCREEN_WIDTH-WIDTH-10)
+                    return true;
+        }
+        return false;
+    }
+
     public boolean onTouchEvent(MotionEvent event){
+        float x = event.getX();
+        float y = event.getY();
+        long clickDuration;
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startClickTime = Calendar.getInstance().getTimeInMillis();
+                if(isIn((int) x, (int)y)){
+                    this.y = (int)y;
+                    return true;
+                }else{
+                    return false;
+                }
+            case MotionEvent.ACTION_MOVE:
+                 clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                if(isIn((int)x,(int)y) &&clickDuration > MAX_CLICK_DURATION){
+
+                    offset = offset + (this.y-(int)y) ;
+                    this.y =(int)y;
+                }
+                break;
+            case MotionEvent.ACTION_UP: {
+                 clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                if(clickDuration < MAX_CLICK_DURATION) {
+                    //click event has occurred
+                    for(GameObject gameObject:scrollingObjects.keySet()){
+                        if(gameObject.touches(new Point((int)x,(int)y))){
+                            //TODO: Draw it on the screen
+                        }
+                    }
+                }
+            }
+            default:
+        }
         return true;
     }
 
@@ -106,14 +159,15 @@ public class ScrollBar {
     private Point getPoint(int number){
         Point point = new Point();
         int x=0,y=0;
+        //TODO: Add the other enums
         switch (type){
             case RIGHT_SIDE:
-                x = WIDTH/2;
-                y = SCREEN_WIDTH - HEIGHT+HEIGHT/(2*shownAmount)+HEIGHT*count;
+                point.x = SCREEN_WIDTH-WIDTH;
+
+                point.y = SCREEN_HEIGHT/(2*shownAmount)+HEIGHT/shownAmount*count;
                 break;
 
         }
-        point.set(x,y);
         return point;
     }
 
