@@ -27,7 +27,7 @@ public class LevelSelect extends GameState {
     }
 
     public void init(){
-        unlockedButton = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button);
+        unlockedButton = this.scaleSquared(BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button));
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
     }
@@ -40,23 +40,23 @@ public class LevelSelect extends GameState {
 
         //drawing the title
         Paint p = new Paint();
-        p.setTextSize(120);
+        p.setTextSize(40*GamePanel.SCALING_FACTOR_X);
         p.setColor(Color.DKGRAY);
-        canvas.drawText("Level Select", GamePanel.WIDTH / 2 - 280, 120, p);
+        canvas.drawText("Level Select", GamePanel.WIDTH / 2 - 90*GamePanel.SCALING_FACTOR_X, 40*GamePanel.SCALING_FACTOR_Y, p);
 
         //setting the paint to draw the numbers of the levels.
-        p.setTextSize(80);
+        p.setTextSize(25*GamePanel.SCALING_FACTOR_X);
         p.setColor(Color.BLACK);
 
         //3 rows and 5 columns
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 5; j++) {
                 //drawing the buttons
-                canvas.drawBitmap(unlockedButton, GamePanel.WIDTH/2 - unlockedButton.getWidth() * 4 + j * unlockedButton.getWidth() * 3 / 2,
-                        200 + unlockedButton.getHeight() * i * 3 / 2, null);
+                canvas.drawBitmap(unlockedButton, (GamePanel.WIDTH/2 - unlockedButton.getWidth() * 4 + j * unlockedButton.getWidth() * 3 / 2),(
+                        160*GamePanel.SCALING_FACTOR_X + unlockedButton.getHeight() * i * 3 / 2), null);
                 //drawing the numbers on the buttons
-                canvas.drawText("" + (i * 5 + j + 1), GamePanel.WIDTH/2 - unlockedButton.getWidth() * 4 + j * unlockedButton.getWidth() * 3 / 2 + 10,
-                        290 + unlockedButton.getHeight() * i * 3 / 2, p);
+                canvas.drawText("" + (i * 5 + j + 1),GamePanel.SCALING_FACTOR_Y*5+ GamePanel.WIDTH/2 - unlockedButton.getWidth() * 4 + j * unlockedButton.getWidth() * 3 / 2 + 10,
+                        100*GamePanel.SCALING_FACTOR_Y + unlockedButton.getHeight() * i * 3 / 2, p);
             }
         }
     }

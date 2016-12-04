@@ -39,8 +39,11 @@ public class MenuState extends GameState{
         //load the background image and scale it to match the size of the screen
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
-        menuButton = BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.menu_button);
-        plank = new Plank(BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.plank));
+        GamePanel.SCALING_FACTOR_X = GamePanel.WIDTH/tempBackground.getWidth();
+        GamePanel.SCALING_FACTOR_Y = GamePanel.HEIGHT/tempBackground.getHeight();
+
+        menuButton = this.scaleBitMap(BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.menu_button));
+        plank = new Plank((BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.plank)));
 
 
     }
@@ -53,13 +56,13 @@ public class MenuState extends GameState{
 
         //drawing the buttons
         Paint p = new Paint();
-        p.setTextSize(150);
+        p.setTextSize(40*GamePanel.SCALING_FACTOR_X);
         p.setColor(Color.DKGRAY);
         for(int i = 0; i < 3 ; i++){
             canvas.drawBitmap(menuButton, GamePanel.WIDTH / 2 - menuButton.getWidth() / 2 ,
-                    50 + menuButton.getHeight() * i, null);
+                    25*GamePanel.SCALING_FACTOR_Y + menuButton.getHeight() * i, null);
             canvas.drawText(options[i], GamePanel.WIDTH / 2 - options[i].length() * p.getTextSize() / 4,
-                    menuButton.getHeight() * (i + 1), p);
+                    2*GamePanel.SCALING_FACTOR_Y +menuButton.getHeight() * (i + 1), p);
         }
     }
 

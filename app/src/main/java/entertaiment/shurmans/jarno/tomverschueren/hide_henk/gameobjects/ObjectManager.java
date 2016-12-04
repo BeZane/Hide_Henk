@@ -12,11 +12,12 @@ public class ObjectManager {
 
     public ObjectManager(){}
 
+    /*
     public void addObjecet(GameObject object){
         if(object.getShape() == GameObject.collisionShape.CIRCLE){
             circles.add(object);
         }
-    }
+    } */
 
 
 }
