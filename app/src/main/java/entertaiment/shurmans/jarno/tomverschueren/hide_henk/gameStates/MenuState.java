@@ -80,7 +80,7 @@ public class MenuState extends GameState{
                         gsm.setState(gsm.STATS);
                     }
                     if( y > menuButton.getHeight() * 2 + 50 && y < menuButton.getHeight() * 3 + 50){
-                        gsm.setState(GameStateManager.BUILDER);
+                        gsm.setState(GameStateManager.BUILDERMENU );
                     }
                 }
                 break;

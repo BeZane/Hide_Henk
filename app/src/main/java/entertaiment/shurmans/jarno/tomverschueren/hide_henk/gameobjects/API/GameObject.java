@@ -26,6 +26,14 @@ public abstract class GameObject {
 
     }
 
+    public Bitmap getBitmap(){
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap){
+        this.bitmap = bitmap;
+    }
+
 
 
     public float getX() {
@@ -42,6 +50,11 @@ public abstract class GameObject {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setCoordinates(int x, int y){
+        this.x = x;
+        this.y =y;
     }
 
     public int getDx() {
@@ -62,6 +75,8 @@ public abstract class GameObject {
 
     public abstract void update();
     public abstract void draw(Canvas canvas);
+
+
 
 
 
