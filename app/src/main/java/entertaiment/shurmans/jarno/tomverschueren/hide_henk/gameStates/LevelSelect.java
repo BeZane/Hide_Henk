@@ -18,6 +18,7 @@ public class LevelSelect extends GameState {
 
     private Bitmap unlockedButton;
     private Bitmap background;
+    private Bitmap previous;
 
     //boolean to see if screen has been backgroundDrawn
     private boolean backgroundDrawn = false;
@@ -30,6 +31,7 @@ public class LevelSelect extends GameState {
         unlockedButton = this.scaleSquared(BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button));
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
+        previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
     }
 
     public void update(){}
@@ -59,10 +61,22 @@ public class LevelSelect extends GameState {
                         100*GamePanel.SCALING_FACTOR_Y + unlockedButton.getHeight() * i * 3 / 2, p);
             }
         }
+
+        //drawing the return button
+        canvas.drawBitmap(previous, GamePanel.WIDTH - previous.getWidth() - 10, 10, p);
     }
 
     public boolean onTouchEvent(MotionEvent event){
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                float x = event.getX();
+                float y = event.getY();
 
+                if(x > GamePanel.WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
+                    gsm.setState(gsm.MENUSTATE);
+                }
+                break;
+        }
         return true;
     }
 

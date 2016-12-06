@@ -16,6 +16,7 @@ public class BuilderMenuState extends GameState {
     private Bitmap background;
     private MenuButton buildButton;
     private MenuButton playButton;
+    private Bitmap previous;
 
     public BuilderMenuState(GameStateManager gsm){
         this.gsm = gsm;
@@ -27,7 +28,7 @@ public class BuilderMenuState extends GameState {
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
         buildButton = new MenuButton(this.scaleBitMap(BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank_button)),"BUILD");
         playButton =  new MenuButton(this.scaleBitMap(BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank_button)),"PLAY");
-
+        previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
     }
 
 
@@ -44,6 +45,9 @@ public class BuilderMenuState extends GameState {
         buildButton.draw(canvas);
         playButton.draw(canvas);
 
+        //drawing the return button
+        canvas.drawBitmap(previous, GamePanel.WIDTH - previous.getWidth() - 10, 10, null);
+
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -55,6 +59,9 @@ public class BuilderMenuState extends GameState {
                     gsm.setState(gsm.BUILDING);
                 }else if(playButton.touches(new Point((int)x,(int)y))){
                     gsm.setState(gsm.ONLINESELECT);
+                }
+                else if(x > GamePanel.WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
+                    gsm.setState(gsm.MENUSTATE);
                 }
                 break;
             case MotionEvent.ACTION_MOVE:

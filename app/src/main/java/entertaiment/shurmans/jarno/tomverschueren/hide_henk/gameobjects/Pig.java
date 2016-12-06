@@ -2,6 +2,7 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Point;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.CircleObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.Moveable;
@@ -27,6 +28,10 @@ public class Pig extends CircleObject implements Moveable {
 
     }
 
+    @Override
+    public boolean touches(Point point) {
+        return false;
+    }
 
 
     @Override
