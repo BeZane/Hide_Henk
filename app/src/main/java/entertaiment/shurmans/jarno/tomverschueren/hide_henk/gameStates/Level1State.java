@@ -19,10 +19,11 @@ public class Level1State extends LevelState {
 
     public void populate(){
         henk = new Henk(905, 350);
-        Plank p1 = new Plank(800, 450);
+        henk.setSolid(true);
+        Plank p1 = new Plank(800, 150);
         p1.setSolid(true);
-        Plank p2 = new Plank(510, 450);
-        p2.setSolid(true);
+        Plank p2 = new Plank(580, 450);
+        p2.setSolid(false);
         objects.add(henk);
         objects.add(p1);
         objects.add(p2);

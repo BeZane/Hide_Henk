@@ -40,12 +40,12 @@ public class LevelState extends GameState {
 
     public void update(){
         for(GameObject o: objects){
+            o.update();
             for(GameObject o2: objects){
                 if(!o.equals(o2)) {
                     o.checkCollision(o2);
                 }
             }
-            o.update();
         }
     }
 

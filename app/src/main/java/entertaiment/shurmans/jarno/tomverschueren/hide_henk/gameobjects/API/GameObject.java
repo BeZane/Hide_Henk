@@ -91,6 +91,7 @@ public abstract class GameObject {
         //check if we will have collision if we keep going in our current direction
         x += dx;
         y += dy;
+
         //store current dx and dy to restore later on
         double tempDx = dx;
         double tempDy = dy;
@@ -132,10 +133,10 @@ public abstract class GameObject {
             }
             //find the point which is part of the rectangle and is closest to the center of the circle with coordinates (x,y)
             double x;
+            double y;
             if(c1.x < r1.x){ x = r1.x;}
             else if(c1.x > r1.x + r1.getWidth()){ x = r1.x + r1.getWidth();}
             else{x=c1.x;}
-            double y;
             if(c1.y < r1.y){ y = r1.y;}
             else if(c1.y > r1.y + r1.getHeight()) {y = r1.y + r1.getHeight();}
             else{y = c1.y;}
@@ -144,6 +145,9 @@ public abstract class GameObject {
                 collision = true;
                 if(shape == Shapes.CIRCLE){
                     calculateNewVector(x, y, r1);
+                }
+                if(shape == Shapes.RECTANGLE){
+                    calculateNewVector(x, y, c1);
                 }
 
             }
@@ -195,13 +199,14 @@ public abstract class GameObject {
         double y = this.y;
         if(shape == Shapes.RECTANGLE){
             RectangleObject r = (RectangleObject)this;
-            x += r.getWidth();
-            y += r.getHeight();
+            x += r.getWidth() / 2;
+            y += r.getHeight() / 2;
         }
         double speed = Math.sqrt(dx*dx + dy*dy);
         double xVector = x - x1;
-        double yvector = y - y1;
-        double alpha = Math.atan(-yvector/xVector);  //the direction of the force caused by o1
+        double yVector = y - y1;
+        System.out.println("xVector: " + xVector + " yVector: " + yVector);
+        double alpha = Math.atan((-1 *yVector) /xVector);  //the direction of the force caused by o1
         if(xVector < 0){
             alpha += Math.PI;
         }
@@ -217,9 +222,13 @@ public abstract class GameObject {
         }
 
         if(o1.solid){
+            System.out.println("dx: " + dx + " dy: " + dy);
+            System.out.println("alpha: " + alpha/ 2 / Math.PI * 360 + " betha: " + betha/ 2 / Math.PI * 360);
             double reflection = (Math.PI - (betha - alpha)) + alpha;    //the direction of the our object after collision
+            System.out.println("reflection: " + reflection / 2 / Math.PI * 360 );
             dy = - Math.sin(reflection) * bouncingFactor * speed;
             dx = Math.cos(reflection) * bouncingFactor * speed;
+
         }
     }
 
@@ -231,6 +240,9 @@ public abstract class GameObject {
         }
         if(dy > maxFallSpeed){
             dy = maxFallSpeed ;
+        }
+        if(y > GamePanel.GAME_HEIGHT){
+            y = 0;
         }
         rotation += drotation;
         if(rotation > maxRotationSpeed){

@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.LevelSelectButton;
@@ -17,22 +19,34 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Lev
 
 public class LevelSelect extends GameState {
 
-    private LevelSelectButton unlockedButton;
+    private ArrayList<LevelSelectButton> unlockedButtons = new ArrayList<LevelSelectButton>();
     private Bitmap background;
     private Bitmap previous;
 
-    //boolean to see if screen has been backgroundDrawn
-    private boolean backgroundDrawn = false;
 
     public LevelSelect(GameStateManager gsm){
         this.gsm = gsm;
     }
 
     public void init(){
-        unlockedButton = new LevelSelectButton();
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
+        addButtons();
+    }
+
+    private void addButtons(){
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 5; j++) {
+                //drawing the buttons
+                LevelSelectButton unlockedButton = new LevelSelectButton();
+                unlockedButton.setTextSize((int)(40*GamePanel.X_SCALE));
+                unlockedButton.setText("" + (i * 5 + j + 1));
+                unlockedButton.setX((int) (GamePanel.SCREEN_WIDTH / 2 + unlockedButton.getPicture().getWidth() * (j - 2.5) * 1.5));
+                unlockedButton.setY(GamePanel.SCREEN_HEIGHT / 2 + (i - 1) * unlockedButton.getPicture().getHeight() * 3 / 2 );
+                unlockedButtons.add(unlockedButton);
+            }
+        }
     }
 
     protected void update(){}
@@ -43,23 +57,15 @@ public class LevelSelect extends GameState {
 
         //drawing the title
         Paint p = new Paint();
-        p.setTextSize(100*GamePanel.X_SCALE);
+        p.setTextSize(100 * GamePanel.X_SCALE);
         p.setColor(Color.DKGRAY);
-        canvas.drawText("Level Select", GamePanel.SCREEN_WIDTH / 2 - (int)p.getTextSize() * "Level Select".length() / 4, 100 * GamePanel.Y_SCALE, p);
-        System.out.println("drawing text at: (" +  (GamePanel.SCREEN_WIDTH / 2 - p.getTextSize() * "Level Select".length() / 4) + "," + 100 * GamePanel.Y_SCALE + ")");
-
+        canvas.drawText("Level Select", GamePanel.SCREEN_WIDTH / 2 - p.getTextSize() * "Level Select".length() / 4, 100 * GamePanel.Y_SCALE, p);
         //setting the paint to draw the numbers of the levels.
-        unlockedButton.setTextSize((int)(25*GamePanel.X_SCALE));
 
 
         //3 rows and 5 columns
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 5; j++) {
-                //drawing the buttons
-                unlockedButton.setText("" + (i * 5 + j + 1));
-                unlockedButton.draw(canvas,(int) (GamePanel.SCREEN_WIDTH / 2 + unlockedButton.getPicture().getWidth() * (j - 2.5) * 1.5),
-                        GamePanel.SCREEN_HEIGHT / 2 + (i - 1) * unlockedButton.getPicture().getHeight() * 3 / 2 );
-            }
+        for(LevelSelectButton b: unlockedButtons){
+            b.draw(canvas);
         }
 
         //drawing the return button

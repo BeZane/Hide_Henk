@@ -32,7 +32,6 @@ public class Button {
         this.y = y;
     }
     public void setTextSize(int size){textSize = size;}
-
     public void setText(String text){
         this.text = text;
     }
@@ -40,6 +39,7 @@ public class Button {
     public Bitmap getPicture(){
         return picture;
     }
+    public int getY(){return y;}
 
     protected void scaleToScreensize(Bitmap picture){
         int destWidth = (int)(picture.getWidth() * GamePanel.X_SCALE);
@@ -47,7 +47,18 @@ public class Button {
         this.picture = Bitmap.createScaledBitmap(picture, destWidth, destHeight, false);
     }
 
-    public void draw(Canvas canvas, int x, int y) {
+    public boolean contains(float x, float y){
+        boolean contains = false;
+
+        if(x > this.x - picture.getWidth() / 2 && x < this.x + picture.getWidth() / 2 &&
+                y > this.y - picture.getHeight() / 2 && y < this.y + picture.getHeight() ){
+            contains = true;
+        }
+
+        return contains;
+    }
+
+    public void draw(Canvas canvas) {
         canvas.drawBitmap(picture, x - picture.getWidth() / 2, y - picture.getHeight() / 2, null);
         Paint p = new Paint();
         p.setColor(color);

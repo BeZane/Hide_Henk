@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
@@ -21,7 +23,7 @@ public class MenuState extends GameState{
     //layout
     private Bitmap background;
     private String[] options = {"START", "STATS", "BUILDER"};
-    private MenuButton menuButton;
+    private ArrayList<MenuButton> menuButtons = new ArrayList<MenuButton>();
 
 
 
@@ -33,8 +35,17 @@ public class MenuState extends GameState{
         //load the background image and scale it to match the size of the screen
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
-        menuButton = new MenuButton();
+        addButtons();
+    }
 
+    private void addButtons(){
+        for(int i = 0; i < options.length; i++){
+            MenuButton menuButton = new MenuButton();
+            menuButton.setX(GamePanel.SCREEN_WIDTH / 2);
+            menuButton.setY((int)(160 + i * (menuButton.getPicture().getHeight() + 35) * GamePanel.Y_SCALE));
+            menuButton.setText(options[i]);
+            menuButtons.add(menuButton);
+        }
     }
 
     public void update(){
@@ -42,29 +53,34 @@ public class MenuState extends GameState{
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(background, 0, 0, null);
-        for(int i = 0; i < options.length; i++){
-            menuButton.setText(options[i]);
-            menuButton.draw(canvas, GamePanel.SCREEN_WIDTH / 2, (int)(160 + i * (menuButton.getPicture().getHeight() + 35) * GamePanel.Y_SCALE));
+
+        for (MenuButton b: menuButtons){
+            b.draw(canvas);
         }
     }
 
     public boolean onTouchEvent(MotionEvent event){
 
         switch (event.getAction()) {
+
             case MotionEvent.ACTION_DOWN:
                 float x = event.getX();
                 float y = event.getY();
                 //check if we pressed a button in the main menu
-                if((GamePanel.SCREEN_WIDTH / 2 - menuButton.getPicture().getWidth() / 2 < x) && (x  < GamePanel.SCREEN_WIDTH / 2 + menuButton.getPicture().getWidth() / 2)){
-                    if( y > 50 && y < menuButton.getPicture().getHeight() + 50){
-                        gsm.setState(gsm.LEVELSELECT);
+                int i = 0;
+                for(MenuButton b : menuButtons){
+                    if(b.contains(x, y)){
+                        if(i == 0){
+                            gsm.setState(GameStateManager.LEVELSELECT);
+                        }
+                        else if(i == 1){
+                            gsm.setState(GameStateManager.STATS);
+                        }
+                        else{
+                            System.out.println("going to builder");
+                        }
                     }
-                    if( y > menuButton.getPicture().getHeight() + 50 && y < menuButton.getPicture().getHeight() * 2 + 50){
-                        gsm.setState(gsm.STATS);
-                    }
-                    if( y > menuButton.getPicture().getHeight() * 2 + 50 && y < menuButton.getPicture().getHeight() * 3 + 50){
-                        //gsm.setState(GameStateManager.BUILDERMENU );
-                    }
+                    i++;
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
