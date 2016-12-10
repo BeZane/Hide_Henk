@@ -12,6 +12,8 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
  * Created by TomVerschueren on 4/12/2016.
  */
 
+/*
+
 public class OnlineSelect extends GameState {
 
     private Bitmap background;
@@ -23,7 +25,7 @@ public class OnlineSelect extends GameState {
     @Override
     protected void init() {
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
-        background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
+        background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
     }
 
     @Override
@@ -41,3 +43,5 @@ public class OnlineSelect extends GameState {
         return false;
     }
 }
+
+*/

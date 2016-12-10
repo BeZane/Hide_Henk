@@ -5,12 +5,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.SoundPool;
 import android.view.MotionEvent;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
 
 
 /**
@@ -21,15 +20,10 @@ public class MenuState extends GameState{
 
     //layout
     private Bitmap background;
-    private Bitmap menuButton;
     private String[] options = {"START", "STATS", "BUILDER"};
+    private MenuButton menuButton;
 
 
-    //music
-    private SoundPool sounds;
-
-    //tom
-    private Plank plank;
 
     public MenuState(GameStateManager gsm){
         this.gsm = gsm;
@@ -38,13 +32,8 @@ public class MenuState extends GameState{
     public void init(){
         //load the background image and scale it to match the size of the screen
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
-        background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
-        GamePanel.SCALING_FACTOR_X = GamePanel.WIDTH/tempBackground.getWidth();
-        GamePanel.SCALING_FACTOR_Y = GamePanel.HEIGHT/tempBackground.getHeight();
-
-        menuButton = this.scaleBitMap(BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.menu_button));
-        plank = new Plank((BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.plank)));
-
+        background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
+        menuButton = new MenuButton();
 
     }
 
@@ -52,43 +41,37 @@ public class MenuState extends GameState{
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(background,0,0,null);
-
-        //drawing the buttons
-        Paint p = new Paint();
-        p.setTextSize(40*GamePanel.SCALING_FACTOR_X);
-        p.setColor(Color.DKGRAY);
-        for(int i = 0; i < 3 ; i++){
-            canvas.drawBitmap(menuButton, GamePanel.WIDTH / 2 - menuButton.getWidth() / 2 ,
-                    25*GamePanel.SCALING_FACTOR_Y + menuButton.getHeight() * i, null);
-            canvas.drawText(options[i], GamePanel.WIDTH / 2 - options[i].length() * p.getTextSize() / 4,
-                    2*GamePanel.SCALING_FACTOR_Y +menuButton.getHeight() * (i + 1), p);
+        canvas.drawBitmap(background, 0, 0, null);
+        for(int i = 0; i < options.length; i++){
+            menuButton.setText(options[i]);
+            menuButton.draw(canvas, GamePanel.SCREEN_WIDTH / 2, (int)(160 + i * (menuButton.getPicture().getHeight() + 35) * GamePanel.Y_SCALE));
         }
     }
 
     public boolean onTouchEvent(MotionEvent event){
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 float x = event.getX();
                 float y = event.getY();
                 //check if we pressed a button in the main menu
-                if((GamePanel.WIDTH / 2 - menuButton.getWidth() / 2 < x) && (x  < GamePanel.WIDTH / 2 + menuButton.getWidth() / 2)){
-                    if( y > 50 && y < menuButton.getHeight() + 50){
+                if((GamePanel.SCREEN_WIDTH / 2 - menuButton.getPicture().getWidth() / 2 < x) && (x  < GamePanel.SCREEN_WIDTH / 2 + menuButton.getPicture().getWidth() / 2)){
+                    if( y > 50 && y < menuButton.getPicture().getHeight() + 50){
                         gsm.setState(gsm.LEVELSELECT);
                     }
-                    if( y > menuButton.getHeight() + 50 && y < menuButton.getHeight() * 2 + 50){
+                    if( y > menuButton.getPicture().getHeight() + 50 && y < menuButton.getPicture().getHeight() * 2 + 50){
                         gsm.setState(gsm.STATS);
                     }
-                    if( y > menuButton.getHeight() * 2 + 50 && y < menuButton.getHeight() * 3 + 50){
-                        gsm.setState(GameStateManager.BUILDERMENU );
+                    if( y > menuButton.getPicture().getHeight() * 2 + 50 && y < menuButton.getPicture().getHeight() * 3 + 50){
+                        //gsm.setState(GameStateManager.BUILDERMENU );
                     }
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                //plank.onDrag(event.getX(),event.getY());
                 break;
             default:
         }
+
         return true;
     }
 

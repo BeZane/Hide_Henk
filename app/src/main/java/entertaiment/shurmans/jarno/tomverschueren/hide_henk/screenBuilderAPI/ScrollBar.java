@@ -5,25 +5,26 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 
 /**
  * Created by TomVerschueren on 4/12/2016.
  */
+
+
 
 public class ScrollBar {
 
 
     //Resized objects to fit in the scrollbar is the first, second is unresized.
     private HashMap<GameObject,GameObject> scrollingObjects = new HashMap<>();
-    private final int SCREEN_WIDTH = GamePanel.WIDTH;
-    private final int SCREEN_HEIGHT = GamePanel.HEIGHT;
+    private final int SCREEN_WIDTH = GamePanel.SCREEN_WIDTH;
+    private final int SCREEN_HEIGHT = GamePanel.SCREEN_HEIGHT;
     private int WIDTH;
     private int HEIGHT;
     private int shownAmount;
@@ -59,6 +60,8 @@ public class ScrollBar {
      * How much items will be visible in the scrollbar?
      * @param shownAmount Amount of items that will be visible in the scrollbar.
      */
+
+
     public void setShownAmount(int shownAmount) {
         this.shownAmount = shownAmount;
     }
@@ -86,7 +89,7 @@ public class ScrollBar {
 
     public void addObject(GameObject gameObject){
         GameObject original = gameObject;
-        gameObject.setBitmap(resizeBitMap(gameObject.getBitmap()));
+        //gameObject.setBitmap(resizeBitMap(gameObject.getBitmap()));
         scrollingObjects.put(gameObject, original);
     }
 
@@ -140,9 +143,10 @@ public class ScrollBar {
                 if(clickDuration < MAX_CLICK_DURATION) {
                     //click event has occurred
                     for(GameObject gameObject:scrollingObjects.keySet()){
-                        if(gameObject.touches(new Point((int)x,(int)y))){
+                        if(gameObject.checkCollision(new Henk(x,y))) {
                             //TODO: Draw it on the screen
-                        }
+                            //TODO: Change Henk to a point class
+                    }
                     }
                 }
             }
@@ -184,3 +188,4 @@ public class ScrollBar {
 
 
 }
+

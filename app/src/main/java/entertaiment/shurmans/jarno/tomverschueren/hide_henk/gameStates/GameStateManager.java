@@ -14,10 +14,11 @@ public class GameStateManager {
 
     public static final int MENUSTATE = 0;
     public static final int STATS = 1;
-    public static final int BUILDERMENU = 2;
-    public static final int LEVELSELECT = 3;
-    public static final int BUILDING = 4;
-    public static final int ONLINESELECT = 5;
+    public static final int LEVELSELECT = 2;
+    public static final int LEVEL1 = 3;
+    public static final int BUILDERMENU = 4;
+    public static final int BUILDING = 5;
+    public static final int ONLINESELECT = 6;
 
     public GameStateManager(){
 
@@ -25,10 +26,11 @@ public class GameStateManager {
         currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
         gameStates.add(new Stats(this));
-        gameStates.add(new BuilderMenuState(this));
         gameStates.add(new LevelSelect(this));
-        gameStates.add(new BuildingState(this));
-        gameStates.add(new OnlineSelect(this));
+        gameStates.add(new Level1State(this));
+        //gameStates.add(new BuilderMenuState(this));
+        //gameStates.add(new BuildingState(this));
+        //gameStates.add(new OnlineSelect(this));
         gameStates.get(currentState).init();
     }
 

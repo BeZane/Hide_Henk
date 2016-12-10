@@ -32,7 +32,7 @@ public class Stats extends GameState {
 
     public void draw(Canvas canvas){
         //drawing the return button
-        canvas.drawBitmap(previous, GamePanel.WIDTH - previous.getWidth() - 10, 10, null);
+        canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -41,7 +41,7 @@ public class Stats extends GameState {
                 float x = event.getX();
                 float y = event.getY();
 
-                if(x > GamePanel.WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
+                if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     gsm.setState(gsm.MENUSTATE);
                 }
                 break;

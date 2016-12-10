@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.LevelSelectButton;
 
 /**
  * Created by Admin on 2/12/2016.
@@ -16,7 +17,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 
 public class LevelSelect extends GameState {
 
-    private Bitmap unlockedButton;
+    private LevelSelectButton unlockedButton;
     private Bitmap background;
     private Bitmap previous;
 
@@ -28,13 +29,13 @@ public class LevelSelect extends GameState {
     }
 
     public void init(){
-        unlockedButton = this.scaleSquared(BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button));
+        unlockedButton = new LevelSelectButton();
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
-        background = Bitmap.createScaledBitmap(tempBackground, GamePanel.WIDTH, GamePanel.HEIGHT, false);
+        background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
     }
 
-    public void update(){}
+    protected void update(){}
 
     public void draw(Canvas canvas){
 
@@ -44,26 +45,25 @@ public class LevelSelect extends GameState {
         Paint p = new Paint();
         p.setTextSize(40*GamePanel.SCALING_FACTOR_X);
         p.setColor(Color.DKGRAY);
-        canvas.drawText("Level Select", GamePanel.WIDTH / 2 - 90*GamePanel.SCALING_FACTOR_X, 40*GamePanel.SCALING_FACTOR_Y, p);
+        canvas.drawText("Level Select", GamePanel.SCREEN_WIDTH / 2 - 90*GamePanel.SCALING_FACTOR_X, 40*GamePanel.SCALING_FACTOR_Y, p);
 
         //setting the paint to draw the numbers of the levels.
-        p.setTextSize(25*GamePanel.SCALING_FACTOR_X);
-        p.setColor(Color.BLACK);
+        unlockedButton.setTextSize((int)(25*GamePanel.X_SCALE));
+
 
         //3 rows and 5 columns
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 5; j++) {
+                System.out.println("i: " + i + " j: " + j );
                 //drawing the buttons
-                canvas.drawBitmap(unlockedButton, (GamePanel.WIDTH/2 - unlockedButton.getWidth() * 4 + j * unlockedButton.getWidth() * 3 / 2),(
-                        160*GamePanel.SCALING_FACTOR_X + unlockedButton.getHeight() * i * 3 / 2), null);
-                //drawing the numbers on the buttons
-                canvas.drawText("" + (i * 5 + j + 1),GamePanel.SCALING_FACTOR_Y*5+ GamePanel.WIDTH/2 - unlockedButton.getWidth() * 4 + j * unlockedButton.getWidth() * 3 / 2 + 10,
-                        100*GamePanel.SCALING_FACTOR_Y + unlockedButton.getHeight() * i * 3 / 2, p);
+                unlockedButton.setText("" + (i * 5 + j + 1));
+                unlockedButton.draw(canvas,(int) (GamePanel.SCREEN_WIDTH / 2 + unlockedButton.getPicture().getWidth() * (j - 2.5) * 1.5),
+                        GamePanel.SCREEN_HEIGHT / 2 + (i - 1) * unlockedButton.getPicture().getHeight() * 3 / 2 );
             }
         }
 
         //drawing the return button
-        canvas.drawBitmap(previous, GamePanel.WIDTH - previous.getWidth() - 10, 10, p);
+        canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, p);
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -72,15 +72,17 @@ public class LevelSelect extends GameState {
                 float x = event.getX();
                 float y = event.getY();
 
-                if(x > GamePanel.WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
+                if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     gsm.setState(gsm.MENUSTATE);
+                }
+
+                if(x < GamePanel.SCREEN_WIDTH / 2 && y < GamePanel.SCREEN_HEIGHT / 2){
+                    gsm.setState(gsm.LEVEL1);
                 }
                 break;
         }
         return true;
     }
-
-
 
 
 

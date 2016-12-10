@@ -2,29 +2,28 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread  thread;
-    private Plank plank;
     private GameStateManager gsm;
 
     //dimensions of the screen
-    public static int HEIGHT;
-    public static int WIDTH;
+    public static int SCREEN_HEIGHT;
+    public static int SCREEN_WIDTH;
+    public static final int GAME_HEIGHT = 720;
+    public static final int GAME_WIDTH = 1280;
+    public static float X_SCALE;
+    public static float Y_SCALE;
     public static float SCALING_FACTOR_X = 0;
     public static float SCALING_FACTOR_Y = 0;
 
@@ -67,8 +66,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private void init(){
         RESOURCES = getResources();
-        HEIGHT = getHeight();
-        WIDTH = getWidth();
+        SCREEN_HEIGHT = getHeight();
+        SCREEN_WIDTH = getWidth();
+        X_SCALE = 1.0f * SCREEN_WIDTH / GAME_WIDTH;
+        Y_SCALE = 1.0f * SCREEN_HEIGHT / GAME_HEIGHT;
+
+        System.out.println("height: " + SCREEN_HEIGHT + " width: " + SCREEN_WIDTH);
 
         gsm = new GameStateManager();
 
@@ -108,7 +111,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas){
 
         gsm.draw(canvas);
-        plank.draw(canvas);
     }
 
 }

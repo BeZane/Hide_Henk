@@ -1,6 +1,5 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 /**
@@ -9,26 +8,21 @@ import android.graphics.Canvas;
 
 public abstract class CircleObject extends GameObject {
 
-    private double radius;
+    protected double radius;
 
-    public CircleObject(Bitmap bitmap) {
-        super(bitmap);
+    public CircleObject(double x, double y) {
+        super(x,y);
+        setShape(Shapes.CIRCLE);
     }
+
 
     public double getRadius() {
             return radius;
         }
 
-        public void setRadius(double radius) {
-            this.radius = radius;
-        }
 
-        public double getArea(){
-            return Math.PI * radius * radius;
-        }
-
-        public double getCircumference(){
-            return 2 * Math.PI * radius;
-        }
-
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(picture,(int) (drawX) - picture.getWidth() / 2,(int) drawY - picture.getHeight() / 2, null);
+    }
 }

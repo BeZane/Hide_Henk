@@ -12,13 +12,11 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 
 public abstract class RectangleObject extends GameObject {
 
-    protected int width, height;
+    protected double width, height;
 
-    public RectangleObject(Bitmap bitmap) {
-        super(bitmap);
-        this.width = bitmap.getWidth();
-        this.height = bitmap.getHeight();
-
+    public RectangleObject(double x, double y) {
+        super(x,y);
+        setShape(Shapes.RECTANGLE);
     }
 
     public boolean touches(Point point){
@@ -28,15 +26,18 @@ public abstract class RectangleObject extends GameObject {
             return false;
         }
 
+    }
 
+    protected void calculateDimensions(Bitmap picture){
+        width = picture.getWidth();
+        height = picture.getHeight();
     }
 
     public Rect getRectangle(){
-        return new Rect(x,y,x+width,y+height);
-
+        return new Rect((int)x,(int)y,(int)(x+width),(int)(y+height));
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
@@ -44,7 +45,7 @@ public abstract class RectangleObject extends GameObject {
         this.height = height;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 

@@ -5,24 +5,27 @@ import android.graphics.BitmapFactory;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.RectangleObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.CircleObject;
 
 /**
- * Created by Admin on 8/12/2016.
+ * Created by TomVerschueren on 27/11/2016.
  */
 
-public class Plank extends RectangleObject {
+public class Henk extends CircleObject{
 
-    public Plank(double x, double y){
+
+    public Henk(double x, double y) {
         super(x,y);
         init();
     }
 
     private void init(){
-        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
-        calculateDimensions(picture);
+        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.dirty_henk);
+        radius = picture.getWidth() / 2;
         scalePicture(picture);
     }
+
+
 
 
 }

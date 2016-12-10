@@ -1,0 +1,58 @@
+package entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
+
+/**
+ * Created by TomVerschueren on 4/12/2016.
+ */
+
+public class Button {
+
+    protected String text;
+    protected int textSize;
+    protected int color;
+    protected int x;
+    protected int y;
+    protected Bitmap picture;
+
+
+    public Button() {
+        color = Color.DKGRAY;
+    }
+
+    public void setX(int x){
+        this.x = x;
+    }
+    public void setY(int y){
+        this.y = y;
+    }
+    public void setTextSize(int size){textSize = size;}
+
+    public void setText(String text){
+        this.text = text;
+    }
+
+    public Bitmap getPicture(){
+        return picture;
+    }
+
+    protected void scaleToScreensize(Bitmap picture){
+        int destWidth = (int)(picture.getWidth() * GamePanel.X_SCALE);
+        int destHeight = (int) (picture.getHeight() * GamePanel.Y_SCALE);
+        this.picture = Bitmap.createScaledBitmap(picture, destWidth, destHeight, false);
+    }
+
+    public void draw(Canvas canvas, int x, int y) {
+        canvas.drawBitmap(picture, x - picture.getWidth() / 2, y - picture.getHeight() / 2, null);
+        Paint p = new Paint();
+        p.setColor(color);
+        p.setTextSize(textSize);
+        canvas.drawText(text, x - text.length() * textSize / 4, y + textSize / 4, p);
+    }
+
+}
