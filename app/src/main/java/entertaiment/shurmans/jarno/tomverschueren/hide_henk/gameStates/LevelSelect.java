@@ -43,9 +43,10 @@ public class LevelSelect extends GameState {
 
         //drawing the title
         Paint p = new Paint();
-        p.setTextSize(40*GamePanel.SCALING_FACTOR_X);
+        p.setTextSize(100*GamePanel.X_SCALE);
         p.setColor(Color.DKGRAY);
-        canvas.drawText("Level Select", GamePanel.SCREEN_WIDTH / 2 - 90*GamePanel.SCALING_FACTOR_X, 40*GamePanel.SCALING_FACTOR_Y, p);
+        canvas.drawText("Level Select", GamePanel.SCREEN_WIDTH / 2 - (int)p.getTextSize() * "Level Select".length() / 4, 100 * GamePanel.Y_SCALE, p);
+        System.out.println("drawing text at: (" +  (GamePanel.SCREEN_WIDTH / 2 - p.getTextSize() * "Level Select".length() / 4) + "," + 100 * GamePanel.Y_SCALE + ")");
 
         //setting the paint to draw the numbers of the levels.
         unlockedButton.setTextSize((int)(25*GamePanel.X_SCALE));
@@ -54,7 +55,6 @@ public class LevelSelect extends GameState {
         //3 rows and 5 columns
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 5; j++) {
-                System.out.println("i: " + i + " j: " + j );
                 //drawing the buttons
                 unlockedButton.setText("" + (i * 5 + j + 1));
                 unlockedButton.draw(canvas,(int) (GamePanel.SCREEN_WIDTH / 2 + unlockedButton.getPicture().getWidth() * (j - 2.5) * 1.5),
