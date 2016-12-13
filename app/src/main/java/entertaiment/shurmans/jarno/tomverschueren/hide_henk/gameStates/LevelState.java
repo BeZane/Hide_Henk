@@ -6,11 +6,13 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 
 /**
  * This is the superclass of all the levels.
@@ -23,6 +25,11 @@ public class LevelState extends GameState {
     private Bitmap background;
     private Bitmap previous;
     protected Henk henk;
+    //hose
+    private Bitmap hose;
+    private int hosePos;
+    private boolean hoseSpawned;
+    private int hoseSpeed = 3;
 
 
     public LevelState(GameStateManager gsm){
@@ -30,13 +37,17 @@ public class LevelState extends GameState {
         init();
     }
 
-
     public void init(){
-
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
+        //making hose bitmap
+        Bitmap unScaledHose = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.hose);
+        int destWidth = (int)(unScaledHose.getWidth() * GamePanel.X_SCALE);
+        int destHeight = (int) (unScaledHose.getHeight() * GamePanel.Y_SCALE);
+        hose = Bitmap.createScaledBitmap(unScaledHose, destWidth, destHeight, false);
     }
+
 
     public void update(){
         for(GameObject o: objects){
@@ -47,6 +58,17 @@ public class LevelState extends GameState {
                 }
             }
         }
+        if(hoseSpawned){
+            if(hosePos % 10 == 0){
+                WaterDrop w = new WaterDrop(hosePos * hoseSpeed, hose.getHeight());
+                w.setDx(hoseSpeed/3);
+                objects.add(w);
+            }
+            hosePos++;
+            if(hosePos > GamePanel.GAME_WIDTH){
+                hoseSpawned = false;
+            }
+        }
     }
 
     public void draw(Canvas canvas){
@@ -55,7 +77,11 @@ public class LevelState extends GameState {
         for(GameObject o: objects){
             o.draw(canvas);
         }
+        if(hoseSpawned){
+            canvas.drawBitmap(hose, hosePos * hoseSpeed, 0, null);
+        }
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
+        canvas.drawBitmap(previous, 0,0,null);
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -67,7 +93,11 @@ public class LevelState extends GameState {
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     gsm.setState(gsm.LEVELSELECT);
                 }
-                //TODO going back to level select does not yet reset the levels that were being played.
+                else if( x < 50 && y < 50){
+                    hoseSpawned = true;
+                    hosePos = 0;
+                }
+                //TODO going back to level select does not yet reset the levels that were being played
                 else{
                     henk.setX(x);
                     henk.setY(y);

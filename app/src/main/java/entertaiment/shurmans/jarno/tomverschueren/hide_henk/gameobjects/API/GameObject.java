@@ -57,6 +57,8 @@ public abstract class GameObject {
     public double getDy() {
         return dy;
     }
+    public void setDx(double xSpeed){ dx = xSpeed;}
+    public void setDy(double ySpeed){ dy = ySpeed;}
     public void setRotation(double rot){ rotation = rot;}
     public void setSolid(Boolean b){ solid = b;}
     public Bitmap getBitmap(){
@@ -205,7 +207,6 @@ public abstract class GameObject {
         double speed = Math.sqrt(dx*dx + dy*dy);
         double xVector = x - x1;
         double yVector = y - y1;
-        System.out.println("xVector: " + xVector + " yVector: " + yVector);
         double alpha = Math.atan((-1 *yVector) /xVector);  //the direction of the force caused by o1
         if(xVector < 0){
             alpha += Math.PI;
@@ -222,10 +223,7 @@ public abstract class GameObject {
         }
 
         if(o1.solid){
-            System.out.println("dx: " + dx + " dy: " + dy);
-            System.out.println("alpha: " + alpha/ 2 / Math.PI * 360 + " betha: " + betha/ 2 / Math.PI * 360);
             double reflection = (Math.PI - (betha - alpha)) + alpha;    //the direction of the our object after collision
-            System.out.println("reflection: " + reflection / 2 / Math.PI * 360 );
             dy = - Math.sin(reflection) * bouncingFactor * speed;
             dx = Math.cos(reflection) * bouncingFactor * speed;
 
@@ -241,17 +239,13 @@ public abstract class GameObject {
         if(dy > maxFallSpeed){
             dy = maxFallSpeed ;
         }
-        if(y > GamePanel.GAME_HEIGHT){
-            y = 0;
-        }
         rotation += drotation;
-        if(rotation > maxRotationSpeed){
-            rotation = maxRotationSpeed;
+        if(drotation > maxRotationSpeed){
+            drotation = maxRotationSpeed;
         }
-        else if(rotation < -maxRotationSpeed){
-            rotation = -maxRotationSpeed;
+        else if(drotation < -maxRotationSpeed){
+            drotation = -maxRotationSpeed;
         }
-
 
         //draw
         drawX = x * GamePanel.X_SCALE;
