@@ -2,6 +2,8 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.SoundPool;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
@@ -22,6 +24,7 @@ public class Henk extends CircleObject{
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.dirty_henk);
         radius = picture.getWidth() / 2;
         scalePicture(picture);
+        type = Types.HENK;
     }
 
     public void cleanHenk(){

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 
 /**
  * Created by TomVerschueren on 27/11/2016.
@@ -30,9 +31,15 @@ public abstract class GameObject {
     protected double drawY;
 
     //kinematics
-    protected Shapes shape;
     protected double bouncingFactor = 0.5;  //value between 0 and 1. 0 does not bounce at all; 1 bounces 100%
     protected double mass;
+
+
+    //collision detection
+    protected enum Shapes {RECTANGLE, CIRCLE, POINT};
+    protected Shapes shape;
+    protected enum Types{HENK, PLANK, WATERDROP};
+    protected Types type;
 
 
     public GameObject(double x, double y){
@@ -41,14 +48,6 @@ public abstract class GameObject {
     }
 
 
-    //collision detection
-    protected enum Shapes {RECTANGLE, CIRCLE, POINT};
-    public void setShape(Shapes shape){
-        this.shape = shape;
-    }
-    public Shapes getShape(){
-        return shape;
-    }
 
     //getters and setters
     public double getDx() {
@@ -80,6 +79,12 @@ public abstract class GameObject {
         dy = 0;
     }
 
+    public void setShape(Shapes shape){
+        this.shape = shape;
+    }
+    public Shapes getShape(){
+        return shape;
+    }
 
 
 
@@ -105,6 +110,15 @@ public abstract class GameObject {
             //if the sum of the radiuses is bigger than the distance between the centers there is collision
             if(c1.getRadius() + c2.getRadius() > distance(c1.x, c1.y, c2.x, c2.y)){
                 collision = true;
+                //Henk gets cleaned if he gets into collision with water
+                if((type == Types.WATERDROP && c1.type == Types.HENK)){
+                    Henk henk = (Henk)c1;
+                    henk.cleanHenk();
+                }
+                if((c1.type == Types.WATERDROP && type == Types.HENK)){
+                    Henk henk = (Henk)this;
+                    henk.cleanHenk();
+                }
             }
 
         }

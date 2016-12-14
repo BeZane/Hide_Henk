@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
@@ -27,9 +26,9 @@ public class LevelState extends GameState {
     protected Henk henk;
     //hose
     private Bitmap hose;
-    private int hosePos;
+    private double hosePos;
     private boolean hoseSpawned;
-    private int hoseSpeed = 3;
+    private double hoseSpeed = 3;
 
 
     public LevelState(GameStateManager gsm){
@@ -46,8 +45,18 @@ public class LevelState extends GameState {
         int destWidth = (int)(unScaledHose.getWidth() * GamePanel.X_SCALE);
         int destHeight = (int) (unScaledHose.getHeight() * GamePanel.Y_SCALE);
         hose = Bitmap.createScaledBitmap(unScaledHose, destWidth, destHeight, false);
+        populate();
     }
 
+    protected void populate(){
+        //TODO read in the file that has info about the level layout.
+    }
+
+    private void reset(){
+        objects = new ArrayList<>();
+        hosePos = -hose.getWidth();
+        hoseSpawned = false;
+    }
 
     public void update(){
         for(GameObject o: objects){
@@ -60,7 +69,7 @@ public class LevelState extends GameState {
         }
         if(hoseSpawned){
             if(hosePos % 10 == 0){
-                WaterDrop w = new WaterDrop(hosePos * hoseSpeed, hose.getHeight());
+                WaterDrop w = new WaterDrop(hosePos * hoseSpeed + hose.getWidth() * 4 / 5, hose.getHeight());
                 w.setDx(hoseSpeed/3);
                 objects.add(w);
             }
@@ -78,7 +87,7 @@ public class LevelState extends GameState {
             o.draw(canvas);
         }
         if(hoseSpawned){
-            canvas.drawBitmap(hose, hosePos * hoseSpeed, 0, null);
+            canvas.drawBitmap(hose,(int) (hosePos * hoseSpeed * GamePanel.X_SCALE), 0, null);
         }
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
         canvas.drawBitmap(previous, 0,0,null);
@@ -91,13 +100,13 @@ public class LevelState extends GameState {
                 float y = event.getY();
 
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
+                    reset();
                     gsm.setState(gsm.LEVELSELECT);
                 }
                 else if( x < 50 && y < 50){
                     hoseSpawned = true;
                     hosePos = 0;
                 }
-                //TODO going back to level select does not yet reset the levels that were being played
                 else{
                     henk.setX(x);
                     henk.setY(y);

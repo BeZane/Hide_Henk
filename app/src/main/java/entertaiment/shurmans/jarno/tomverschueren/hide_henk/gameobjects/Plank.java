@@ -22,6 +22,7 @@ public class Plank extends RectangleObject {
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
         calculateDimensions(picture);
         scalePicture(picture);
+        type = Types.PLANK;
     }
 
 
