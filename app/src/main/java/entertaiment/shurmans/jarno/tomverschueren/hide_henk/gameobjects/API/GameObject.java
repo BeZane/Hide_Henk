@@ -2,6 +2,7 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
@@ -20,13 +21,15 @@ public abstract class GameObject {
     protected int maxFallSpeed = 15;
     protected double rotation; //expressed in degrees to determine the rotation
     protected double drotation; //rotation speed
-    protected double maxRotationSpeed;
+    protected double arotation = 0.004; //rotation acceleration
+    protected double maxRotationSpeed = 30;
 
     protected boolean solid; //solid objects are not affected by gravity, nor can be moved by impact
 
 
     //drawing
     protected Bitmap picture;   //Bitmap already scaled to the correct screen width and height.
+    protected Bitmap rotatedPicture;
     protected double drawX;     //Make sure that you retrieve dimensions of objects from the original bitmap before scaling it!
     protected double drawY;
 
@@ -254,6 +257,7 @@ public abstract class GameObject {
             dy = maxFallSpeed ;
         }
         rotation += drotation;
+        drotation += arotation;
         if(drotation > maxRotationSpeed){
             drotation = maxRotationSpeed;
         }
@@ -261,11 +265,20 @@ public abstract class GameObject {
             drotation = -maxRotationSpeed;
         }
 
+        rotateImage(picture, rotation );
+
         //draw
         drawX = x * GamePanel.X_SCALE;
         drawY = y * GamePanel.Y_SCALE;
     };
 
+    private void rotateImage(Bitmap src, double degree)
+    {
+        Matrix matrix = new Matrix();
+        matrix.postRotate((float)degree);
+        Bitmap bmp = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        rotatedPicture = bmp;
+    }
 
     //drawing stuff
     protected void scalePicture(Bitmap picture){
@@ -275,7 +288,7 @@ public abstract class GameObject {
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(picture, (int)drawX, (int)drawY, null);
+        canvas.drawBitmap(rotatedPicture, (int)drawX, (int)drawY, null);
     }
 
 
