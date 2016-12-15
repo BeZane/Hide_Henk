@@ -33,7 +33,6 @@ public class LevelState extends GameState {
 
     public LevelState(GameStateManager gsm){
         this.gsm = gsm;
-        init();
     }
 
     public void init(){
@@ -59,11 +58,19 @@ public class LevelState extends GameState {
     }
 
     public void update(){
-        for(GameObject o: objects){
+        for(int i = 0; i < objects.size(); i++){
+            GameObject o = objects.get(i);
             o.update();
             for(GameObject o2: objects){
                 if(!o.equals(o2)) {
                     o.checkCollision(o2);
+                }
+            }
+            if(o.getType() == GameObject.Types.WATERDROP){
+                WaterDrop drop = (WaterDrop)o;
+                if(drop.getTimeLived() > drop.getTimeToLive()){
+                    objects.remove(i);
+                    i--;
                 }
             }
         }

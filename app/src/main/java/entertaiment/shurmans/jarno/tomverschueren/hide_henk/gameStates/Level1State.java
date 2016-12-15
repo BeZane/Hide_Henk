@@ -16,11 +16,10 @@ public class Level1State extends LevelState {
 
     public Level1State(GameStateManager gsm){
         super(gsm);
-        populate();
     }
 
 
-
+    @Override
     protected void populate(){
         henk = new Henk(905, 350);
         Plank p1 = new Plank(800, 450);
