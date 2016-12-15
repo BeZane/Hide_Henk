@@ -96,8 +96,8 @@ public class LevelState extends GameState {
     public boolean onTouchEvent(MotionEvent event){
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
+                float x = event.getX() / GamePanel.X_SCALE;
+                float y = event.getY() / GamePanel.Y_SCALE;
 
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     reset();
