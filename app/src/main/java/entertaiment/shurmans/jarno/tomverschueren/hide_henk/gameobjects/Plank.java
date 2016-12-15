@@ -24,6 +24,7 @@ public class Plank extends RectangleObject {
 
         calculateDimensions(picture);
         scalePicture(picture);
+        type = Types.PLANK;
     }
 
 
