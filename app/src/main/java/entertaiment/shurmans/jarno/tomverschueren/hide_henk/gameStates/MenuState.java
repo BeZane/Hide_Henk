@@ -42,7 +42,7 @@ public class MenuState extends GameState{
         for(int i = 0; i < options.length; i++){
             MenuButton menuButton = new MenuButton();
             menuButton.setX(GamePanel.SCREEN_WIDTH / 2);
-            menuButton.setY((int)(160 + i * (menuButton.getPicture().getHeight() + 35) * GamePanel.Y_SCALE));
+            menuButton.setY((int)(160 * GamePanel.Y_SCALE + i * (menuButton.getPicture().getHeight() + 35 * GamePanel.Y_SCALE)));
             menuButton.setText(options[i]);
             menuButtons.add(menuButton);
         }
