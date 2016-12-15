@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Game;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
@@ -76,7 +77,7 @@ public class LevelState extends GameState {
         }
         if(hoseSpawned){
             if(hosePos % 10 == 0){
-                WaterDrop w = new WaterDrop(hosePos * hoseSpeed + hose.getWidth() * 4 / 5, hose.getHeight());
+                WaterDrop w = new WaterDrop(hosePos * hoseSpeed + hose.getWidth() * 4 / 5, hose.getHeight() / GamePanel.Y_SCALE);
                 w.setDx(hoseSpeed/3);
                 objects.add(w);
             }
