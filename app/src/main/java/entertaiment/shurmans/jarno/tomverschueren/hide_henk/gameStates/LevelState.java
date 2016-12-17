@@ -40,8 +40,10 @@ public class LevelState extends GameState {
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
+        previous = Bitmap.createScaledBitmap(previous, 140, 140, false);
         //making hose bitmap
         Bitmap unScaledHose = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.hose);
+        unScaledHose = Bitmap.createScaledBitmap(unScaledHose, 120, 170, false);
         int destWidth = (int)(unScaledHose.getWidth() * GamePanel.X_SCALE);
         int destHeight = (int) (unScaledHose.getHeight() * GamePanel.Y_SCALE);
         hose = Bitmap.createScaledBitmap(unScaledHose, destWidth, destHeight, false);
@@ -77,7 +79,7 @@ public class LevelState extends GameState {
         }
         if(hoseSpawned){
             if(hosePos % 10 == 0){
-                WaterDrop w = new WaterDrop(hosePos * hoseSpeed + hose.getWidth() * 4 / 5, hose.getHeight() / GamePanel.Y_SCALE);
+                WaterDrop w = new WaterDrop(hosePos * hoseSpeed + hose.getWidth() / GamePanel.X_SCALE * 4 / 5, hose.getHeight() / GamePanel.Y_SCALE);
                 w.setDx(hoseSpeed/3);
                 objects.add(w);
             }

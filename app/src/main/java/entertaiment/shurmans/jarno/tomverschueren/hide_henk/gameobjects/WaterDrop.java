@@ -25,6 +25,7 @@ public class WaterDrop extends CircleObject{
 
     private void init(){
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.water_drop);
+        picture = Bitmap.createScaledBitmap(picture, 30, 30, false);
         radius = picture.getWidth() / 2;
         scalePicture(picture);
         type = Types.WATERDROP;
