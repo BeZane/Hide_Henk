@@ -2,7 +2,6 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
@@ -21,7 +20,7 @@ public class Plank extends RectangleObject {
 
     private void init(){
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
-
+        picture = Bitmap.createScaledBitmap(picture, 160, 24, false);
         calculateDimensions(picture);
         scalePicture(picture);
         type = Types.PLANK;

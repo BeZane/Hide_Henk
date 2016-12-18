@@ -23,6 +23,7 @@ public class Stats extends GameState {
 
     public void init(){
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
+        previous = Bitmap.createScaledBitmap(previous, 140, 140, false);
     }
 
 

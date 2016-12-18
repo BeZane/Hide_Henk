@@ -32,6 +32,7 @@ public class LevelSelect extends GameState {
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
+        previous = Bitmap.createScaledBitmap(previous, 140, 140, false);
         addButtons();
     }
 
