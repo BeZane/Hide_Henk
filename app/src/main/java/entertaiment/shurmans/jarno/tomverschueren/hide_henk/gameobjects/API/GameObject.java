@@ -35,13 +35,15 @@ public abstract class GameObject {
 
     //kinematics
     protected double bouncingFactor = 0.5;  //value between 0 and 1. 0 does not bounce at all; 1 bounces 100%
+    protected double restitution = 0.8;
     protected double mass;
+    protected double density;
 
 
     //collision detection
     protected enum Shapes {RECTANGLE, CIRCLE, POINT};
     protected Shapes shape;
-    public enum Types{HENK, PLANK, WATERDROP};
+    public enum Types{HENK, PLANK, WATERDROP, TIRE};
     protected Types type;
 
 
@@ -114,6 +116,7 @@ public abstract class GameObject {
             //if the sum of the radiuses is bigger than the distance between the centers there is collision
             if(c1.getRadius() + c2.getRadius() > distance(c1.x, c1.y, c2.x, c2.y)){
                 collision = true;
+                calculateNewVector(c1.x, c1.y, c1);
                 //Henk gets cleaned if he gets into collision with water
                 if((type == Types.WATERDROP && c1.type == Types.HENK)){
                     Henk henk = (Henk)c1;
@@ -123,17 +126,6 @@ public abstract class GameObject {
                     Henk henk = (Henk)this;
                     henk.cleanHenk();
                 }
-            }
-
-        }
-
-        //circle - point detection
-        if(o1.getShape() == Shapes.CIRCLE && shape == Shapes.POINT){
-            CircleObject c1 = (CircleObject)o1;
-            CircleObject p1 = (CircleObject)this;
-            //if the distance is smaller than the radius we have collision
-            if(c1.getRadius() > distance(c1.x, c1.y, p1.x, p1.y)){
-                collision = true;
             }
 
         }
@@ -223,6 +215,7 @@ public abstract class GameObject {
             y += r.getHeight() / 2;
         }
         double speed = Math.sqrt(dx*dx + dy*dy);
+        double o1Speed = Math.sqrt(o1.dx * o1.dx + o1.dy * o1.dy);
         double xVector = x - x1;
         double yVector = y - y1;
         double alpha = Math.atan((-1 *yVector) /xVector);  //the direction of the force caused by o1
@@ -239,11 +232,25 @@ public abstract class GameObject {
         while(betha < 0){
             betha += 2*Math.PI;
         }
-
-        if(o1.solid){
-            double reflection = (Math.PI - (betha - alpha)) + alpha;    //the direction of the our object after collision
+        double o1Betha = Math.atan(-o1.dy/o1.dx);            //the direction the other object is moving in
+        if(dx < 0){
+            o1Betha += Math.PI;
+        }
+        while(betha < 0){
+            o1Betha += 2*Math.PI;
+        }
+        double reflection = (Math.PI - (betha - alpha)) + alpha; //the direction of the force on our object
+        double o1Reflection = (- (o1Betha - alpha + Math.PI)) + alpha;
+        if(o1.solid){   //the direction of the our object after collision
             dy = - Math.sin(reflection) * bouncingFactor * speed;
             dx = Math.cos(reflection) * bouncingFactor * speed;
+        }
+        else{
+            dy = - Math.sin(reflection) * bouncingFactor * o1Speed * o1.mass / mass * restitution;
+            dx = Math.cos(reflection) * bouncingFactor * o1Speed * o1.mass / mass * restitution;
+
+            o1.dy =  - Math.sin(o1Reflection) * bouncingFactor * speed * mass / o1.mass * restitution;
+            o1.dx =  Math.cos(o1Reflection) * bouncingFactor * speed * mass / o1.mass * restitution;
 
         }
     }

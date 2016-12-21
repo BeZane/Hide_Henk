@@ -29,6 +29,8 @@ public class WaterDrop extends CircleObject{
         radius = picture.getWidth() / 2;
         scalePicture(picture);
         type = Types.WATERDROP;
+        density = 5;
+        calculateMass();
     }
 
     @Override
