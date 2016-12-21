@@ -28,6 +28,10 @@ public abstract class RectangleObject extends GameObject {
 
     }
 
+    protected void calculateMass() {
+        mass = density * height * width;
+    }
+
     protected void calculateDimensions(Bitmap picture){
         width = picture.getWidth();
         height = picture.getHeight();

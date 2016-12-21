@@ -22,6 +22,9 @@ public class LevelState extends GameState {
 
     //fields
     protected ArrayList<GameObject> objects = new ArrayList<GameObject>();
+    protected ArrayList<GameObject> toPlace = new ArrayList<GameObject>();
+    private int indexToPlace;
+    private GameObject selectedObject;
     private Bitmap background;
     private Bitmap previous;
     protected Henk henk;
@@ -30,6 +33,8 @@ public class LevelState extends GameState {
     private double hosePos;
     private boolean hoseSpawned;
     private double hoseSpeed = 3;
+
+
 
 
     public LevelState(GameStateManager gsm){
@@ -43,7 +48,7 @@ public class LevelState extends GameState {
         previous = Bitmap.createScaledBitmap(previous, 140, 140, false);
         //making hose bitmap
         Bitmap unScaledHose = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.hose);
-        unScaledHose = Bitmap.createScaledBitmap(unScaledHose, 120, 170, false);
+        unScaledHose = Bitmap.createScaledBitmap(unScaledHose, 100, 110, false);
         int destWidth = (int)(unScaledHose.getWidth() * GamePanel.X_SCALE);
         int destHeight = (int) (unScaledHose.getHeight() * GamePanel.Y_SCALE);
         hose = Bitmap.createScaledBitmap(unScaledHose, destWidth, destHeight, false);
@@ -60,15 +65,21 @@ public class LevelState extends GameState {
         hoseSpawned = false;
     }
 
+    private void checkCollisions(GameObject object){
+        for(GameObject o: objects){
+            if(!object.equals(o)){
+                if(object.checkCollision(o)){
+                    checkCollisions(o);
+                }
+            }
+        }
+    }
+
     public void update(){
         for(int i = 0; i < objects.size(); i++){
             GameObject o = objects.get(i);
             o.update();
-            for(GameObject o2: objects){
-                if(!o.equals(o2)) {
-                    o.checkCollision(o2);
-                }
-            }
+            checkCollisions(o);
             if(o.getType() == GameObject.Types.WATERDROP){
                 WaterDrop drop = (WaterDrop)o;
                 if(drop.getTimeLived() > drop.getTimeToLive()){
@@ -77,10 +88,13 @@ public class LevelState extends GameState {
                 }
             }
         }
+
+
         if(hoseSpawned){
             if(hosePos % 10 == 0){
                 WaterDrop w = new WaterDrop(hosePos * hoseSpeed + hose.getWidth() / GamePanel.X_SCALE * 4 / 5, hose.getHeight() / GamePanel.Y_SCALE);
                 w.setDx(hoseSpeed/3);
+                w.setDy(5);
                 objects.add(w);
             }
             hosePos++;
@@ -101,6 +115,8 @@ public class LevelState extends GameState {
         }
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
         canvas.drawBitmap(previous, 0,0,null);
+
+        selectedObject.draw(canvas);
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -117,12 +133,34 @@ public class LevelState extends GameState {
                     hoseSpawned = true;
                     hosePos = 0;
                 }
-                else{
-                    henk.setX(x);
-                    henk.setY(y);
-                    henk.stop();
+                else {
+                    if(indexToPlace < toPlace.size()) {
+                        selectedObject = toPlace.get(indexToPlace);
+                        selectedObject.setX(x);
+                        selectedObject.setY(y);
+                        indexToPlace++;
+                    }
                 }
                 break;
+
+            case MotionEvent.ACTION_MOVE:
+                float xPos = event.getX() / GamePanel.X_SCALE;
+                float yPos = event.getY() / GamePanel.Y_SCALE;
+
+                if(selectedObject != null) {
+                    System.out.println(xPos);
+                    selectedObject.setX(xPos);
+                    selectedObject.setY(yPos);
+                    System.out.println(selectedObject.getX());
+                }
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+                if(selectedObject != null) {
+                    objects.add(selectedObject);
+                    selectedObject = null;
+                }
         }
         return true;
     }

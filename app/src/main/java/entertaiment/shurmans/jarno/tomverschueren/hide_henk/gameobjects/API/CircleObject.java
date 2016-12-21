@@ -20,6 +20,9 @@ public abstract class CircleObject extends GameObject {
             return radius;
         }
 
+    protected void calculateMass(){
+        mass = density * radius * radius * Math.PI;
+    }
 
     @Override
     public void draw(Canvas canvas) {
