@@ -22,7 +22,7 @@ public abstract class GameObject {
     protected double rotation; //expressed in degrees to determine the rotation
     protected double drotation; //rotation speed
     protected double arotation = 0.004; //rotation acceleration
-    protected double maxRotationSpeed = 30;
+    protected double maxRotationSpeed = 0.05;
 
     protected boolean solid; //solid objects are not affected by gravity, nor can be moved by impact
 
@@ -30,6 +30,7 @@ public abstract class GameObject {
     //drawing
     protected Bitmap picture;   //Bitmap already scaled to the correct screen width and height.
     protected Bitmap rotatedPicture;
+    protected Matrix rotationMatrix;
     protected double drawX;     //Make sure that you retrieve dimensions of objects from the original bitmap before scaling it!
     protected double drawY;
 
@@ -50,6 +51,8 @@ public abstract class GameObject {
     public GameObject(double x, double y){
         this.x = x;
         this.y = y;
+
+        rotationMatrix = new Matrix();
     }
 
 
@@ -273,13 +276,14 @@ public abstract class GameObject {
         else if(drotation < -maxRotationSpeed){
             drotation = -maxRotationSpeed;
         }
-
-        //draw
-        drawX = x * GamePanel.X_SCALE;
-        drawY = y * GamePanel.Y_SCALE;
+        rotationMatrix.postRotate((float)rotation);
+        drawUpdate();
     };
 
-
+    public void drawUpdate(){
+        drawX = x * GamePanel.X_SCALE;
+        drawY = y * GamePanel.Y_SCALE;
+    }
 
     //drawing stuff
     protected void scalePicture(Bitmap picture){

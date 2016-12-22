@@ -102,6 +102,9 @@ public class LevelState extends GameState {
                 hoseSpawned = false;
             }
         }
+        if(selectedObject != null) {
+            selectedObject.drawUpdate();
+        }
     }
 
     public void draw(Canvas canvas){
