@@ -77,7 +77,7 @@ public class MenuState extends GameState{
                             gsm.setState(GameStateManager.STATS);
                         }
                         else{
-                            System.out.println("going to builder");
+                            gsm.setState(GameStateManager.BUILDERMENU);
                         }
                     }
                     i++;

@@ -41,7 +41,7 @@ public abstract class GameObject {
 
 
     //collision detection
-    protected enum Shapes {RECTANGLE, CIRCLE, POINT};
+    public enum Shapes {RECTANGLE, CIRCLE, POINT};
     protected Shapes shape;
     public enum Types{HENK, PLANK, WATERDROP, TIRE};
     protected Types type;
@@ -51,6 +51,7 @@ public abstract class GameObject {
         this.x = x;
         this.y = y;
     }
+
 
 
 
@@ -292,4 +293,8 @@ public abstract class GameObject {
     }
 
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

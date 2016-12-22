@@ -5,6 +5,8 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.BuilderMenuState;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.BuildingState;
 
 
 public class GameStateManager {
@@ -28,8 +30,8 @@ public class GameStateManager {
         gameStates.add(new Stats(this));
         gameStates.add(new LevelSelect(this));
         gameStates.add(new Level1State(this));
-        //gameStates.add(new BuilderMenuState(this));
-        //gameStates.add(new BuildingState(this));
+        gameStates.add(new BuilderMenuState(this));
+        gameStates.add(new BuildingState(this));
         //gameStates.add(new OnlineSelect(this));
         gameStates.get(currentState).init();
     }

@@ -1,4 +1,4 @@
-package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates;
+package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,9 +8,11 @@ import android.view.MotionEvent;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
 
-/*
+
 public class BuilderMenuState extends GameState {
 
     private Bitmap background;
@@ -26,9 +28,17 @@ public class BuilderMenuState extends GameState {
     public void init(){
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
-        buildButton = new MenuButton(this.scaleBitMap(BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank_button)),"BUILD");
-        playButton =  new MenuButton(this.scaleBitMap(BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank_button)),"PLAY");
+        buildButton = new MenuButton();
+        buildButton.setText("Build");
+        buildButton.setX(GamePanel.SCREEN_WIDTH / 2);
+        buildButton.setY((int)(160 * GamePanel.Y_SCALE + 0.5 * (buildButton.getPicture().getHeight() + 35 * GamePanel.Y_SCALE)));
+        playButton =  new MenuButton();
+        playButton.setText("Play");
+        playButton.setX(GamePanel.SCREEN_WIDTH / 2);
+        playButton.setY((int)(160 * GamePanel.Y_SCALE + 1.5 * (buildButton.getPicture().getHeight() + 35 * GamePanel.Y_SCALE)));
+
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
+
     }
 
 
@@ -38,12 +48,8 @@ public class BuilderMenuState extends GameState {
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(background,0,0,null);
-        buildButton.setX(GamePanel.SCREEN_WIDTH/2-buildButton.getHeight()/2);
-        buildButton.setY(GamePanel.SCREEN_HEIGHT/4*3-buildButton.getWidth()/2);
-        playButton.setX(GamePanel.SCREEN_WIDTH/2 - buildButton.getHeight()/2);
-        playButton.setY(GamePanel.SCREEN_HEIGHT/4*1-buildButton.getWidth()/2);
-        buildButton.draw(canvas);
         playButton.draw(canvas);
+         buildButton.draw(canvas);
 
         //drawing the return button
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
@@ -55,9 +61,9 @@ public class BuilderMenuState extends GameState {
             case MotionEvent.ACTION_DOWN:
                 float x = event.getX();
                 float y = event.getY();
-                if(buildButton.touches(new Point((int)x,(int)y))){
+                if(buildButton.contains(x,y)){
                     gsm.setState(gsm.BUILDING);
-                }else if(playButton.touches(new Point((int)x,(int)y))){
+                }else if(playButton.contains((float)x,(float)y)){
                     gsm.setState(gsm.ONLINESELECT);
                 }
                 else if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
@@ -74,4 +80,3 @@ public class BuilderMenuState extends GameState {
 
 
 }
-*/

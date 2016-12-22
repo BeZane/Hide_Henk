@@ -68,3 +68,13 @@ public class DatabaseManager {
         RequestSingleton.getInstance(context).addToRequestQueue(jsObjRequest);
     }
 }
+
+
+
+
+
+
+
+
+
+

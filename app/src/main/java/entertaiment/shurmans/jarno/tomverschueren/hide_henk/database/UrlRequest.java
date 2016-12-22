@@ -6,7 +6,7 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.database;
 
 public enum UrlRequest {
 
-    SELECT_LEVEL("http://api.a16_sd507.studev.groept.be/selectlevel");
+    SELECT_LEVEL("http://studev.groept.be/api/a16_sd507/selectlevel");
 
 
     String url;

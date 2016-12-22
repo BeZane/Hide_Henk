@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.options.Preferences;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -42,7 +43,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         databaseManager.request(UrlRequest.SELECT_LEVEL);
 
 
-
+        new Preferences(context);
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
@@ -52,8 +53,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
 
         //sounds
-        sounds = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
-        themeSong = sounds.load(context,R.raw.main_theme,1);
+
+            sounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+            themeSong = sounds.load(context, R.raw.main_theme, 1);
+
     }
 
 
@@ -79,7 +82,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         gsm = new GameStateManager();
 
-        sounds.play(themeSong,1,1,0,-1,1);
+        if(Preferences.SOUND) {
+            sounds.play(themeSong, 1, 1, 0, -1, 1);
+        }
 
     }
     @Override

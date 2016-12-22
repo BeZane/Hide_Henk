@@ -13,6 +13,7 @@ public abstract class CircleObject extends GameObject {
     public CircleObject(double x, double y) {
         super(x,y);
         setShape(Shapes.CIRCLE);
+
     }
 
 
