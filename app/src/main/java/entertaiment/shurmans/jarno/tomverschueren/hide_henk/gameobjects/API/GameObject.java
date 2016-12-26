@@ -3,6 +3,7 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.icu.text.DisplayContext;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
@@ -245,7 +246,12 @@ public abstract class GameObject {
         }
         double reflection = (Math.PI - (betha - alpha)) + alpha; //the direction of the force on our object
         double o1Reflection = (- (o1Betha - alpha + Math.PI)) + alpha;
-        if(o1.solid){   //the direction of the our object after collision
+        if(speed < 1 && Math.abs(Math.cos(reflection)) > 0.001 && Math.sin(reflection) > 0){
+            dx += Math.cos(reflection) * GRAVITY;
+            System.out.println(type + " rolling of the thing    reflection = " + reflection);
+            System.out.println("direction of " + type + ": " + alpha + "direction of what we hit : "  +betha);
+        }
+        else if(o1.solid){   //the direction of the our object after collision
             dy = - Math.sin(reflection) * bouncingFactor * speed;
             dx = Math.cos(reflection) * bouncingFactor * speed;
         }

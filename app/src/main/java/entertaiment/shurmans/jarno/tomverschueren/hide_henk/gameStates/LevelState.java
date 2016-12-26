@@ -33,8 +33,7 @@ public class LevelState extends GameState {
     private double hosePos;
     private boolean hoseSpawned;
     private double hoseSpeed = 3;
-
-
+    private boolean objectsLoaded = false;
 
 
     public LevelState(GameStateManager gsm){
@@ -53,6 +52,7 @@ public class LevelState extends GameState {
         int destHeight = (int) (unScaledHose.getHeight() * GamePanel.Y_SCALE);
         hose = Bitmap.createScaledBitmap(unScaledHose, destWidth, destHeight, false);
         populate();
+        objectsLoaded = true;
     }
 
     protected void populate(){
@@ -61,8 +61,11 @@ public class LevelState extends GameState {
 
     private void reset(){
         objects = new ArrayList<>();
+        toPlace = new ArrayList<>();
         hosePos = -hose.getWidth();
         hoseSpawned = false;
+        objectsLoaded = false;
+        indexToPlace = 0;
     }
 
     private void checkCollisions(GameObject object){
@@ -76,6 +79,9 @@ public class LevelState extends GameState {
     }
 
     public void update(){
+
+        boolean hoseMustSpawn = true;
+
         for(int i = 0; i < objects.size(); i++){
             GameObject o = objects.get(i);
             o.update();
@@ -87,6 +93,14 @@ public class LevelState extends GameState {
                     i--;
                 }
             }
+            //System.out.println("dx :" + o.getDx() + " dy: " + o.getDy());
+            if(o.getDx() > 0.1 || o.getDy() > 0.1){
+                hoseMustSpawn = false;
+            }
+        }
+
+        if(objectsLoaded && toPlace.size() == 0 && hoseMustSpawn){
+            hoseSpawned = true;
         }
 
 
@@ -120,6 +134,9 @@ public class LevelState extends GameState {
         canvas.drawBitmap(previous, 0,0,null);
 
         selectedObject.draw(canvas);
+        for(GameObject o: toPlace){
+            o.draw(canvas);
+        }
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -162,6 +179,7 @@ public class LevelState extends GameState {
             case MotionEvent.ACTION_UP:
                 if(selectedObject != null) {
                     objects.add(selectedObject);
+                    toPlace.remove(selectedObject);
                     selectedObject = null;
                 }
         }

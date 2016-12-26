@@ -35,14 +35,6 @@ public class Level1State extends LevelState {
         objects.add(p2);
         objects.add(p3);
 
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 3; j++){
-                Plank p = new Plank(i*180, j * 50);
-                p.setSolid(true);
-                objects.add(p);
-            }
-        }
-
         //objects to place
         Tire t = new Tire(1100, 0);
         toPlace.add(t);

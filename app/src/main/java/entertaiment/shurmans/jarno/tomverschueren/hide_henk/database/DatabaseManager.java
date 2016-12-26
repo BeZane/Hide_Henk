@@ -42,7 +42,7 @@ public class DatabaseManager {
 // Instantiate the RequestQueue with the cache and network.
 
 // Start the queue
-        RequestSingleton.getInstance(context).getRequestQueue().start ();
+        RequestSingleton.getInstance(context).getRequestQueue().start();
 
         String url = URL.getUrl();
 
@@ -53,7 +53,7 @@ public class DatabaseManager {
                     @Override
                     public void onResponse(JSONArray response) {
                         System.out.println("\n---------------------------////////////////////////\n");
-                        System.out.print(response.toString());
+                        System.out.println("response: " + response.toString());
                     }
                 }, new Response.ErrorListener() {
 

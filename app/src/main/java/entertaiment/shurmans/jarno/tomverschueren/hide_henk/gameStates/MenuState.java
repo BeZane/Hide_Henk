@@ -76,7 +76,7 @@ public class MenuState extends GameState{
                         else if(i == 1){
                             gsm.setState(GameStateManager.STATS);
                         }
-                        else{
+                        else if(i == 2){
                             gsm.setState(GameStateManager.BUILDERMENU);
                         }
                     }
