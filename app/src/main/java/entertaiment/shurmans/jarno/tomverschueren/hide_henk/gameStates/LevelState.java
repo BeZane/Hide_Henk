@@ -10,9 +10,12 @@ import java.util.ArrayList;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Game;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 
 /**
  * This is the superclass of all the levels.
@@ -34,6 +37,9 @@ public class LevelState extends GameState {
     private boolean hoseSpawned;
     private double hoseSpeed = 3;
     private boolean objectsLoaded = false;
+    private ScrollBar scrollBar;
+    private ObjectManager objectManager = new ObjectManager();
+
 
 
     public LevelState(GameStateManager gsm){
@@ -51,11 +57,23 @@ public class LevelState extends GameState {
         int destWidth = (int)(unScaledHose.getWidth() * GamePanel.X_SCALE);
         int destHeight = (int) (unScaledHose.getHeight() * GamePanel.Y_SCALE);
         hose = Bitmap.createScaledBitmap(unScaledHose, destWidth, destHeight, false);
+        scrollBar = new ScrollBar(objectManager);
+        scrollBar.setShownAmount(2);
+        scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
+        scrollBar.setWIDTH(GamePanel.SCREEN_WIDTH / 8);
+        scrollBar.addObject(new Plank(0, 0));
+        scrollBar.addObject(new Henk(0, 0));
+        scrollBar.addObject(new WaterDrop(0, 0));
+        //ADD HERE ALL THE OBJECTS BY DOING SCROLLBAR.ADDOBJECT
+        scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
+
         populate();
         objectsLoaded = true;
     }
 
     protected void populate(){
+        //TODO: I WOULD USE THE LEVELWRAPPER CLASS. PREPAREOBJECTS ARE OBJECTS THAT ARE ALREADY IN THE GAME. NORMAL OBJECTS
+        //TODO: ARE THE OBJECTS THAT NEED TO BE PLACED
         //TODO read in the file that has info about the level layout.
     }
 
@@ -137,6 +155,15 @@ public class LevelState extends GameState {
         for(GameObject o: toPlace){
             o.draw(canvas);
         }
+
+        //DRAW THE SCROLLBAR
+        /*
+        if(!hoseSpawned){ //ONLY DRAW THE SCROLLBAR IF HOSE ISN4T SPAWNED
+            scrollBar.draw(canvas);
+        }
+        */
+
+
     }
 
     public boolean onTouchEvent(MotionEvent event){

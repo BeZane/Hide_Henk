@@ -20,7 +20,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
 
 /**
  * Created by TomVerschueren on 8/12/2016.
@@ -37,14 +40,14 @@ public class DatabaseManager {
     }
 
 
-    public static void request(UrlRequest URL) {
+    private static void request(final String url, String ID) {
 
 // Instantiate the RequestQueue with the cache and network.
 
 // Start the queue
         RequestSingleton.getInstance(context).getRequestQueue().start();
 
-        String url = URL.getUrl();
+
 
         // \Formulate the request and handle the response.
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
@@ -52,7 +55,12 @@ public class DatabaseManager {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        System.out.println("response: " + response.toString());
+                        if(url.contains("insert"))
+                            return;
+                        if(url.contains("getid")){
+
+                        }
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -64,8 +72,13 @@ public class DatabaseManager {
 
 
 // Add the request to the RequestQueue.
+
         RequestSingleton.getInstance(context).addToRequestQueue(jsObjRequest);
+
     }
+
+
+
 }
 
 

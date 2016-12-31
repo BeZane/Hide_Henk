@@ -1,7 +1,5 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.building2state;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,8 +9,6 @@ import android.view.MotionEvent;
 import java.util.HashMap;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.BuildingObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ZoomInButton;

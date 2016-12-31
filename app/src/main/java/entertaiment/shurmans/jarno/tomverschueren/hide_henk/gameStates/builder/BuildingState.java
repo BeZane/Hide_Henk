@@ -1,6 +1,5 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Queue;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
@@ -38,7 +36,7 @@ public class BuildingState extends GameState {
 
     private Bitmap background;
     private ScrollBar scrollBar;
-    private BuildingObjectManager objectManager;
+    private ObjectManager objectManager;
     private ZoomInButton zoomInButton;
     private ZoomOutButton zoomOutButton;
     private SolidButton solidButton;
@@ -50,7 +48,7 @@ public class BuildingState extends GameState {
 
     public BuildingState(GameStateManager gsm) {
         this.gsm = gsm;
-        objectManager = new BuildingObjectManager();
+        objectManager = new ObjectManager();
     }
 
 

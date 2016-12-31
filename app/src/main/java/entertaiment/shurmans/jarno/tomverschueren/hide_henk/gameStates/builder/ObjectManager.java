@@ -16,14 +16,14 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.Game
  * Created by TomVerschueren on 21/12/2016.
  */
 
-public class BuildingObjectManager {
+public class ObjectManager {
 
     private Queue<GameObject> objects = new LinkedList<GameObject>();
     private GameObject lastSelected;
 
 
 
-    public BuildingObjectManager(){
+    public ObjectManager(){
 
 
     }

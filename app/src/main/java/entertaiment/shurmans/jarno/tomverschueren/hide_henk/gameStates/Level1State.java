@@ -5,9 +5,12 @@ import android.view.MotionEvent;
 import java.util.Iterator;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 
 /**
  * Created by Admin on 8/12/2016.
@@ -20,8 +23,11 @@ public class Level1State extends LevelState {
     }
 
 
+
+
     @Override
     protected void populate(){
+
         //environment
         henk = new Henk(800, 300);
         Plank p1 = new Plank(740, 420);
@@ -34,6 +40,9 @@ public class Level1State extends LevelState {
         objects.add(p1);
         objects.add(p2);
         objects.add(p3);
+
+
+
 
         //objects to place
         Tire t = new Tire(1100, 0);

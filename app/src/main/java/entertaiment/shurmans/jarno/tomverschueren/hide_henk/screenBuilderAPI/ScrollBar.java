@@ -6,12 +6,9 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.BuildingObjectManager;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.CircleObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
@@ -42,7 +39,7 @@ public class ScrollBar {
     protected int count =0;
     protected int offset =0;
 
-    private BuildingObjectManager objectManager;
+    private ObjectManager objectManager;
 
     private Bitmap resizeBitMap(Bitmap bitmap){
         if(bitmap.getWidth() > this.WIDTH)
@@ -51,7 +48,7 @@ public class ScrollBar {
 
     }
 
-    public ScrollBar(BuildingObjectManager objectManager){
+    public ScrollBar(ObjectManager objectManager){
         this.objectManager = objectManager;
     }
 

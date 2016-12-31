@@ -34,10 +34,9 @@ public class UrlRequest {
         return "http://api.a16_sd507.studev.groept.be/insertonlinegame/"+name+ "/"+ stringID;
     }
 
-    public String getLevel(String name){
-
+    public String getOnlineLevels(){
+        return "http://api.a16_sd507.studev.groept.be/getlevels";
     }
-
 
 
 }
