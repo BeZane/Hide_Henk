@@ -18,6 +18,12 @@ public class Plank extends RectangleObject {
         init();
     }
 
+    @Override
+    public void rescaleObject(int newWidth, int newHeight) {
+        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
+        picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
+    }
+
     private void init(){
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
         picture = Bitmap.createScaledBitmap(picture, 160, 24, false);

@@ -46,7 +46,7 @@ public class DatabaseManager {
 
         String url = URL.getUrl();
 
-        // Formulate the request and handle the response.
+        // \Formulate the request and handle the response.
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 

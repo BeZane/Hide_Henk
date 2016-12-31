@@ -48,6 +48,7 @@ public class Button {
     }
 
     public boolean contains(float x, float y){
+
         boolean contains = false;
 
         if(x > this.x - picture.getWidth() / 2 && x < this.x + picture.getWidth() / 2 &&
@@ -60,6 +61,8 @@ public class Button {
 
     public void draw(Canvas canvas) {
         canvas.drawBitmap(picture, x - picture.getWidth() / 2, y - picture.getHeight() / 2, null);
+        if(text.equalsIgnoreCase("")|| text == null)
+            return;
         Paint p = new Paint();
         p.setColor(color);
         p.setTextSize(textSize);

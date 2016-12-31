@@ -8,11 +8,14 @@ import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ImageView;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.BuildingState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.options.Preferences;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ToastUtil;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -40,13 +43,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         super(context);
         DatabaseManager databaseManager =new DatabaseManager(getContext());
-        databaseManager.request(UrlRequest.SELECT_LEVEL);
+
 
 
         new Preferences(context);
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
-
+        ToastUtil.context = context;
         thread = new MainThread(getHolder(),this);
 
         //make gamePanel focusable so it can handle events
@@ -118,8 +121,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public void draw(Canvas canvas){
-
         gsm.draw(canvas);
+        Game.getEditText().draw(canvas);
+
     }
 
 }

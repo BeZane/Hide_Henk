@@ -18,6 +18,12 @@ public class Tire extends CircleObject {
         init();
     }
 
+    @Override
+    public void rescaleObject(int newWidth, int newHeight) {
+        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.tire);
+        picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
+    }
+
     private void init(){
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.tire);
         picture = Bitmap.createScaledBitmap(picture, 200, 200, false);

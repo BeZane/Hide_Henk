@@ -39,4 +39,10 @@ public class WaterDrop extends CircleObject{
         timeLived++;
     }
 
+    @Override
+    public void rescaleObject(int newWidth, int newHeight) {
+        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.water_drop);
+        picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
+    }
+
 }

@@ -29,4 +29,13 @@ public abstract class CircleObject extends GameObject {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(picture,(int) (drawX) - picture.getWidth() / 2,(int) drawY - picture.getHeight() / 2, null);
     }
+
+    @Override
+    public boolean contains(float x, float y){
+        int tdx = (int)Math.abs(x-this.x);
+        int tdy = (int)Math.abs(y-this.y);
+        if(tdx<=radius && tdy <=radius)
+            return true;
+        return false;
+    }
 }

@@ -28,6 +28,13 @@ public abstract class RectangleObject extends GameObject {
 
     }
 
+    public boolean contains(float x, float y){
+        if((this.x-20)<x && x<this.x+getBitmap().getWidth()+20
+                && (this.y-20)<y && y<(this.y+getBitmap().getHeight()+20))
+            return true;
+        return false;
+    }
+
     protected void calculateMass() {
         mass = density * height * width;
     }

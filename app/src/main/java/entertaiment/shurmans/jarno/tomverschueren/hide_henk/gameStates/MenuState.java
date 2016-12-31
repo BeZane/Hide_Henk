@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Game;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
@@ -57,6 +58,7 @@ public class MenuState extends GameState{
         for (MenuButton b: menuButtons){
             b.draw(canvas);
         }
+        Game.getEditText().draw(canvas);
     }
 
     public boolean onTouchEvent(MotionEvent event){

@@ -26,7 +26,7 @@ public abstract class GameObject {
     protected double maxRotationSpeed = 0.05;
 
     protected boolean solid; //solid objects are not affected by gravity, nor can be moved by impact
-
+    protected boolean prepareSolid;
 
     //drawing
     protected Bitmap picture;   //Bitmap already scaled to the correct screen width and height.
@@ -54,6 +54,18 @@ public abstract class GameObject {
         this.y = y;
 
         rotationMatrix = new Matrix();
+    }
+
+    /**
+     * Used to save the solid state of an object to build the level
+     * @param b
+     */
+    public void setPrepareSolid(boolean b){
+        prepareSolid = b;
+    }
+
+    public boolean isPrepareSolid(){
+        return prepareSolid;
     }
 
 
@@ -275,16 +287,13 @@ public abstract class GameObject {
             dy = maxFallSpeed ;
         }
         rotation += drotation;
-        drotation += arotation;
-        if(drotation > maxRotationSpeed){
-            drotation = maxRotationSpeed;
-        }
-        else if(drotation < -maxRotationSpeed){
-            drotation = -maxRotationSpeed;
-        }
-        rotationMatrix.postRotate((float)rotation);
+        //rotationMatrix.postRotate((float)rotation);
         drawUpdate();
     };
+
+    public boolean isSolid(){
+        return solid;
+    }
 
     public void drawUpdate(){
         drawX = x * GamePanel.X_SCALE;
@@ -307,4 +316,7 @@ public abstract class GameObject {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    public abstract void rescaleObject(int newWidth, int newHeight);
+    public abstract boolean contains(float x, float y);
 }
