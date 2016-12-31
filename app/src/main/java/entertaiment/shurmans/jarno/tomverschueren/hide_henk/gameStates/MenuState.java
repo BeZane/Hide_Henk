@@ -58,7 +58,6 @@ public class MenuState extends GameState{
         for (MenuButton b: menuButtons){
             b.draw(canvas);
         }
-        Game.getEditText().draw(canvas);
     }
 
     public boolean onTouchEvent(MotionEvent event){

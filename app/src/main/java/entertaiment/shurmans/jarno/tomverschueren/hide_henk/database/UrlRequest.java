@@ -1,5 +1,7 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.database;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
+
 /**
  * Created by TomVerschueren on 8/12/2016.
  */
@@ -30,6 +32,10 @@ public class UrlRequest {
 
     public String insertLevel(String name, String stringID){
         return "http://api.a16_sd507.studev.groept.be/insertonlinegame/"+name+ "/"+ stringID;
+    }
+
+    public String getLevel(String name){
+
     }
 
 

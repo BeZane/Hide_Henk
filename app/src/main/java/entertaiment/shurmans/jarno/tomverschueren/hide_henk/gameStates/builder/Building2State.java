@@ -55,9 +55,10 @@ public class Building2State extends GameState {
     protected void init() {
         Bitmap tempBackground = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
-        DoneButton doneButton = new DoneButton();
-        doneButton.setX(500);
-        doneButton.setY(50);
+        doneButton = new DoneButton();
+
+        doneButton.setX(700);
+        doneButton.setY(250);
 
         scrollBar = new BuildingScrollBar();
         scrollBar.setShownAmount(3);
@@ -79,10 +80,9 @@ public class Building2State extends GameState {
     @Override
     protected void draw(Canvas canvas) {
         canvas.drawBitmap(background, 0, 0, null);
+
         scrollBar.draw(canvas);
-
         doneButton.draw(canvas);
-
     }
 
     @Override
@@ -97,9 +97,7 @@ public class Building2State extends GameState {
             case MotionEvent.ACTION_MOVE:
                 clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
                 if (MAX_CLICK_DURATION < clickDuration) {
-                    if(doneButton.contains(x,y)){
 
-                    }
                     return scrollBar.actionMove(event);
 
                 }
@@ -110,7 +108,11 @@ public class Building2State extends GameState {
 
                 clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
                 if (clickDuration < MAX_CLICK_DURATION) {
+                    if(doneButton.contains(x,y)){
+                        Building3State building3State = (Building3State) gsm.setState(GameStateManager.BUILDING3);
+                        building3State.setLevelWrapper(levelWrapper);
 
+                    }
                     return scrollBar.actionUp(event);
                 }
                 break;

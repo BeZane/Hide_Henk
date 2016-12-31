@@ -28,7 +28,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 
 public class DatabaseManager {
 
-    private Context context;
+    private static Context context;
 
 
     public DatabaseManager(Context context){
@@ -37,7 +37,7 @@ public class DatabaseManager {
     }
 
 
-    public void request(UrlRequest URL) {
+    public static void request(UrlRequest URL) {
 
 // Instantiate the RequestQueue with the cache and network.
 
@@ -52,7 +52,6 @@ public class DatabaseManager {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        System.out.println("\n---------------------------////////////////////////\n");
                         System.out.println("response: " + response.toString());
                     }
                 }, new Response.ErrorListener() {

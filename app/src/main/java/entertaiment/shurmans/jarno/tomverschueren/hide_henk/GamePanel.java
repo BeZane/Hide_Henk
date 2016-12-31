@@ -57,8 +57,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //sounds
 
-            sounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-            themeSong = sounds.load(context, R.raw.main_theme, 1);
+   //         sounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+     //       themeSong = sounds.load(context, R.raw.main_theme, 1);
 
     }
 
@@ -122,7 +122,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas){
         gsm.draw(canvas);
-        Game.getEditText().draw(canvas);
 
     }
 

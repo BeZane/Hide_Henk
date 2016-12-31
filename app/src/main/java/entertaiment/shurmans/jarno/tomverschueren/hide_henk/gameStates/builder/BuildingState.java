@@ -75,6 +75,7 @@ public class BuildingState extends GameState {
         solidButton = new SolidButton();
         solidButton.setX((int)(250));
         solidButton.setY((int)(50));
+
         doneButton = new DoneButton();
         doneButton.setX((int)(700));
         doneButton.setY((int)(50));
