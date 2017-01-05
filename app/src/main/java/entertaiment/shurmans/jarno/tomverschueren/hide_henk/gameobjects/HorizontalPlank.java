@@ -11,9 +11,9 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.Rect
  * Created by Admin on 8/12/2016.
  */
 
-public class Plank extends RectangleObject {
+public class HorizontalPlank extends RectangleObject {
 
-    public Plank(double x, double y){
+    public HorizontalPlank(double x, double y){
         super(x,y);
         init();
     }

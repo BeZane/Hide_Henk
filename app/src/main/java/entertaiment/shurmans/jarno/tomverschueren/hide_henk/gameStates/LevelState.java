@@ -3,17 +3,18 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Game;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 
@@ -35,12 +36,13 @@ public class LevelState extends GameState {
     private Bitmap hose;
     private double hosePos;
     private boolean hoseSpawned;
+    private boolean hoseHasSprayed;
     private double hoseSpeed = 3;
     private boolean objectsLoaded = false;
     private ScrollBar scrollBar;
     private ObjectManager objectManager = new ObjectManager();
 
-
+    private int botsingen = 0;
 
     public LevelState(GameStateManager gsm){
         this.gsm = gsm;
@@ -61,7 +63,7 @@ public class LevelState extends GameState {
         scrollBar.setShownAmount(2);
         scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
         scrollBar.setWIDTH(GamePanel.SCREEN_WIDTH / 8);
-        scrollBar.addObject(new Plank(0, 0));
+        scrollBar.addObject(new HorizontalPlank(0, 0));
         scrollBar.addObject(new Henk(0, 0));
         scrollBar.addObject(new WaterDrop(0, 0));
         //ADD HERE ALL THE OBJECTS BY DOING SCROLLBAR.ADDOBJECT
@@ -84,12 +86,21 @@ public class LevelState extends GameState {
         hoseSpawned = false;
         objectsLoaded = false;
         indexToPlace = 0;
+        hoseHasSprayed = false;
     }
 
     private void checkCollisions(GameObject object){
         for(GameObject o: objects){
             if(!object.equals(o)){
                 if(object.checkCollision(o)){
+                    botsingen++;
+                    System.out.println("Collision between " + object.getType() + " hitting " + o.getType() + " and this was nr " + botsingen + " in the chain reaction");
+                    o.update();
+                    if(botsingen > 100){
+                        object.setDx(0);
+                        object.setDy(0);
+                        return;
+                    }
                     checkCollisions(o);
                 }
             }
@@ -104,6 +115,7 @@ public class LevelState extends GameState {
             GameObject o = objects.get(i);
             o.update();
             checkCollisions(o);
+            botsingen = 0;
             if(o.getType() == GameObject.Types.WATERDROP){
                 WaterDrop drop = (WaterDrop)o;
                 if(drop.getTimeLived() > drop.getTimeToLive()){
@@ -111,14 +123,22 @@ public class LevelState extends GameState {
                     i--;
                 }
             }
-            //System.out.println("dx :" + o.getDx() + " dy: " + o.getDy());
             if(o.getDx() > 0.1 || o.getDy() > 0.1){
                 hoseMustSpawn = false;
+            }
+            if(o.getY() > 1500){
+                objects.remove(i);
+                i--;
             }
         }
 
         if(objectsLoaded && toPlace.size() == 0 && hoseMustSpawn){
             hoseSpawned = true;
+        }
+
+        if(!objects.contains(henk) && objectsLoaded){
+            reset();
+            gsm.setState(GameStateManager.GAMEOVER);
         }
 
 
@@ -130,8 +150,26 @@ public class LevelState extends GameState {
                 objects.add(w);
             }
             hosePos++;
-            if(hosePos > GamePanel.GAME_WIDTH){
+            if((hosePos - 10) * hoseSpeed > GamePanel.GAME_WIDTH){
                 hoseSpawned = false;
+                hoseHasSprayed = true;
+            }
+        }
+        System.out.println("hoseHasSprayed = "  + hoseHasSprayed + " henk = " + henk.isCleaned() + " cleaned");
+        if(hoseHasSprayed){
+            boolean waterDropsPresent = false;
+            for(GameObject o : objects){
+                if(o.getType() == GameObject.Types.WATERDROP){
+                    waterDropsPresent = true;
+                }
+            }
+            if(!waterDropsPresent && !henk.isCleaned()){
+                reset();
+                gsm.setState(GameStateManager.LEVELCOMPLETED);
+            }
+            else if(henk.isCleaned()){
+                reset();
+                gsm.setState(GameStateManager.GAMEOVER);
             }
         }
         if(selectedObject != null) {
@@ -149,11 +187,16 @@ public class LevelState extends GameState {
             canvas.drawBitmap(hose,(int) (hosePos * hoseSpeed * GamePanel.X_SCALE), 0, null);
         }
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
-        canvas.drawBitmap(previous, 0,0,null);
 
         selectedObject.draw(canvas);
         for(GameObject o: toPlace){
             o.draw(canvas);
+        }
+
+        if(toPlace.size() > 0){
+            Paint p = new Paint();
+            p.setARGB(70,70,70,125);
+            canvas.drawRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT/3, p);
         }
 
         //DRAW THE SCROLLBAR
@@ -176,17 +219,14 @@ public class LevelState extends GameState {
                     reset();
                     gsm.setState(gsm.LEVELSELECT);
                 }
-                else if( x < 50 && y < 50){
-                    hoseSpawned = true;
-                    hosePos = 0;
-                }
-                else {
-                    if(indexToPlace < toPlace.size()) {
-                        selectedObject = toPlace.get(indexToPlace);
-                        selectedObject.setX(x);
-                        selectedObject.setY(y);
-                        indexToPlace++;
+                else if(indexToPlace < toPlace.size()) {
+                    selectedObject = toPlace.get(indexToPlace);
+                    selectedObject.setX(x);
+                    if(y > GamePanel.SCREEN_HEIGHT / 3 ){
+                        y = GamePanel.SCREEN_HEIGHT / 3;
                     }
+                    selectedObject.setY(y);
+                    indexToPlace++;
                 }
                 break;
 
@@ -195,8 +235,10 @@ public class LevelState extends GameState {
                 float yPos = event.getY() / GamePanel.Y_SCALE;
 
                 if(selectedObject != null) {
-                    System.out.println(xPos);
                     selectedObject.setX(xPos);
+                    if(yPos > GamePanel.SCREEN_HEIGHT / 3 ){
+                        yPos = GamePanel.SCREEN_HEIGHT / 3;
+                    }
                     selectedObject.setY(yPos);
                     System.out.println(selectedObject.getX());
                 }

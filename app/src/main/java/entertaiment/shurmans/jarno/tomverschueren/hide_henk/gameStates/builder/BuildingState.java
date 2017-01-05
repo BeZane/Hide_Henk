@@ -17,7 +17,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.DoneButton;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
@@ -60,7 +60,7 @@ public class BuildingState extends GameState {
         scrollBar.setShownAmount(2);
         scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
         scrollBar.setWIDTH(GamePanel.SCREEN_WIDTH / 8);
-        scrollBar.addObject(new Plank(0, 0));
+        scrollBar.addObject(new HorizontalPlank(0, 0));
         scrollBar.addObject(new Henk(0, 0));
         scrollBar.addObject(new WaterDrop(0, 0));
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);

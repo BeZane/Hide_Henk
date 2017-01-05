@@ -4,24 +4,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.DoneButton;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ToastUtil;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.building2state.BuildingScrollBar;
 
 /**
@@ -31,7 +26,6 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.bui
 public class Building2State extends GameState {
 
     private DoneButton doneButton;
-    private GameStateManager gsm;
     private Bitmap background;
     private BuildingScrollBar scrollBar;
     private long startClickTime;
@@ -64,7 +58,7 @@ public class Building2State extends GameState {
         scrollBar.setShownAmount(3);
         scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
         scrollBar.setWIDTH((int)(GamePanel.SCREEN_WIDTH /1.5));
-        scrollBar.addObject(new Plank(0, 0));
+        scrollBar.addObject(new HorizontalPlank(0, 0));
         scrollBar.addObject(new Henk(0, 0));
         scrollBar.addObject(new WaterDrop(0, 0));
         scrollBar.addObject(new Tire(0,0));

@@ -13,7 +13,6 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState
 
 public class Building3State extends GameState {
 
-    private GameStateManager gsm;
     private LevelWrapper levelWrapper;
 
     public Building3State(GameStateManager gsm){

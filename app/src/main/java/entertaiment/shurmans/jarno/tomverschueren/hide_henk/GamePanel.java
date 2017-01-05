@@ -55,10 +55,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //make gamePanel focusable so it can handle events
         setFocusable(true);
 
-        //sounds
+       //sounds
 
-   //         sounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-     //       themeSong = sounds.load(context, R.raw.main_theme, 1);
+         sounds = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+         themeSong = sounds.load(context, R.raw.main_theme, 1);
 
     }
 
@@ -80,8 +80,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         SCREEN_WIDTH = getWidth();
         X_SCALE = 1.0f * SCREEN_WIDTH / GAME_WIDTH;
         Y_SCALE = 1.0f * SCREEN_HEIGHT / GAME_HEIGHT;
-
-        System.out.println("height: " + SCREEN_HEIGHT + " width: " + SCREEN_WIDTH);
 
         gsm = new GameStateManager();
 

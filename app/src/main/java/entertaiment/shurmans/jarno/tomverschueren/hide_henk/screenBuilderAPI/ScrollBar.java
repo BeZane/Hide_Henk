@@ -11,7 +11,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Plank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 
 /**
@@ -222,7 +222,7 @@ public class ScrollBar {
             case WATERDROP:
                 return new WaterDrop(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case PLANK:
-                return new Plank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+                return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             default:
                 return null;
 

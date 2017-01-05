@@ -3,6 +3,7 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.icu.text.DisplayContext;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
@@ -43,7 +44,7 @@ public abstract class GameObject {
 
 
     //collision detection
-    public enum Shapes {RECTANGLE, CIRCLE, POINT};
+    public enum Shapes {RECTANGLE, CIRCLE};
     protected Shapes shape;
     public enum Types{HENK, PLANK, WATERDROP, TIRE};
     protected Types type;
@@ -206,7 +207,7 @@ public abstract class GameObject {
             }
         }
 
-        //we don't actually want to move in out current direction just yet
+        //we don't actually want to move in our current direction just yet
         x -= tempDx;
         y -= tempDy;
 
@@ -242,39 +243,44 @@ public abstract class GameObject {
         while(alpha < 0){
             alpha += 2*Math.PI;
         }
-        double betha = Math.atan(-dy/dx);            //the direction our object is moving in
-        if(dx < 0){
-            betha += Math.PI;
+        //Rolling of another object
+        if(speed < 1 && Math.abs(Math.cos(alpha)) > 0.001 && Math.sin(alpha) > 0){
+            dx += Math.cos(alpha) * GRAVITY;
+            dy = 0;
+            //System.out.println(type + " rolling off " + o1.type);
+            //System.out.println("direction of " + type + ": " + alpha + "direction of what we hit : "  +betha);
         }
-        while(betha < 0){
-            betha += 2*Math.PI;
-        }
-        double o1Betha = Math.atan(-o1.dy/o1.dx);            //the direction the other object is moving in
-        if(dx < 0){
-            o1Betha += Math.PI;
-        }
-        while(betha < 0){
-            o1Betha += 2*Math.PI;
-        }
-        double reflection = (Math.PI - (betha - alpha)) + alpha; //the direction of the force on our object
-        double o1Reflection = (- (o1Betha - alpha + Math.PI)) + alpha;
-        if(speed < 1 && Math.abs(Math.cos(reflection)) > 0.001 && Math.sin(reflection) > 0){
-            dx += Math.cos(reflection) * GRAVITY;
-            System.out.println(type + " rolling of the thing    reflection = " + reflection);
-            System.out.println("direction of " + type + ": " + alpha + "direction of what we hit : "  +betha);
-        }
+        //Bouncing off a solid object
         else if(o1.solid){   //the direction of the our object after collision
-            dy = - Math.sin(reflection) * bouncingFactor * speed;
-            dx = Math.cos(reflection) * bouncingFactor * speed;
+            System.out.println(alpha*360/2/Math.PI);
+            if(alpha *180 / Math.PI % 90 == 0 ) {
+                System.out.println("op een vlak");
+                dy += -Math.sin(alpha) * dy * 2;
+                dx += Math.cos(alpha) * dx * 2;
+                dy = dy * bouncingFactor;
+                dx = dx * bouncingFactor;
+            }
+            else{
+                System.out.println("op de punt");
+                dy = -Math.sin(alpha) * bouncingFactor * dy;
+                dx += Math.cos(alpha) * bouncingFactor * speed;
+            }
         }
+        //Collision between two objects that can move
+
         else{
-            dy = - Math.sin(reflection) * bouncingFactor * o1Speed * o1.mass / mass * restitution;
-            dx = Math.cos(reflection) * bouncingFactor * o1Speed * o1.mass / mass * restitution;
-
-            o1.dy =  - Math.sin(o1Reflection) * bouncingFactor * speed * mass / o1.mass * restitution;
-            o1.dx =  Math.cos(o1Reflection) * bouncingFactor * speed * mass / o1.mass * restitution;
-
+            System.out.println("alpha = " + alpha*180/Math.PI);
+            double newDx = (mass - o1.mass)/(mass + o1.mass)*dx + (2*o1.mass)/(mass + o1.mass)*o1.dx; //the newDx in case of 1D movement and no loss kinetic energy
+            double F = mass * Math.abs(newDx - dx) / Math.abs(Math.cos(alpha));
+            System.out.println("Force = " + F);
+            dx += F * Math.cos(alpha) / mass;
+            dy -= F * Math.sin(alpha) / mass;
+            o1.dx -= F * Math.cos(alpha) / o1.mass;
+            o1.dy += F * Math.sin(alpha) / o1.mass;
+            System.out.println(type + " has a new speed of (" + dx + "," + dy +")");
+            System.out.println(o1.type + " has a new speed of (" + o1.dx + "," + o1.dy +")");
         }
+
     }
 
     public void update(){

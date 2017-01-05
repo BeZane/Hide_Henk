@@ -25,6 +25,8 @@ public class GameStateManager {
     public static final int ONLINESELECT = 8;
     public static final int BUILDING2 = 6;
     public static final int BUILDING3 = 7;
+    public static final int GAMEOVER = 8;
+    public static final int LEVELCOMPLETED = 9;
 
     public GameStateManager(){
 
@@ -38,6 +40,8 @@ public class GameStateManager {
         gameStates.add(new BuildingState(this));
         gameStates.add(new Building2State(this));
         gameStates.add(new Building3State(this));
+        gameStates.add(new GameOverState(this));
+        gameStates.add(new LevelCompleted(this));
         //gameStates.add(new OnlineSelect(this));
         gameStates.get(currentState).init();
     }
