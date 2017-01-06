@@ -1,6 +1,7 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.database;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.options.Preferences;
 
 /**
  * Created by TomVerschueren on 8/12/2016.
@@ -17,25 +18,43 @@ public class UrlRequest {
 
     }
 
-    public String getUrl() {
-        return url;
-    }
 
-    public String createTables(){
+    public static String createTables(){
         return "http://api.a16_sd507.studev.groept.be/createtables";
 
     }
 
-    public String getID(String name){
+    public static String getID(String name){
         return "http://api.a16_sd507.studev.groept.be/getid/" + name;
     }
 
-    public String insertLevel(String name, String stringID){
+    public static String insertLevel(String name, String stringID){
         return "http://api.a16_sd507.studev.groept.be/insertonlinegame/"+name+ "/"+ stringID;
     }
 
-    public String getOnlineLevels(){
+    public static String getOnlineLevels(){
         return "http://api.a16_sd507.studev.groept.be/getlevels";
+    }
+
+    public static String getStats(){
+        return "http://api.a16_sd507.studev.groept.be/getstats/"+ Preferences.uuid.toString();
+    }
+
+    public static String instertPlayer(){
+        return "http://api.a16_sd507.studev.groept.be/insertplayer/" + Preferences.uuid.toString();
+    }
+
+    public static String insertStat(String stat, int value){
+        return "ttp://api.a16_sd507.studev.groept.be/insertstat/"  + stat + "/" + Preferences.uuid.toString() + "/" +value;
+    }
+
+    public static String insertPlayer(){
+        System.out.println("INSERTING");
+        return "http://api.a16_sd507.studev.groept.be/insertplayer/" + Preferences.uuid.toString();
+    }
+
+    public static String checkPlayer(){
+        return "http://api.a16_sd507.studev.groept.be/checkplayer/" + Preferences.uuid.toString();
     }
 
 

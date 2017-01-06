@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Game;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
 
 
@@ -36,7 +38,8 @@ public class MenuState extends GameState{
         //load the background image and scale it to match the size of the screen
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES,R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
-        addButtons();
+        if(this.menuButtons.isEmpty())
+            addButtons();
     }
 
     private void addButtons(){
@@ -76,6 +79,7 @@ public class MenuState extends GameState{
                         }
                         else if(i == 1){
                             gsm.setState(GameStateManager.STATS);
+                            DatabaseManager.request(UrlRequest.getStats());
                         }
                         else if(i == 2){
                             gsm.setState(GameStateManager.BUILDERMENU);

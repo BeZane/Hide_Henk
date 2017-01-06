@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Util.Stats;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
 
 /**
@@ -36,11 +37,12 @@ public class DatabaseManager {
 
     public DatabaseManager(Context context){
         this.context = context;
+        request(UrlRequest.checkPlayer());
 
     }
 
 
-    private static void request(final String url, String ID) {
+    public static void request(final String url) {
 
 // Instantiate the RequestQueue with the cache and network.
 
@@ -50,15 +52,25 @@ public class DatabaseManager {
 
 
         // \Formulate the request and handle the response.
-        JsonArrayRequest jsObjRequest = new JsonArrayRequest
+        final JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
                         if(url.contains("insert"))
                             return;
+                        if(url.contains("checkplayer")){
+                            if(response.isNull(0))
+                                request(UrlRequest.insertPlayer());
+                            System.out.println("INSERTING PLAYER");
+                        }
                         if(url.contains("getid")){
 
+                        }
+                        if(url.contains("getstats")){
+                            System.out.println("/////////////////////////////////");
+                            Stats.convert(response);
+                            System.out.println(response);
                         }
 
                     }

@@ -42,11 +42,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public GamePanel(Context context){
 
         super(context);
-        DatabaseManager databaseManager =new DatabaseManager(getContext());
-
-
-
         new Preferences(context);
+
+        DatabaseManager databaseManager =new DatabaseManager(getContext());
+        //INSERT THE PLAYER IF IT DOES NOT EXIST IN THE DATABASE;
+        databaseManager.request(UrlRequest.checkPlayer());
+        //LOAD ALL THE STATS
+        databaseManager.request(UrlRequest.getStats());
+
+
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
         ToastUtil.context = context;

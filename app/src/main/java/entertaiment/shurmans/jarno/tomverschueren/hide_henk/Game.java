@@ -36,6 +36,7 @@ public class Game extends Activity {
         //set window to full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        setContentView(new GamePanel(this));
 
 
     }
@@ -43,7 +44,7 @@ public class Game extends Activity {
     @Override
     public void onResume(){
         super.onResume();
-        switchContent();
+        //switchContent();
     }
 
     public void switchContent(){

@@ -22,18 +22,19 @@ public class GameStateManager {
     public static final int LEVEL1 = 3;
     public static final int BUILDERMENU = 4;
     public static final int BUILDING = 5;
-    public static final int ONLINESELECT = 8;
     public static final int BUILDING2 = 6;
     public static final int BUILDING3 = 7;
     public static final int GAMEOVER = 8;
     public static final int LEVELCOMPLETED = 9;
+    public static final int ONLINESELECT = 10;
+
 
     public GameStateManager(){
 
         gameStates = new ArrayList<GameState>();
         currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
-        gameStates.add(new Stats(this));
+        gameStates.add(new StatsMenu(this));
         gameStates.add(new LevelSelect(this));
         gameStates.add(new Level1State(this));
         gameStates.add(new BuilderMenuState(this));
