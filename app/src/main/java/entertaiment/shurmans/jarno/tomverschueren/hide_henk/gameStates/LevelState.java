@@ -27,7 +27,6 @@ public class LevelState extends GameState {
     //fields
     protected ArrayList<GameObject> objects = new ArrayList<GameObject>();
     protected ArrayList<GameObject> toPlace = new ArrayList<GameObject>();
-    private int indexToPlace;
     private GameObject selectedObject;
     private Bitmap background;
     private Bitmap previous;
@@ -83,7 +82,6 @@ public class LevelState extends GameState {
         hosePos = -hose.getWidth();
         hoseSpawned = false;
         objectsLoaded = false;
-        indexToPlace = 0;
         hoseHasSprayed = false;
     }
 
@@ -217,14 +215,13 @@ public class LevelState extends GameState {
                     reset();
                     gsm.setState(gsm.LEVELSELECT);
                 }
-                else if(indexToPlace < toPlace.size()) {
-                    selectedObject = toPlace.get(indexToPlace);
+                else if(0 < toPlace.size()) {
+                    selectedObject = toPlace.get(0);
                     selectedObject.setX(x);
                     if(y > GamePanel.SCREEN_HEIGHT / 3 ){
                         y = GamePanel.SCREEN_HEIGHT / 3;
                     }
                     selectedObject.setY(y);
-                    indexToPlace++;
                 }
                 break;
 

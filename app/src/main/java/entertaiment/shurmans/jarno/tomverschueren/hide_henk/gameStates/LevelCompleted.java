@@ -1,5 +1,7 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,6 +10,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
 
 /**
@@ -16,6 +19,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Men
 
 public class LevelCompleted extends GameState{
 
+    private Bitmap background;
     private ArrayList<MenuButton> menuButtons = new ArrayList<>();
     private String[] options = {"Next Level", "Replay level", "Level Select"};
 
@@ -31,6 +35,8 @@ public class LevelCompleted extends GameState{
             b.setY((int)(160 * GamePanel.Y_SCALE + i * (b.getPicture().getHeight() + 35 * GamePanel.Y_SCALE)));
             b.setText(options[i]);
             menuButtons.add(b);
+            Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
+            background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         }
     }
 
@@ -39,6 +45,8 @@ public class LevelCompleted extends GameState{
     }
 
     public void draw(Canvas canvas){
+
+        canvas.drawBitmap(background,0,0,null);
 
         for(MenuButton b: menuButtons){
             b.draw(canvas);
