@@ -155,7 +155,6 @@ public class LevelState extends GameState {
                 hoseHasSprayed = true;
             }
         }
-        System.out.println("hoseHasSprayed = "  + hoseHasSprayed + " henk = " + henk.isCleaned() + " cleaned");
         if(hoseHasSprayed){
             boolean waterDropsPresent = false;
             for(GameObject o : objects){
@@ -240,7 +239,6 @@ public class LevelState extends GameState {
                         yPos = GamePanel.SCREEN_HEIGHT / 3;
                     }
                     selectedObject.setY(yPos);
-                    System.out.println(selectedObject.getX());
                 }
 
                 break;

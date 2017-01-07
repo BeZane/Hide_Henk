@@ -22,7 +22,7 @@ public class Level1State extends LevelState {
     protected void populate(){
 
         //environment
-        henk = new Henk(640, 540);
+        henk = new Henk(650, 400);
         henk.setSolid(false);
         HorizontalPlank p1 = new HorizontalPlank(740, 420);
         p1.setSolid(true);
