@@ -7,8 +7,12 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.logging.Level;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ZoomInButton;
@@ -35,7 +39,7 @@ public class BuildingScrollBar extends ScrollBar {
 
     @Override
     public boolean actionUp(MotionEvent event){
-            int number = getSelectedNumber((int)(event.getY()/GamePanel.Y_SCALE));
+            int number = getSelectedNumber((int)(event.getY()));
             if(event.getX() > SCREEN_WIDTH/2){
                 if(amount.get(number) > 0)
                     amount.put(number,amount.get(number)-1);
@@ -59,11 +63,11 @@ public class BuildingScrollBar extends ScrollBar {
             scrollingObjects.get(number).setSolid(true);
             scrollingObjects.get(number).draw(canvas);
             if(scrollingObjects.get(number).getShape() == GameObject.Shapes.CIRCLE) {
-                zoomIn.setX((int) ((point.x - 50 - scrollingObjects.get(number).getBitmap().getWidth() / 2)));
-                zoomOut.setX((int) ((point.x + 50 + scrollingObjects.get(number).getBitmap().getWidth() / 2)));
+                zoomIn.setX((int) ((point.x - 50*GamePanel.X_SCALE - scrollingObjects.get(number).getBitmap().getWidth() / 2)));
+                zoomOut.setX((int) ((point.x + 50*GamePanel.Y_SCALE + scrollingObjects.get(number).getBitmap().getWidth() / 2)));
             }else{
-                zoomIn.setX((int) ((point.x - 50)));
-                zoomOut.setX((int) ((point.x + 50 + scrollingObjects.get(number).getBitmap().getWidth())));
+                zoomIn.setX((int) ((point.x - 50*GamePanel.X_SCALE)));
+                zoomOut.setX((int) ((point.x + 50*GamePanel.Y_SCALE + scrollingObjects.get(number).getBitmap().getWidth())));
             }
             zoomIn.setY((int)(point.y-offset));
             zoomOut.setY((int)(point.y-offset));
@@ -84,5 +88,15 @@ public class BuildingScrollBar extends ScrollBar {
         count =0;
         number=0;
 
+    }
+
+    public void updateLevelWrapper(LevelWrapper levelWrapper){
+        Iterator it = amount.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            for(int i = 0;i<(int)pair.getValue();i++) {
+                levelWrapper.addObject(getSelectedObjectByNumber((int) pair.getKey()));
+            }
+        }
     }
 }

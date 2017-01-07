@@ -29,7 +29,7 @@ public class HorizontalPlank extends RectangleObject {
         picture = Bitmap.createScaledBitmap(picture, 160, 24, false);
         calculateDimensions(picture);
         scalePicture(picture);
-        type = Types.PLANK;
+        type = Types.HORIZONTAL_PLANK;
         density = 0.9;
         calculateMass();
     }

@@ -77,6 +77,11 @@ public class ObjectManager {
 
     }
 
+    public void clear(){
+        objects.clear();
+        lastSelected = null;
+    }
+
     public void setLastObject(GameObject gameObject){
         lastSelected = gameObject;
     }

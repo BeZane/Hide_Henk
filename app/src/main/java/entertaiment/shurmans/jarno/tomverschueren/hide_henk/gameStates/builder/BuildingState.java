@@ -65,18 +65,18 @@ public class BuildingState extends GameState {
         scrollBar.addObject(new WaterDrop(0, 0));
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
         zoomInButton = new ZoomInButton();
-        zoomInButton.setX((int)(50));
-        zoomInButton.setY((int)(50));
+        zoomInButton.setX((int)(50*GamePanel.X_SCALE));
+        zoomInButton.setY((int)(50*GamePanel.Y_SCALE));
         zoomOutButton = new ZoomOutButton();
-        zoomOutButton.setX((int)(150));
-        zoomOutButton.setY((int)(50));
+        zoomOutButton.setX((int)(150*GamePanel.X_SCALE));
+        zoomOutButton.setY((int)(50*GamePanel.Y_SCALE));
         solidButton = new SolidButton();
-        solidButton.setX((int)(250));
-        solidButton.setY((int)(50));
+        solidButton.setX((int)(250*GamePanel.X_SCALE));
+        solidButton.setY((int)(50*GamePanel.Y_SCALE));
 
         doneButton = new DoneButton();
-        doneButton.setX((int)(700));
-        doneButton.setY((int)(50));
+        doneButton.setX((int)(1200*GamePanel.X_SCALE));
+        doneButton.setY((int)(50*GamePanel.Y_SCALE));
 
     }
 

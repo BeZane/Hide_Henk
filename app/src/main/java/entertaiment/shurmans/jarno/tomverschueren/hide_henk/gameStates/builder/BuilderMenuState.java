@@ -3,9 +3,9 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.view.MotionEvent;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.activities.ActivityManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;

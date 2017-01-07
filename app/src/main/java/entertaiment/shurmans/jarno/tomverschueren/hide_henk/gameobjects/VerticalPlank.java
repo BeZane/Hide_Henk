@@ -29,7 +29,7 @@ public class VerticalPlank extends RectangleObject {
         picture = Bitmap.createScaledBitmap(picture, 24, 160, false);
         calculateDimensions(picture);
         scalePicture(picture);
-        type = Types.PLANK;
+        type = Types.VERTICAL_PLANK;
         density = 0.9;
         calculateMass();
     }

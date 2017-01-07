@@ -12,6 +12,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.O
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 
 /**
@@ -191,7 +192,7 @@ public class ScrollBar {
                 point.y = SCREEN_HEIGHT/(2*shownAmount)+HEIGHT/shownAmount*number;
                 break;
             case MIDDLE:
-                point.x = SCREEN_WIDTH-(WIDTH/2)-(scrollingObjects.get(number).getBitmap().getHeight()/2);
+                point.x = SCREEN_WIDTH/2-(scrollingObjects.get(number).getBitmap().getWidth()/2);
                 if(scrollingObjects.get(number).getShape() == GameObject.Shapes.CIRCLE){
                     point.x = (SCREEN_WIDTH)/2;
                 }
@@ -221,7 +222,9 @@ public class ScrollBar {
                 return new Henk(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
             case WATERDROP:
                 return new WaterDrop(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-            case PLANK:
+            case VERTICAL_PLANK:
+                return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            case HORIZONTAL_PLANK:
                 return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             default:
                 return null;
@@ -243,6 +246,25 @@ public class ScrollBar {
         return number;
     }
 
+    public GameObject getSelectedObjectByNumber(int number){
+        GameObject gameObject = scrollingObjects.get(number);
+        switch (gameObject.getType()) {
+            case HENK:
+                return new Henk(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            case WATERDROP:
+                return new WaterDrop(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            case VERTICAL_PLANK:
+                return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            case HORIZONTAL_PLANK:
+                return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            case TIRE:
+                return new Tire(0,0);
+            default:
+                return null;
+
+        }
+    }
+
 
 
 
@@ -253,6 +275,12 @@ public class ScrollBar {
         BOTTOM,
         MIDDLE;
     }
+
+    public void clear(){
+        scrollingObjects.clear();
+    }
+
+
 
 
 
