@@ -40,12 +40,13 @@ public class Building3State extends GameState {
         //    levelWrapper.setName(Game.getInputName());
         //}
         System.out.println("HEY");
-        if(levelWrapper !=null && NameActivity.NAME != null) {
+        if(levelWrapper !=null && NameActivity.done) {
             ActivityManager.getInstance().startActivity(0);
             levelWrapper.setName(NameActivity.NAME);
             DatabaseManager.request(UrlRequest.insertLevel(NameActivity.NAME, levelWrapper.getStringID()));
+            System.out.println("INSERTING");
             gsm.setState(GameStateManager.BUILDERMENU);
-            NameActivity.NAME = null;
+            NameActivity.done = false;
         }
     }
 

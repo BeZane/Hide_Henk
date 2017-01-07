@@ -39,7 +39,7 @@ public class LevelState extends GameState {
     private boolean hoseHasSprayed;
     private double hoseSpeed = 3;
     private boolean objectsLoaded = false;
-    private ScrollBar scrollBar;
+    protected ScrollBar scrollBar;
     private ObjectManager objectManager = new ObjectManager();
 
     private int botsingen = 0;
@@ -63,9 +63,6 @@ public class LevelState extends GameState {
         scrollBar.setShownAmount(2);
         scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
         scrollBar.setWIDTH(GamePanel.SCREEN_WIDTH / 8);
-        scrollBar.addObject(new HorizontalPlank(0, 0));
-        scrollBar.addObject(new Henk(0, 0));
-        scrollBar.addObject(new WaterDrop(0, 0));
         //ADD HERE ALL THE OBJECTS BY DOING SCROLLBAR.ADDOBJECT
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
 
@@ -74,6 +71,7 @@ public class LevelState extends GameState {
     }
 
     protected void populate(){
+
         //TODO: I WOULD USE THE LEVELWRAPPER CLASS. PREPAREOBJECTS ARE OBJECTS THAT ARE ALREADY IN THE GAME. NORMAL OBJECTS
         //TODO: ARE THE OBJECTS THAT NEED TO BE PLACED
         //TODO read in the file that has info about the level layout.
@@ -174,6 +172,7 @@ public class LevelState extends GameState {
         if(selectedObject != null) {
             selectedObject.drawUpdate();
         }
+        System.out.println("UPDATING LEVELSTATE");
     }
 
     public void draw(Canvas canvas){

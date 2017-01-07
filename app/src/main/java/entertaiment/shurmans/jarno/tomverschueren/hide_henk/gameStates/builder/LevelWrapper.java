@@ -18,6 +18,7 @@ public class LevelWrapper {
 
     private ArrayList<GameObject> presetObjects = new ArrayList<>();
     private ArrayList<GameObject> objects = new ArrayList<>();
+
     private String name;
     private String ID = null;
 
@@ -38,7 +39,11 @@ public class LevelWrapper {
         return objects;
     }
 
-    public void loadFromDatabase(String StringID){
+    /**
+     * LOAD THE WHOLE LEVEL INTO THE LEVELWRAPPER
+     * @param StringID ID from database of the level
+     */
+    public void loadFromString(String StringID){
             String[] stringArray = StringID.split("!");
             setName(stringArray[0]);
             String[] presetObjectInfo = stringArray[1].split(";");
@@ -46,6 +51,7 @@ public class LevelWrapper {
                 Henk object = new Henk(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
                 object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+                object.makeDirty();
                 presetObjects.add(object);
             }else if(presetObjectInfo[0] ==GameObject.Types.VERTICAL_PLANK.toString()){
                 VerticalPlank object = new VerticalPlank(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
@@ -68,6 +74,7 @@ public class LevelWrapper {
                 Henk object = new Henk(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
                 object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+                object.makeDirty();
                 objects.add(object);
         }else if(objectInfo[0] ==GameObject.Types.VERTICAL_PLANK.toString()){
             VerticalPlank object = new VerticalPlank(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));

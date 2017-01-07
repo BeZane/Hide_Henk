@@ -34,7 +34,9 @@ public class LevelCompleted extends GameState{
         }
     }
 
-    public void update(){}
+    public void update(){
+        System.out.println("UPDATING LEVELCOMPLETED");
+    }
 
     public void draw(Canvas canvas){
 

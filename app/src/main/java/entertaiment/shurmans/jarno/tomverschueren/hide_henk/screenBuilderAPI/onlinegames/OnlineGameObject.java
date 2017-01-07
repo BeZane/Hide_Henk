@@ -24,7 +24,7 @@ public class OnlineGameObject extends RectangleObject {
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.menu_button);
         picture = Bitmap.createScaledBitmap(picture, 1000, 164, false);
         scalePicture(picture);
-        type = Types.HORIZONTAL_PLANK;
+        type = Types.SPECIAL;
         //density = 0.95;
         //calculateMass();
         setSolid(true);
@@ -48,6 +48,10 @@ public class OnlineGameObject extends RectangleObject {
         //canvas.drawText(text, (float)x - text.length() * paint.getTextSize() / 4,(float) y + paint.getTextSize() / 4, paint);
         canvas.drawText(text,(float) GamePanel.SCREEN_WIDTH/2-text.length()*(paint.getTextSize()/4),(float) this.drawY+90*GamePanel.X_SCALE, paint);
 
+    }
+
+    public String getText(){
+        return text;
     }
 
 

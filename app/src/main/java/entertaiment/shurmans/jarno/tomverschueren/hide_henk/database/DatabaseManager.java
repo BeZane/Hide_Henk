@@ -18,12 +18,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Util.Stats;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.LevelState;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineLevel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineSelect;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
 
@@ -74,6 +77,12 @@ public class DatabaseManager {
                         }else if(url.contains("getonlinenames")){
                             OnlineSelect.updateScrollBar(response);
                             System.out.println("Just responded");
+                        }else if(url.contains("getonlinelevel")){
+                            try {
+                                OnlineLevel.lastLoadedID = response.getJSONObject(0).getString("id");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                     }

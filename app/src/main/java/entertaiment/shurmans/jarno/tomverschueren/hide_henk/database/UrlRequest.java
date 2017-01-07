@@ -59,5 +59,9 @@ public class UrlRequest {
         return "http://api.a16_sd507.studev.groept.be/getonlinenames";
     }
 
+    public static String getOnlineLevel(String name){
+        return "http://api.a16_sd507.studev.groept.be/getonlinelevel/"+name;
+    }
+
 
 }

@@ -46,7 +46,7 @@ public abstract class GameObject {
     //collision detection
     public enum Shapes {RECTANGLE, CIRCLE};
     protected Shapes shape;
-    public enum Types{HENK, VERTICAL_PLANK, HORIZONTAL_PLANK, WATERDROP, TIRE};
+    public enum Types{HENK, VERTICAL_PLANK, HORIZONTAL_PLANK, WATERDROP, TIRE,SPECIAL};
     protected Types type;
 
 

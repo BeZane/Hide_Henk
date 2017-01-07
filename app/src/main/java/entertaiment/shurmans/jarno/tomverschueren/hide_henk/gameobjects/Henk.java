@@ -36,6 +36,12 @@ public class Henk extends CircleObject{
         calculateMass();
     }
 
+    public void makeDirty(){
+        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.dirty_henk);
+        picture = Bitmap.createScaledBitmap(picture, 100, 100, false);
+        cleaned = false;
+    }
+
     public void cleanHenk(){
         if(cleaned) return;
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.clean_henk);

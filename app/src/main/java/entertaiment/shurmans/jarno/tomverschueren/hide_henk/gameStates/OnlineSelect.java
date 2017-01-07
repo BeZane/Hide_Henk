@@ -9,10 +9,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.activities.ActivityManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.Building3State;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
@@ -32,6 +36,8 @@ public class OnlineSelect extends GameState {
     private Bitmap background;
     private static OnlineGameScrollbar scrollBar;
     private Bitmap previous;
+    private long startClickTime;
+    private int MAX_CLICK_DURATION = 200;
 
     public OnlineSelect(GameStateManager gsm) {
         this.gsm = gsm;
@@ -43,7 +49,8 @@ public class OnlineSelect extends GameState {
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
         previous = Bitmap.createScaledBitmap(previous, 140, 140, false);
-        scrollBar = new OnlineGameScrollbar();
+
+        scrollBar = new OnlineGameScrollbar(gsm);
         scrollBar.setShownAmount(5);
         scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
         scrollBar.setWIDTH((int)(GamePanel.SCREEN_WIDTH /1.5));
@@ -52,7 +59,10 @@ public class OnlineSelect extends GameState {
 
     @Override
     protected void update() {
+        if(!OnlineLevel.lastLoadedID.equalsIgnoreCase("")){
+            OnlineLevel gameState = (OnlineLevel) gsm.setState(GameStateManager.ONLINELEVEL);
 
+        }
     }
 
     public static void updateScrollBar(JSONArray jsonArray){
@@ -79,6 +89,35 @@ public class OnlineSelect extends GameState {
 
     @Override
     protected boolean onTouchEvent(MotionEvent event) {
+        long clickDuration = 0;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startClickTime = Calendar.getInstance().getTimeInMillis();
+                return scrollBar.actionDown(event);
+            case MotionEvent.ACTION_MOVE:
+                clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                if (MAX_CLICK_DURATION < clickDuration) {
+
+                    return scrollBar.actionMove(event);
+
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                float x = event.getX();///GamePanel.X_SCALE;
+                float y = event.getY();///GamePanel.Y_SCALE;
+
+                clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                if (clickDuration < MAX_CLICK_DURATION) {
+                    if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
+                        gsm.setState(gsm.BUILDERMENU);
+                        return true;
+                    }
+                    return scrollBar.actionUp(event);
+                }
+                break;
+
+        }
         return false;
     }
+
 }

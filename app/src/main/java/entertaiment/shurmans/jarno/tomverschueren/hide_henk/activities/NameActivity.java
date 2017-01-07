@@ -16,7 +16,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Toa
 
 public class NameActivity extends Activity implements IDActivity {
 
-    private static boolean nameLayout = false;
+    public static boolean done = false;
     private static EditText editText = null;
     private Button button;
 
@@ -37,11 +37,12 @@ public class NameActivity extends Activity implements IDActivity {
 
             @Override
             public void onClick(View v) {
-                nameLayout = false;
+
                 NAME = editText.getText().toString();
                 System.out.println(editText.getText().toString());
-                ActivityManager.getInstance().startActivity(0);
+               // ActivityManager.getInstance().startActivity(0);
                 ToastUtil.createToast("Level saved!", Toast.LENGTH_SHORT).show();
+                done = true;
             }
         });
     }

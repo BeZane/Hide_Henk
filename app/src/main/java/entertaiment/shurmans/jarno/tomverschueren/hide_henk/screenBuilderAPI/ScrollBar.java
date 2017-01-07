@@ -13,6 +13,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.Game
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.VerticalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 
 /**
@@ -174,6 +175,10 @@ public class ScrollBar {
         return false;
     }
 
+    public void setObjects(ArrayList<GameObject> objects){
+        this.scrollingObjects = objects;
+    }
+
     /**
      * Get position of the image that is numbered "number" according to the count.
      * @param number The number of the element visible
@@ -223,11 +228,13 @@ public class ScrollBar {
             case WATERDROP:
                 return new WaterDrop(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case VERTICAL_PLANK:
-                return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+                return new VerticalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case HORIZONTAL_PLANK:
                 return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            case SPECIAL:
+                return gameObject;
             default:
-                return null;
+                return gameObject;
 
         }
     }
