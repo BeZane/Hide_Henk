@@ -102,11 +102,17 @@ public class Building2State extends GameState {
                 clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
                 if (clickDuration < MAX_CLICK_DURATION) {
                     if(doneButton.contains(x,y)){
+                        System.out.println("STARTING BUILDINGSTATE 3");
                         scrollBar.updateLevelWrapper(levelWrapper);
+                        System.out.println("STARTING BUILDINGSTATE 3 UPDATED WRAPPER");
+
                         Building3State building3State = (Building3State) gsm.setState(GameStateManager.BUILDING3);
+                        System.out.println("STARTING BUILDINGSTATE 3 GOT STATE");
 
 
                         building3State.setLevelWrapper(levelWrapper);
+                        System.out.println("STARTING BUILDINGSTATE 3 ADDED WRAPPER");
+
                         ActivityManager.getInstance().startActivity(1);
 
                         return true;

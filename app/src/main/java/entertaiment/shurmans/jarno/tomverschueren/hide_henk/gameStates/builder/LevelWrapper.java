@@ -43,55 +43,76 @@ public class LevelWrapper {
      * LOAD THE WHOLE LEVEL INTO THE LEVELWRAPPER
      * @param StringID ID from database of the level
      */
-    public void loadFromString(String StringID){
-            String[] stringArray = StringID.split("!");
-            setName(stringArray[0]);
-            String[] presetObjectInfo = stringArray[1].split(";");
-            if(presetObjectInfo[0] ==GameObject.Types.HENK.toString()){
-                Henk object = new Henk(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
+    public void loadFromString(String StringID) {
+        System.out.println("STRINGID: " + StringID);
+        String[] stringArray = StringID.split("!");
+        setName(stringArray[0]);
+        System.out.println("TESTING2");
+        String[] PresetObjectsInfos = stringArray[1].split(";");
+        for (String objectInfo : PresetObjectsInfos) {
+
+            String[] presetObjectInfo = objectInfo.split(",");
+
+            if (presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.HENK.toString())) {
+                Henk object = new Henk(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]), Integer.parseInt(presetObjectInfo[2]));
                 object.makeDirty();
                 presetObjects.add(object);
-            }else if(presetObjectInfo[0] ==GameObject.Types.VERTICAL_PLANK.toString()){
-                VerticalPlank object = new VerticalPlank(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
+            } else if (presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.VERTICAL_PLANK.toString())) {
+                VerticalPlank object = new VerticalPlank(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]), Integer.parseInt(presetObjectInfo[2]));
                 presetObjects.add(object);
-            }else if(presetObjectInfo[0] ==GameObject.Types.HORIZONTAL_PLANK.toString()){
-                HorizontalPlank object = new HorizontalPlank(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
+            } else if (presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.HORIZONTAL_PLANK.toString())) {
+                System.out.println("TESTING3" + presetObjectInfo[3] + presetObjectInfo[4]);
+                HorizontalPlank object = new HorizontalPlank(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
+                System.out.println("TESTING4");
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+                System.out.println("TESTING5");
+                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]), Integer.parseInt(presetObjectInfo[2]));
+                System.out.println("TESTING6");
                 presetObjects.add(object);
-            }else if(presetObjectInfo[0] ==GameObject.Types.TIRE.toString()){
-                Tire object = new Tire(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
+                System.out.println("TESTING7");
+            } else if (presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.TIRE.toString())) {
+                Tire object = new Tire(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]), Integer.parseInt(presetObjectInfo[2]));
                 presetObjects.add(object);
+            }else{
+
             }
-            String[] objectInfo = stringArray[1].split(";");
-            if(objectInfo[0] ==GameObject.Types.HENK.toString()){
-                Henk object = new Henk(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
-                object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-                object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+        }
+        System.out.println("TESTING");
+        String[] objectsInfos = stringArray[2].split(";");
+        for (String info : objectsInfos) {
+            String[] objectInfo = info.split(",");
+
+            if (objectInfo[0].equalsIgnoreCase(GameObject.Types.HENK.toString())) {
+                Henk object = new Henk(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
+                object.setSolid(Boolean.valueOf(objectInfo[5]));
+                object.rescaleObject(Integer.parseInt(objectInfo[1]), Integer.parseInt(objectInfo[2]));
                 object.makeDirty();
                 objects.add(object);
-        }else if(objectInfo[0] ==GameObject.Types.VERTICAL_PLANK.toString()){
-            VerticalPlank object = new VerticalPlank(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
-            object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-            object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+            } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.VERTICAL_PLANK.toString())) {
+                VerticalPlank object = new VerticalPlank(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
+                object.setSolid(Boolean.valueOf(objectInfo[5]));
+                object.rescaleObject(Integer.parseInt(objectInfo[1]), Integer.parseInt(objectInfo[2]));
                 objects.add(object);
-        }else if(objectInfo[0] ==GameObject.Types.HORIZONTAL_PLANK.toString()){
-            HorizontalPlank object = new HorizontalPlank(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
-            object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-            object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
+            } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.HORIZONTAL_PLANK.toString())) {
+                HorizontalPlank object = new HorizontalPlank(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
+                object.setSolid(Boolean.valueOf(objectInfo[5]));
+                object.rescaleObject(Integer.parseInt(objectInfo[1]), Integer.parseInt(objectInfo[2]));
                 objects.add(object);
-        }else if(objectInfo[0] ==GameObject.Types.TIRE.toString()){
-            Tire object = new Tire(Integer.parseInt(presetObjectInfo[3]),Integer.parseInt(presetObjectInfo[4]));
-            object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-            object.rescaleObject(Integer.parseInt(presetObjectInfo[1]),Integer.parseInt(presetObjectInfo[2]));
-            objects.add(object);
+            } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.TIRE.toString())) {
+                Tire object = new Tire(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
+                object.setSolid(Boolean.valueOf(objectInfo[5]));
+                object.rescaleObject(Integer.parseInt(objectInfo[1]), Integer.parseInt(objectInfo[2]));
+                objects.add(object);
+            }
         }
+        System.out.println("OBJECTS:" + objects.toString());
+        System.out.println("PRESETOBJECTS: " + presetObjects.toString());
     }
 
     public String getName(){

@@ -170,7 +170,6 @@ public class LevelState extends GameState {
         if(selectedObject != null) {
             selectedObject.drawUpdate();
         }
-        System.out.println("UPDATING LEVELSTATE");
     }
 
     public void draw(Canvas canvas){

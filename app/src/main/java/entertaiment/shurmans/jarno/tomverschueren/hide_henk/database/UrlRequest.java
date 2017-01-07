@@ -18,49 +18,53 @@ public class UrlRequest {
 
     }
 
+    /**
+     * NOT USED AT THE MOMENT AND NOT VALID!!
+     * @return
+     */
 
-    public static String createTables(){
-        return "http://api.a16_sd507.studev.groept.be/createtables";
+    /*public static String createTables(){
+        return "http://studev.groept.be/api/a16_sd507/createtables";
 
-    }
+    }*/
 
     public static String getID(String name){
-        return "http://api.a16_sd507.studev.groept.be/getid/" + name;
+        return "http://studev.groept.be/api/a16_sd507/getid/" + name;
     }
 
     public static String insertLevel(String name, String stringID){
-        return "http://api.a16_sd507.studev.groept.be/insertonlinegame/"+name+ "/"+ stringID + "/" + Preferences.uuid.toString();
+        return "http://studev.groept.be/api/a16_sd507/insertonlinegame/"+name+ "/"+ stringID + "/" + Preferences.uuid.toString();
     }
 
     public static String getOnlineLevels(){
-        return "http://api.a16_sd507.studev.groept.be/getlevels";
+        return "http://studev.groept.be/api/a16_sd507/getlevels";
     }
 
     public static String getStats(){
-        return "http://api.a16_sd507.studev.groept.be/getstats/"+ Preferences.uuid.toString();
+        return "http://studev.groept.be/api/a16_sd507/getstats/"+ Preferences.uuid.toString();
     }
 
 
 
     public static String insertStat(String stat, int value){
-        return "ttp://api.a16_sd507.studev.groept.be/insertstat/"  + stat + "/" + Preferences.uuid.toString() + "/" +value;
+        return "http://studev.groept.be/api/a16_sd507/insertstat/"  + stat + "/" + Preferences.uuid.toString() + "/" +value;
     }
 
     public static String insertPlayer(){
         System.out.println("INSERTING");
-        return "http://api.a16_sd507.studev.groept.be/insertplayer/" + Preferences.uuid.toString();
+        return "http://studev.groept.be/api/a16_sd507/insertplayer/" + Preferences.uuid.toString();
     }
 
     public static String checkPlayer(){
-        return "http://api.a16_sd507.studev.groept.be/checkplayer/" + Preferences.uuid.toString();
+        return "http://studev.groept.be/api/a16_sd507/checkplayer/" + Preferences.uuid.toString();
     }
 
     public static String getOnlineNames(){
-        return "http://api.a16_sd507.studev.groept.be/getonlinenames";
+        return "http://studev.groept.be/api/a16_sd507/getonlinenames";
     }
 
     public static String getOnlineLevel(String name){
-        return "http://api.a16_sd507.studev.groept.be/getonlinelevel/"+name;
+        return "http://studev.groept.be/api/a16_sd507/getonlinelevel/"+name;
     }
 
 

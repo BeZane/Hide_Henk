@@ -26,6 +26,7 @@ public class OnlineLevel extends LevelState {
         objects.clear();
         scrollBar.setObjects(levelWrapper.getObjects());
         objects.addAll(levelWrapper.getPresetObjects());
+
         lastLoadedID = "";
     }
 

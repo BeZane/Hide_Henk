@@ -62,7 +62,7 @@ public class DatabaseManager {
                     @Override
                     public void onResponse(JSONArray response) {
                         if(url.contains("insert"))
-                            return;
+                            System.out.println("INSERT: " + response);
                         if(url.contains("checkplayer")){
                             if(response.isNull(0))
                                 request(UrlRequest.insertPlayer());
@@ -79,6 +79,8 @@ public class DatabaseManager {
                             System.out.println("Just responded");
                         }else if(url.contains("getonlinelevel")){
                             try {
+                                System.out.println(response);
+                                System.out.println(response.getJSONObject(0).getString("id"));
                                 OnlineLevel.lastLoadedID = response.getJSONObject(0).getString("id");
                             } catch (JSONException e) {
                                 e.printStackTrace();

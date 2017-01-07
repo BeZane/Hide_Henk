@@ -40,9 +40,10 @@ public class NameActivity extends Activity implements IDActivity {
 
                 NAME = editText.getText().toString();
                 System.out.println(editText.getText().toString());
-               // ActivityManager.getInstance().startActivity(0);
                 ToastUtil.createToast("Level saved!", Toast.LENGTH_SHORT).show();
                 done = true;
+                ActivityManager.getInstance().startActivity(0);
+
             }
         });
     }
