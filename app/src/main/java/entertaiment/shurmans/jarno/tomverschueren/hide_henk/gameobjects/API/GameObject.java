@@ -21,17 +21,13 @@ public abstract class GameObject {
     protected double dx,dy;
     protected final static double GRAVITY = 0.3;
     protected int maxFallSpeed = 15;
-    protected double rotation; //expressed in degrees to determine the rotation
-    protected double drotation; //rotation speed
-    protected double arotation = 0.004; //rotation acceleration
-    protected double maxRotationSpeed = 0.05;
+
 
     protected boolean solid; //solid objects are not affected by gravity, nor can be moved by impact
     protected boolean prepareSolid;
 
     //drawing
     protected Bitmap picture;   //Bitmap already scaled to the correct screen width and height.
-    protected Bitmap rotatedPicture;
     protected Matrix rotationMatrix;
     protected double drawX;     //Make sure that you retrieve dimensions of objects from the original bitmap before scaling it!
     protected double drawY;
@@ -46,7 +42,7 @@ public abstract class GameObject {
     //collision detection
     public enum Shapes {RECTANGLE, CIRCLE};
     protected Shapes shape;
-    public enum Types{HENK, PLANK, WATERDROP, TIRE};
+    public enum Types{HENK, HORIZONTALPLANK, VETICALPLANK, WATERDROP, TIRE};
     protected Types type;
 
 
@@ -81,7 +77,6 @@ public abstract class GameObject {
     }
     public void setDx(double xSpeed){ dx = xSpeed;}
     public void setDy(double ySpeed){ dy = ySpeed;}
-    public void setRotation(double rot){ rotation = rot;}
     public void setSolid(Boolean b){ solid = b;}
     public Bitmap getBitmap(){
         return picture;
@@ -191,6 +186,8 @@ public abstract class GameObject {
             RectangleObject r2 = (RectangleObject)this;
             boolean xOverlap = false;
             boolean yOverlap = false;
+            double xContact;
+            double yContact;
             if(r1.x - r2.x >= 0 && r1.x - r2.x < r2.width){
                 xOverlap = true;
             }
@@ -205,6 +202,23 @@ public abstract class GameObject {
             }
             if(xOverlap && yOverlap){
                 collision = true;
+                if(r1.y > r2.y){
+                    yContact = r2.y + r2.getHeight();
+                    xContact = r2.x + r2.getWidth() / 2;
+                }
+                else{
+                    yContact = r2.y;
+                    xContact = r2.x + r2.getWidth() / 2;
+                }
+                /*
+                if(r1.x < r2.x){
+                    xContact = r2.x;
+                }
+                else{
+                    xContact = r2.x + r2.getHeight();
+                }
+                */
+                calculateNewVector(xContact, yContact, r1);
             }
         }
 
@@ -251,16 +265,13 @@ public abstract class GameObject {
         }
         //Bouncing off a solid object
         else if(o1.solid){   //the direction of the our object after collision
-            System.out.println(forceDirection*360/2/Math.PI);
             if(forceDirection *180 / Math.PI % 90 == 0 ) {
-                System.out.println("op een vlak");
                 dy += -Math.sin(forceDirection) * dy * 2;
                 dx += Math.cos(forceDirection) * dx * 2;
                 dy = dy * bouncingFactor;
                 dx = dx * bouncingFactor;
             }
             else{
-                System.out.println("op de punt");
                 dy = -Math.sin(forceDirection) * bouncingFactor * dy;
                 dx += Math.cos(forceDirection) * bouncingFactor * speed;
             }
@@ -297,7 +308,6 @@ public abstract class GameObject {
         if(dy > maxFallSpeed){
             dy = maxFallSpeed ;
         }
-        rotation += drotation;
         //rotationMatrix.postRotate((float)rotation);
         drawUpdate();
     };

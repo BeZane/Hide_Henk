@@ -221,7 +221,7 @@ public class ScrollBar {
                 return new Henk(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
             case WATERDROP:
                 return new WaterDrop(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-            case PLANK:
+            case HORIZONTALPLANK:
                 return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             default:
                 return null;
