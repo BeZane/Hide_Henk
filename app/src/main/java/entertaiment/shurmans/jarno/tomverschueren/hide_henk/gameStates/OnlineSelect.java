@@ -5,9 +5,22 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.onlinegames.OnlineGameObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.onlinegames.OnlineGameScrollbar;
 
 /**
  * Created by TomVerschueren on 4/12/2016.
@@ -17,6 +30,8 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Men
 public class OnlineSelect extends GameState {
 
     private Bitmap background;
+    private static OnlineGameScrollbar scrollBar;
+    private Bitmap previous;
 
     public OnlineSelect(GameStateManager gsm) {
         this.gsm = gsm;
@@ -26,7 +41,13 @@ public class OnlineSelect extends GameState {
     protected void init() {
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
-
+        previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
+        previous = Bitmap.createScaledBitmap(previous, 140, 140, false);
+        scrollBar = new OnlineGameScrollbar();
+        scrollBar.setShownAmount(5);
+        scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
+        scrollBar.setWIDTH((int)(GamePanel.SCREEN_WIDTH /1.5));
+        DatabaseManager.request(UrlRequest.getOnlineNames());
     }
 
     @Override
@@ -34,8 +55,25 @@ public class OnlineSelect extends GameState {
 
     }
 
+    public static void updateScrollBar(JSONArray jsonArray){
+        scrollBar.clear();
+        System.out.println(jsonArray);
+        for(int i=0;i<jsonArray.length();i++) {
+            OnlineGameObject onlineGameObject = new OnlineGameObject(0, 0);
+            try {
+                onlineGameObject.setText(jsonArray.getJSONObject(i).getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            scrollBar.addObject(onlineGameObject);
+        }
+    }
+
     @Override
     protected void draw(Canvas canvas) {
+        canvas.drawBitmap(background, 0, 0, null);
+        scrollBar.draw(canvas);
+        canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
 
     }
 

@@ -29,7 +29,7 @@ public class UrlRequest {
     }
 
     public static String insertLevel(String name, String stringID){
-        return "http://api.a16_sd507.studev.groept.be/insertonlinegame/"+name+ "/"+ stringID;
+        return "http://api.a16_sd507.studev.groept.be/insertonlinegame/"+name+ "/"+ stringID + "/" + Preferences.uuid.toString();
     }
 
     public static String getOnlineLevels(){
@@ -40,9 +40,7 @@ public class UrlRequest {
         return "http://api.a16_sd507.studev.groept.be/getstats/"+ Preferences.uuid.toString();
     }
 
-    public static String instertPlayer(){
-        return "http://api.a16_sd507.studev.groept.be/insertplayer/" + Preferences.uuid.toString();
-    }
+
 
     public static String insertStat(String stat, int value){
         return "ttp://api.a16_sd507.studev.groept.be/insertstat/"  + stat + "/" + Preferences.uuid.toString() + "/" +value;
@@ -55,6 +53,10 @@ public class UrlRequest {
 
     public static String checkPlayer(){
         return "http://api.a16_sd507.studev.groept.be/checkplayer/" + Preferences.uuid.toString();
+    }
+
+    public static String getOnlineNames(){
+        return "http://api.a16_sd507.studev.groept.be/getonlinenames";
     }
 
 

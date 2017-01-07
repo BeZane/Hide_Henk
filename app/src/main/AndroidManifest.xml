@@ -12,7 +12,17 @@
         android:theme="@style/AppTheme"
         android:debuggable="true">
         <activity
-            android:name=".Game"
+            android:name=".activities.ActivityManager$Game"
+            android:screenOrientation="landscape">
+            android:label="Hide Henk"
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.NameActivity"
             android:screenOrientation="landscape">
             android:label="Hide Henk"
             <intent-filter>

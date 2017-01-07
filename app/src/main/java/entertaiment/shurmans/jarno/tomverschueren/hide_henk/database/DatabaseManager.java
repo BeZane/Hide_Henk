@@ -24,6 +24,7 @@ import java.util.HashMap;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Util.Stats;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineSelect;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
 
 /**
@@ -68,9 +69,11 @@ public class DatabaseManager {
 
                         }
                         if(url.contains("getstats")){
-                            System.out.println("/////////////////////////////////");
                             Stats.convert(response);
                             System.out.println(response);
+                        }else if(url.contains("getonlinenames")){
+                            OnlineSelect.updateScrollBar(response);
+                            System.out.println("Just responded");
                         }
 
                     }

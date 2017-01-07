@@ -3,7 +3,10 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Game;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.activities.ActivityManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.activities.NameActivity;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
 
@@ -17,7 +20,6 @@ public class Building3State extends GameState {
 
     public Building3State(GameStateManager gsm){
         this.gsm = gsm;
-        Game.setNameLayout(true);
 
     }
 
@@ -27,13 +29,23 @@ public class Building3State extends GameState {
 
     @Override
     protected void init() {
-        Game.setNameLayout(true);
+        //Game.setNameLayout(true);
+        System.out.println("SENDING");
+
     }
 
     @Override
     protected void update() {
-        if(!Game.getNameLayout()){
-            levelWrapper.setName(Game.getInputName());
+      //  if(!Game.getNameLayout()){
+        //    levelWrapper.setName(Game.getInputName());
+        //}
+        System.out.println("HEY");
+        if(levelWrapper !=null && NameActivity.NAME != null) {
+            ActivityManager.getInstance().startActivity(0);
+            levelWrapper.setName(NameActivity.NAME);
+            DatabaseManager.request(UrlRequest.insertLevel(NameActivity.NAME, levelWrapper.getStringID()));
+            gsm.setState(GameStateManager.BUILDERMENU);
+            NameActivity.NAME = null;
         }
     }
 

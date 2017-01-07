@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 
 import java.util.Calendar;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.activities.ActivityManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
@@ -51,8 +52,8 @@ public class Building2State extends GameState {
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         doneButton = new DoneButton();
 
-        doneButton.setX(700);
-        doneButton.setY(250);
+        doneButton.setX((int)(1200*GamePanel.X_SCALE));
+        doneButton.setY((int)(650*GamePanel.Y_SCALE));
 
         scrollBar = new BuildingScrollBar();
         scrollBar.setShownAmount(3);
@@ -81,8 +82,6 @@ public class Building2State extends GameState {
 
     @Override
     protected boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX() / GamePanel.X_SCALE;
-        float y = event.getY() / GamePanel.Y_SCALE;
         long clickDuration = 0;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -97,15 +96,20 @@ public class Building2State extends GameState {
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                x = event.getX();
-                y = event.getY();
+                float x = event.getX();///GamePanel.X_SCALE;
+                float y = event.getY();///GamePanel.Y_SCALE;
 
                 clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
                 if (clickDuration < MAX_CLICK_DURATION) {
                     if(doneButton.contains(x,y)){
+                        scrollBar.updateLevelWrapper(levelWrapper);
                         Building3State building3State = (Building3State) gsm.setState(GameStateManager.BUILDING3);
-                        building3State.setLevelWrapper(levelWrapper);
 
+
+                        building3State.setLevelWrapper(levelWrapper);
+                        ActivityManager.getInstance().startActivity(1);
+
+                        return true;
                     }
                     return scrollBar.actionUp(event);
                 }

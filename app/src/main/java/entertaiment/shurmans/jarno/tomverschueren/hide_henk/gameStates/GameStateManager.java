@@ -43,7 +43,7 @@ public class GameStateManager {
         gameStates.add(new Building3State(this));
         gameStates.add(new GameOverState(this));
         gameStates.add(new LevelCompleted(this));
-        //gameStates.add(new OnlineSelect(this));
+        gameStates.add(new OnlineSelect(this));
         gameStates.get(currentState).init();
     }
 

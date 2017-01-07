@@ -3,13 +3,10 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Game;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
