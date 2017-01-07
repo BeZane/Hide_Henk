@@ -16,6 +16,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.Game
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.options.Preferences;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 
 /**
@@ -40,6 +41,8 @@ public class LevelState extends GameState {
     private boolean objectsLoaded = false;
     protected ScrollBar scrollBar;
     private ObjectManager objectManager = new ObjectManager();
+
+    private int level = 0;
 
     private int botsingen = 0;
 
@@ -74,6 +77,7 @@ public class LevelState extends GameState {
         //TODO: I WOULD USE THE LEVELWRAPPER CLASS. PREPAREOBJECTS ARE OBJECTS THAT ARE ALREADY IN THE GAME. NORMAL OBJECTS
         //TODO: ARE THE OBJECTS THAT NEED TO BE PLACED
         //TODO read in the file that has info about the level layout.
+        //TODO set the int level to the level we are currently playing.
     }
 
     private void reset(){
@@ -160,6 +164,7 @@ public class LevelState extends GameState {
             }
             if(!waterDropsPresent && !henk.isCleaned()){
                 reset();
+                Preferences.levelsUnlocked[level + 1] = true;
                 gsm.setState(GameStateManager.LEVELCOMPLETED);
             }
             else if(henk.isCleaned()){

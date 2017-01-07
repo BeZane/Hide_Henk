@@ -15,6 +15,7 @@ public class Preferences {
     public static boolean SOUND = false;
     private static SharedPreferences settings;
     public static UUID uuid;
+    public static boolean[] levelsUnlocked = {true, false, false, false, false};
 
     public Preferences(Context context){
         settings = context.getSharedPreferences("options",0);

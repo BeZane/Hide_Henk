@@ -23,6 +23,7 @@ public class Button {
 
     public Button() {
         color = Color.DKGRAY;
+        text = "";
     }
 
     public void setX(int x){
@@ -40,6 +41,7 @@ public class Button {
         return picture;
     }
     public int getY(){return y;}
+    public int getX(){return x;}
 
     protected void scaleToScreensize(Bitmap picture){
         int destWidth = (int)(picture.getWidth() * GamePanel.X_SCALE);

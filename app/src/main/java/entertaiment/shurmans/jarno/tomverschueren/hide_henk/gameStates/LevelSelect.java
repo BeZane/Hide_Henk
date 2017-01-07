@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.options.Preferences;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.LevelSelectButton;
 
 /**
@@ -38,17 +39,19 @@ public class LevelSelect extends GameState {
 
 
     private void addButtons(){
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 5; j++) {
-                //drawing the buttons
-                LevelSelectButton unlockedButton = new LevelSelectButton();
-                unlockedButton.setTextSize((int)(40*GamePanel.X_SCALE));
-                unlockedButton.setText("" + (i * 5 + j + 1));
-                unlockedButton.setX((int) (GamePanel.SCREEN_WIDTH / 2 + unlockedButton.getPicture().getWidth() * (j - 2.5) * 1.5));
-                unlockedButton.setY(GamePanel.SCREEN_HEIGHT / 2 + (i - 1) * unlockedButton.getPicture().getHeight() * 3 / 2 );
-                unlockedButtons.add(unlockedButton);
+        for(int i = 0; i < 5; i++) {
+            //drawing the buttons
+            LevelSelectButton unlockedButton = new LevelSelectButton();
+            unlockedButton.setTextSize((int)(40*GamePanel.X_SCALE));
+            if(Preferences.levelsUnlocked[i]) {
+                unlockedButton.setText("" + (i + 1));
             }
+            unlockedButton.setX((int) (GamePanel.SCREEN_WIDTH / 2 + unlockedButton.getPicture().getWidth() * (i - 2.5) * 1.5));
+            unlockedButton.setY(GamePanel.SCREEN_HEIGHT / 2 );
+            unlockedButton.unlockButton(Preferences.levelsUnlocked[i]);
+            unlockedButtons.add(unlockedButton);
         }
+
     }
 
     protected void update(){}
@@ -66,7 +69,9 @@ public class LevelSelect extends GameState {
 
 
         //3 rows and 5 columns
+        int i = 0;
         for(LevelSelectButton b: unlockedButtons){
+            i++;
             b.draw(canvas);
         }
 
@@ -83,10 +88,17 @@ public class LevelSelect extends GameState {
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     gsm.setState(gsm.MENUSTATE);
                 }
-
-                if(x < GamePanel.SCREEN_WIDTH / 2 && y < GamePanel.SCREEN_HEIGHT / 2){
-                    gsm.setState(gsm.LEVEL1);
+                int i = 0;
+                for(LevelSelectButton b : unlockedButtons){
+                    if(b.contains(x,y) && i == 0){
+                        gsm.setState(GameStateManager.LEVEL1);
+                    }
+                    if(b.contains(x,y) && b.isUnlocked()){
+                       //TODO Load the i-nd level
+                    }
+                    i++;
                 }
+
                 break;
         }
         return true;

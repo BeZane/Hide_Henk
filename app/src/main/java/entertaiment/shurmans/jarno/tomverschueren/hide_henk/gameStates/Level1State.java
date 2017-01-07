@@ -23,7 +23,7 @@ public class Level1State extends LevelState {
 
         //environment
         henk = new Henk(650, 520);
-        henk.setSolid(true);
+        henk.setSolid(false);
         HorizontalPlank p1 = new HorizontalPlank(740, 420);
         p1.setSolid(true);
         HorizontalPlank p2 = new HorizontalPlank(580, 600);

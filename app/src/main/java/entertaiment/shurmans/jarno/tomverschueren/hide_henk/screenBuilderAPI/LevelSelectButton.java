@@ -11,12 +11,32 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 
 public class LevelSelectButton extends Button{
 
+    private boolean unlocked = false;
+
     public LevelSelectButton(){
         super();
         textSize = (int)(30* GamePanel.X_SCALE);
-        Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button);
+        Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.locked_button);
         tempPicture = Bitmap.createScaledBitmap(tempPicture, 90, 90, false);
         scaleToScreensize(tempPicture);
+    }
+
+    public void unlockButton(boolean b){
+        unlocked = b;
+        if(unlocked){
+            Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button);
+            tempPicture = Bitmap.createScaledBitmap(tempPicture, 90, 90, false);
+            scaleToScreensize(tempPicture);
+        }
+        else{
+            Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.locked_button);
+            tempPicture = Bitmap.createScaledBitmap(tempPicture, 90, 90, false);
+            scaleToScreensize(tempPicture);
+        }
+    }
+
+    public boolean isUnlocked(){
+        return unlocked;
     }
 
 }
