@@ -6,13 +6,13 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.L
  * Created by TomVerschueren on 7/01/2017.
  */
 
-public class OnlineLevel extends LevelState {
+public class Level extends LevelState {
 
     public static String lastLoadedID = "";
 
 
 
-    public OnlineLevel(GameStateManager gsm) {
+    public Level(GameStateManager gsm) {
         super(gsm);
     }
 
@@ -35,6 +35,8 @@ public class OnlineLevel extends LevelState {
         lastLoadedID = "";
         populated =true;
     }
+
+
 
 
 

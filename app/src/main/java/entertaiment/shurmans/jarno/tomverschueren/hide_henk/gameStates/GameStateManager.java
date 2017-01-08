@@ -46,7 +46,7 @@ public class GameStateManager {
         gameStates.add(new GameOverState(this));
         gameStates.add(new LevelCompleted(this));
         gameStates.add(new OnlineSelect(this));
-        gameStates.add(new OnlineLevel(this));
+        gameStates.add(new Level(this));
         gameStates.get(currentState).init();
     }
 

@@ -5,11 +5,7 @@ import android.widget.Toast;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineLevel;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ToastUtil;
 
