@@ -22,6 +22,8 @@ public class HorizontalPlank extends RectangleObject {
     public void rescaleObject(int newWidth, int newHeight) {
         Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
         picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
+        setWidth(newWidth);
+        setHeight(newHeight);
     }
 
     private void init(){

@@ -91,11 +91,15 @@ public class LevelSelect extends GameState {
                 int i = 0;
                 for(LevelSelectButton b : unlockedButtons){
                     if(b.contains(x,y) && i == 0){
-                        gsm.setState(GameStateManager.LEVEL1);
+                        //gsm.setState(GameStateManager.LEVEL1);
                     }
                     if(b.contains(x,y) && b.isUnlocked()){
                         System.out.println("LEVEL1 STARTING");
-                        gsm.setState(GameStateManager.LEVEL1);
+                        Level level = (Level)gsm.setState(GameStateManager.ONLINELEVEL);
+
+                        level.setLastLoadedID(i);
+                        System.out.println("HEY");
+                        level.populate();
                        //TODO Load the i-nd level
                     }
                     i++;

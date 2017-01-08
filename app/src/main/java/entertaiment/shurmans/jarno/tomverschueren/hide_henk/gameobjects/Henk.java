@@ -51,6 +51,7 @@ public class Henk extends CircleObject{
     }
 
     public void rescaleObject(int newWidth,int newHeight){
+
         System.out.println("IN RESCALING");
         Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.dirty_henk);
         this.picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);

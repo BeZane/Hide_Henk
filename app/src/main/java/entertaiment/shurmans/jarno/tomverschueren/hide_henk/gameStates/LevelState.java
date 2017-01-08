@@ -72,7 +72,7 @@ public class LevelState extends GameState {
         //ADD HERE ALL THE OBJECTS BY DOING SCROLLBAR.ADDOBJECT
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
 
-        populate();
+//        populate();
         objectsLoaded = true;
     }
 
@@ -125,6 +125,9 @@ public class LevelState extends GameState {
                 return;
         }
         if(selectedObject != null) {
+            //MOET GEUPATE WORDEN ANDERS KAN JE HET NIET SLEPEN OVER HET SCHERM
+            //ZET HET EFFE OP SOLID ZODAT HET NIET VALT ALS JE HET VAST HEBT
+            selectedObject.setSolid(true);
             selectedObject.update();
         }
         boolean hoseMustSpawn = true;
@@ -245,6 +248,7 @@ public class LevelState extends GameState {
     private int MAX_CLICK_DURATION = 200;
     private long clickDuration =0;
 
+    @Override
     public boolean onTouchEvent(MotionEvent event){
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -289,6 +293,8 @@ public class LevelState extends GameState {
 
             case MotionEvent.ACTION_UP:
                     if (selectedObject != null) {
+                        //ZET TERUG OP GRAVITY
+                        selectedObject.setSolid(false);
                         System.out.println("HERE");
                         objects.add(selectedObject);
                         toPlace.remove(selectedObject);

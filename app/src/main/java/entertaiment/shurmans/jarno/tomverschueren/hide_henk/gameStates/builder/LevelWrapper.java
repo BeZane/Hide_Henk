@@ -56,7 +56,7 @@ public class LevelWrapper {
                 Henk object = new Henk(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
                 System.out.println("TESTINGBOO");
-                object.rescaleObject((int) (Math.ceil(Float.parseFloat(presetObjectInfo[1]) / GamePanel.X_SCALE)), (int) Math.ceil(Float.parseFloat(presetObjectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Math.ceil(Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE)), (int) Math.ceil(Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
                 System.out.println("TESTINGBO2");
 
                 object.makeDirty();
@@ -64,7 +64,7 @@ public class LevelWrapper {
             } else if (presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.VERTICAL_PLANK.toString())) {
                 VerticalPlank object = new VerticalPlank(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) / GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
                 presetObjects.add(object);
             } else if (presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.HORIZONTAL_PLANK.toString())) {
                 System.out.println("TESTING3" + presetObjectInfo[3] + presetObjectInfo[4]);
@@ -72,14 +72,14 @@ public class LevelWrapper {
                 System.out.println("TESTING4");
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
                 System.out.println("TESTING5");
-                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) / GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
                 System.out.println("TESTING6");
                 presetObjects.add(object);
                 System.out.println("TESTING7");
             } else if (presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.TIRE.toString())) {
                 Tire object = new Tire(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
-                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) / GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
                 presetObjects.add(object);
             } else {
 
@@ -93,23 +93,23 @@ public class LevelWrapper {
             if (objectInfo[0].equalsIgnoreCase(GameObject.Types.HENK.toString())) {
                 Henk object = new Henk(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
                 object.setSolid(Boolean.valueOf(objectInfo[5]));
-                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) / GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
                 object.makeDirty();
                 objects.add(object);
             } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.VERTICAL_PLANK.toString())) {
                 VerticalPlank object = new VerticalPlank(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
                 object.setSolid(Boolean.valueOf(objectInfo[5]));
-                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) / GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
                 objects.add(object);
             } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.HORIZONTAL_PLANK.toString())) {
                 HorizontalPlank object = new HorizontalPlank(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
                 object.setSolid(Boolean.valueOf(objectInfo[5]));
-                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) / GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
                 objects.add(object);
             } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.TIRE.toString())) {
                 Tire object = new Tire(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
                 object.setSolid(Boolean.valueOf(objectInfo[5]));
-                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) / GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) / GamePanel.Y_SCALE));
+                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
                 objects.add(object);
             }
         }
@@ -129,8 +129,8 @@ public class LevelWrapper {
         ID = name.replaceAll(" ", "=") + "!";
         for (GameObject gameObject : presetObjects) {
             ID = ID + gameObject.getType().toString() + "," +
-                    gameObject.getBitmap().getWidth() * GamePanel.X_SCALE + "," +
-                    gameObject.getBitmap().getHeight() * GamePanel.Y_SCALE + "," +
+                    gameObject.getBitmap().getWidth() / GamePanel.X_SCALE + "," +
+                    gameObject.getBitmap().getHeight() / GamePanel.Y_SCALE + "," +
                     gameObject.getX() + "," +
                     gameObject.getY() + "," +
                     gameObject.isPrepareSolid() + ";";
@@ -139,8 +139,8 @@ public class LevelWrapper {
         for (GameObject gameObject : objects) {
             System.out.println("GAMEOBJECT: " + gameObject);
             ID = ID + gameObject.getType().toString() + "," +
-                    gameObject.getBitmap().getWidth() * GamePanel.X_SCALE + "," +
-                    gameObject.getBitmap().getHeight() * GamePanel.Y_SCALE + "," +
+                    gameObject.getBitmap().getWidth() / GamePanel.X_SCALE + "," +
+                    gameObject.getBitmap().getHeight() / GamePanel.Y_SCALE + "," +
                     gameObject.getX() + "," +
                     gameObject.getY() + "," +
                     gameObject.isPrepareSolid() + ";";

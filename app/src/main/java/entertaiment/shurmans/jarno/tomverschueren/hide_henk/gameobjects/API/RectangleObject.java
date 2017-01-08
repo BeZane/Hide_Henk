@@ -35,6 +35,8 @@ public abstract class RectangleObject extends GameObject {
         return false;
     }
 
+
+
     protected void calculateMass() {
         mass = density * height * width;
     }
