@@ -28,7 +28,6 @@ public abstract class GameObject {
 
     //drawing
     protected Bitmap picture;   //Bitmap already scaled to the correct screen width and height.
-    protected Matrix rotationMatrix;
     protected double drawX;     //Make sure that you retrieve dimensions of objects from the original bitmap before scaling it!
     protected double drawY;
 
@@ -49,8 +48,6 @@ public abstract class GameObject {
     public GameObject(double x, double y){
         this.x = x;
         this.y = y;
-
-        rotationMatrix = new Matrix();
     }
 
     /**

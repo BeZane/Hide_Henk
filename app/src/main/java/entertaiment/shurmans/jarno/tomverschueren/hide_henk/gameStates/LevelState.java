@@ -3,7 +3,6 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
@@ -14,7 +13,6 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.options.Preferences;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
@@ -44,7 +42,7 @@ public class LevelState extends GameState {
 
     private int level = 0;
 
-    private int botsingen = 0;
+    private int collisions = 0;
 
     public LevelState(GameStateManager gsm){
         this.gsm = gsm;
@@ -73,7 +71,6 @@ public class LevelState extends GameState {
     }
 
     protected void populate(){
-
         //TODO: I WOULD USE THE LEVELWRAPPER CLASS. PREPAREOBJECTS ARE OBJECTS THAT ARE ALREADY IN THE GAME. NORMAL OBJECTS
         //TODO: ARE THE OBJECTS THAT NEED TO BE PLACED
         //TODO read in the file that has info about the level layout.
@@ -93,10 +90,10 @@ public class LevelState extends GameState {
         for(GameObject o: objects){
             if(!object.equals(o)){
                 if(object.checkCollision(o)){
-                    botsingen++;
-                    System.out.println("Collision between " + object.getType() + " hitting " + o.getType() + " and this was nr " + botsingen + " in the chain reaction");
+                    collisions++;
+                    System.out.println("Collision between " + object.getType() + " hitting " + o.getType() + " and this was nr " + collisions + " in the chain reaction");
                     o.update();
-                    if(botsingen > 100){
+                    if(collisions > 100){
                         object.setDx(0);
                         object.setDy(0);
                         return;
@@ -115,7 +112,7 @@ public class LevelState extends GameState {
             GameObject o = objects.get(i);
             o.update();
             checkCollisions(o);
-            botsingen = 0;
+            collisions = 0;
             if(o.getType() == GameObject.Types.WATERDROP){
                 WaterDrop drop = (WaterDrop)o;
                 if(drop.getTimeLived() > drop.getTimeToLive()){
@@ -136,7 +133,7 @@ public class LevelState extends GameState {
             hoseSpawned = true;
         }
 
-        if(!objects.contains(henk) && objectsLoaded){
+       if(!objects.contains(henk) && objectsLoaded){
             reset();
             gsm.setState(GameStateManager.GAMEOVER);
         }

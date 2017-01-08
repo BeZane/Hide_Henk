@@ -30,8 +30,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int GAME_WIDTH = 1280;
     public static float X_SCALE;
     public static float Y_SCALE;
-    public static float SCALING_FACTOR_X = 0;
-    public static float SCALING_FACTOR_Y = 0;
 
     //sounds
     private SoundPool sounds;

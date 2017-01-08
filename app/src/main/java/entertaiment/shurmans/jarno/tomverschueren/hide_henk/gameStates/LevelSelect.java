@@ -20,7 +20,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Lev
 
 public class LevelSelect extends GameState {
 
-    private ArrayList<LevelSelectButton> unlockedButtons = new ArrayList<LevelSelectButton>();
+    private ArrayList<LevelSelectButton> buttons = new ArrayList<LevelSelectButton>();
     private Bitmap background;
     private Bitmap previous;
 
@@ -49,7 +49,7 @@ public class LevelSelect extends GameState {
             unlockedButton.setX((int) (GamePanel.SCREEN_WIDTH / 2 + unlockedButton.getPicture().getWidth() * (i - 2.5) * 1.5));
             unlockedButton.setY(GamePanel.SCREEN_HEIGHT / 2 );
             unlockedButton.unlockButton(Preferences.levelsUnlocked[i]);
-            unlockedButtons.add(unlockedButton);
+            buttons.add(unlockedButton);
         }
 
     }
@@ -70,7 +70,7 @@ public class LevelSelect extends GameState {
 
         //3 rows and 5 columns
         int i = 0;
-        for(LevelSelectButton b: unlockedButtons){
+        for(LevelSelectButton b: buttons){
             i++;
             b.draw(canvas);
         }
@@ -86,10 +86,10 @@ public class LevelSelect extends GameState {
                 float y = event.getY();
 
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
-                    gsm.setState(gsm.MENUSTATE);
+                    gsm.setState(gsm.MAINMENU);
                 }
                 int i = 0;
-                for(LevelSelectButton b : unlockedButtons){
+                for(LevelSelectButton b : buttons){
                     if(b.contains(x,y) && i == 0){
                         gsm.setState(GameStateManager.LEVEL1);
                     }

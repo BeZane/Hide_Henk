@@ -69,7 +69,7 @@ public class StatsMenu extends GameState {
 
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     stats = null;
-                    gsm.setState(gsm.MENUSTATE);
+                    gsm.setState(gsm.MAINMENU);
                 }
                 break;
         }
