@@ -175,8 +175,12 @@ public class ScrollBar {
         return false;
     }
 
-    public void setObjects(ArrayList<GameObject> objects){
-        this.scrollingObjects = objects;
+    public ArrayList<GameObject> getObjects(){
+        return scrollingObjects;
+    }
+
+    public void addAllObjects(ArrayList<GameObject> objects){
+        scrollingObjects.addAll(objects);
     }
 
     /**
@@ -270,6 +274,10 @@ public class ScrollBar {
                 return null;
 
         }
+    }
+
+    public void resetOffset(){
+        offset = 0;
     }
 
 

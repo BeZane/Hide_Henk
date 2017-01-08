@@ -34,6 +34,15 @@ public class Building3State extends GameState {
 
     }
 
+    public void done(){
+        ActivityManager.getInstance().startActivity(0);
+        levelWrapper.setName(NameActivity.NAME);
+        DatabaseManager.request(UrlRequest.insertLevel(NameActivity.NAME, levelWrapper.getStringID()));
+        System.out.println("INSERTING");
+        //gsm.setState(GameStateManager.BUILDERMENU);
+        NameActivity.done = false;
+    }
+
     @Override
     protected void update() {
       //  if(!Game.getNameLayout()){
@@ -45,7 +54,7 @@ public class Building3State extends GameState {
             levelWrapper.setName(NameActivity.NAME);
             DatabaseManager.request(UrlRequest.insertLevel(NameActivity.NAME, levelWrapper.getStringID()));
             System.out.println("INSERTING");
-            gsm.setState(GameStateManager.BUILDERMENU);
+            //gsm.setState(GameStateManager.BUILDERMENU);
             NameActivity.done = false;
         }
     }

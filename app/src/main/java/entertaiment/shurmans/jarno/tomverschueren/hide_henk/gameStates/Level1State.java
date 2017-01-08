@@ -37,11 +37,13 @@ public class Level1State extends LevelState {
         objects.add(p2);
         objects.add(p3);
         objects.add(p4);
+        populated = true;
 
-
+        System.out.println("POPULATION");
 
         //objects to place
         Tire t = new Tire(1100, 0);
+        scrollBar.addObject(t);
         toPlace.add(t);
 
     }

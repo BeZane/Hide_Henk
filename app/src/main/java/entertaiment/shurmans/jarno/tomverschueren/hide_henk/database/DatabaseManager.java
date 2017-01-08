@@ -4,31 +4,17 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.database;
 
 import android.content.Context;
 
-import com.android.volley.Cache;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.HashMap;
-
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Util.Stats;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.LevelState;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineLevel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.Level;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineSelect;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
 
 /**
  * Created by TomVerschueren on 8/12/2016.
@@ -81,7 +67,7 @@ public class DatabaseManager {
                             try {
                                 System.out.println(response);
                                 System.out.println(response.getJSONObject(0).getString("id"));
-                                OnlineLevel.lastLoadedID = response.getJSONObject(0).getString("id");
+                                Level.lastLoadedID = response.getJSONObject(0).getString("id");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

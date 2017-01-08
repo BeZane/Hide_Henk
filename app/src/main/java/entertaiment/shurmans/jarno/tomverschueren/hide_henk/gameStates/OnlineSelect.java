@@ -7,22 +7,13 @@ import android.view.MotionEvent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Calendar;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.activities.ActivityManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.Building3State;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.onlinegames.OnlineGameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.onlinegames.OnlineGameScrollbar;
 
@@ -59,8 +50,8 @@ public class OnlineSelect extends GameState {
 
     @Override
     protected void update() {
-        if(!OnlineLevel.lastLoadedID.equalsIgnoreCase("")){
-            OnlineLevel gameState = (OnlineLevel) gsm.setState(GameStateManager.ONLINELEVEL);
+        if(!Level.lastLoadedID.equalsIgnoreCase("")){
+            Level gameState = (Level) gsm.setState(GameStateManager.ONLINELEVEL);
             gameState.populate();
 
         }

@@ -5,11 +5,7 @@ import android.widget.Toast;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineLevel;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ScrollBar;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ToastUtil;
 
@@ -37,10 +33,10 @@ public class OnlineGameScrollbar extends ScrollBar {
         if(isIn((int)x,(int)y)) {
             //click event has occurred
             this.y = (int)y;
-            DatabaseManager.request(UrlRequest.getOnlineLevel(((OnlineGameObject)this.getSelectedObject((int)event.getY())).getText()));
             ToastUtil.createToast("Loading level from database", Toast.LENGTH_SHORT);
+            DatabaseManager.request(UrlRequest.getOnlineLevel(((OnlineGameObject)this.getSelectedObject((int)event.getY())).getText()));
 
-
+            resetOffset();
             System.out.println("COMING HERE");
 
             return true;
