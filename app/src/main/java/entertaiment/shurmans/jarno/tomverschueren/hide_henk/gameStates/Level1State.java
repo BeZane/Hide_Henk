@@ -37,7 +37,6 @@ public class Level1State extends LevelState {
         objects.add(p2);
         objects.add(p3);
         objects.add(p4);
-        populated = true;
 
         System.out.println("POPULATION");
 

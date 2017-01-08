@@ -44,7 +44,6 @@ public class LevelState extends GameState {
     private boolean objectsLoaded = false;
     protected ScrollBar scrollBar;
     private ObjectManager objectManager = new ObjectManager();
-    protected boolean populated = false;
 
     private int level = 0;
 
@@ -112,8 +111,9 @@ public class LevelState extends GameState {
     }
 
     public void update(){
-        if(!populated)
+        if(!objectsLoaded) {
             return;
+        }
         if(henk == null){
             for(GameObject gameObject:objects){
                 if(gameObject.getType() == GameObject.Types.HENK)
@@ -122,6 +122,7 @@ public class LevelState extends GameState {
             if(henk == null)
                 return;
         }
+
         boolean hoseMustSpawn = true;
 
         for(int i = 0; i < objects.size(); i++){
@@ -200,8 +201,9 @@ public class LevelState extends GameState {
     }
 
     public void draw(Canvas canvas){
-        if(!populated)
+        if(!objectsLoaded) {
             return;
+        }
         canvas.drawBitmap(background,0,0,null);
         for(GameObject o: objects){
             o.draw(canvas);
@@ -240,7 +242,7 @@ public class LevelState extends GameState {
     public boolean onTouchEvent(MotionEvent event){
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                clickDuration =0;
+                clickDuration = 0;
                 float x = event.getX() / GamePanel.X_SCALE;
                 float y = event.getY() / GamePanel.Y_SCALE;
 
