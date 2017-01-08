@@ -67,5 +67,9 @@ public class UrlRequest {
         return "http://studev.groept.be/api/a16_sd507/getonlinelevel/"+name;
     }
 
+    public static String incrementStat(String stat){
+        return "http://studev.groept.be/api/a16_sd507/incrementstat/" + stat + "/" + stat + "/" + Preferences.uuid.toString();
+    }
+
 
 }

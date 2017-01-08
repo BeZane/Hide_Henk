@@ -37,10 +37,10 @@ public class OnlineGameScrollbar extends ScrollBar {
         if(isIn((int)x,(int)y)) {
             //click event has occurred
             this.y = (int)y;
-            DatabaseManager.request(UrlRequest.getOnlineLevel(((OnlineGameObject)this.getSelectedObject((int)event.getY())).getText()));
             ToastUtil.createToast("Loading level from database", Toast.LENGTH_SHORT);
+            DatabaseManager.request(UrlRequest.getOnlineLevel(((OnlineGameObject)this.getSelectedObject((int)event.getY())).getText()));
 
-
+            resetOffset();
             System.out.println("COMING HERE");
 
             return true;

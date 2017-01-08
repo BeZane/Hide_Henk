@@ -24,10 +24,16 @@ public class OnlineLevel extends LevelState {
         levelWrapper.loadFromString(lastLoadedID);
         scrollBar.clear();
         objects.clear();
-        scrollBar.setObjects(levelWrapper.getObjects());
+        //System.out.println("POPULATING");
+        scrollBar.addAllObjects(levelWrapper.getObjects());
+        toPlace.addAll(levelWrapper.getObjects());
+        System.out.println("SIZE:" +toPlace.size());
+        System.out.println("X:" + levelWrapper.getPresetObjects().get(0).getX());
+        //System.out.println("SCROLLINGBAROBJECTS: " + scrollBar.getObjects().toString());
         objects.addAll(levelWrapper.getPresetObjects());
 
         lastLoadedID = "";
+        populated =true;
     }
 
 

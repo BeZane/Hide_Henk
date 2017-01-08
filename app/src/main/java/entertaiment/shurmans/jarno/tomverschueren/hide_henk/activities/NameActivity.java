@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.Building3State;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.ToastUtil;
 
 /**
@@ -19,6 +21,7 @@ public class NameActivity extends Activity implements IDActivity {
     public static boolean done = false;
     private static EditText editText = null;
     private Button button;
+    public static GameStateManager gameStateManager;
 
     public static String NAME = null;
     //THIS THREAD IS USED TO SWITCH FROM GAMEPANEL TO ACTIVITY
@@ -42,7 +45,10 @@ public class NameActivity extends Activity implements IDActivity {
                 System.out.println(editText.getText().toString());
                 ToastUtil.createToast("Level saved!", Toast.LENGTH_SHORT).show();
                 done = true;
-                ActivityManager.getInstance().startActivity(0);
+                Building3State building3State = (Building3State)gameStateManager.getState();
+                building3State.done();
+                //ActivityManager.getInstance().startActivity(0);
+
 
             }
         });

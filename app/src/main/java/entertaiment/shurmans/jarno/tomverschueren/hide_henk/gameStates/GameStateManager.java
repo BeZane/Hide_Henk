@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.activities.NameActivity;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.BuilderMenuState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.Building2State;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.Building3State;
@@ -31,7 +32,7 @@ public class GameStateManager {
 
 
     public GameStateManager(){
-
+        NameActivity.gameStateManager = this;
         gameStates = new ArrayList<GameState>();
         currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
@@ -65,6 +66,10 @@ public class GameStateManager {
 
     public boolean onTouchEvent(MotionEvent event){
         return gameStates.get(currentState).onTouchEvent(event);
+    }
+
+    public GameState getState(){
+        return gameStates.get(currentState);
     }
 
 

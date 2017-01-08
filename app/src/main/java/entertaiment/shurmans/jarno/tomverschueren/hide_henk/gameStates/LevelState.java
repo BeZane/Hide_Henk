@@ -8,9 +8,12 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
@@ -41,6 +44,7 @@ public class LevelState extends GameState {
     private boolean objectsLoaded = false;
     protected ScrollBar scrollBar;
     private ObjectManager objectManager = new ObjectManager();
+    protected boolean populated = false;
 
     private int level = 0;
 
@@ -62,7 +66,7 @@ public class LevelState extends GameState {
         int destHeight = (int) (unScaledHose.getHeight() * GamePanel.Y_SCALE);
         hose = Bitmap.createScaledBitmap(unScaledHose, destWidth, destHeight, false);
         scrollBar = new ScrollBar(objectManager);
-        scrollBar.setShownAmount(2);
+        scrollBar.setShownAmount(4);
         scrollBar.setHEIGHT(GamePanel.SCREEN_HEIGHT);
         scrollBar.setWIDTH(GamePanel.SCREEN_WIDTH / 8);
         //ADD HERE ALL THE OBJECTS BY DOING SCROLLBAR.ADDOBJECT
@@ -90,6 +94,7 @@ public class LevelState extends GameState {
     }
 
     private void checkCollisions(GameObject object){
+
         for(GameObject o: objects){
             if(!object.equals(o)){
                 if(object.checkCollision(o)){
@@ -105,10 +110,23 @@ public class LevelState extends GameState {
                 }
             }
         }
+
     }
 
     public void update(){
-
+        if(!populated)
+            return;
+        if(henk == null){
+            for(GameObject gameObject:objects){
+                if(gameObject.getType() == GameObject.Types.HENK)
+                    henk =(Henk) gameObject;
+            }
+            if(henk == null)
+                return;
+        }
+        if(selectedObject != null) {
+            selectedObject.update();
+        }
         boolean hoseMustSpawn = true;
 
         for(int i = 0; i < objects.size(); i++){
@@ -135,8 +153,14 @@ public class LevelState extends GameState {
         if(objectsLoaded && toPlace.size() == 0 && hoseMustSpawn){
             hoseSpawned = true;
         }
-
-        if(!objects.contains(henk) && objectsLoaded){
+        boolean containsHenk = false;
+        for(GameObject gameObject:objects){
+            if(gameObject.getType() == GameObject.Types.HENK)
+                containsHenk = true;
+        }
+        if(!containsHenk && objectsLoaded){
+            System.out.println("FIRST GAME OVER");
+            System.out.println("OBJECTS: " + objects);
             reset();
             gsm.setState(GameStateManager.GAMEOVER);
         }
@@ -165,90 +189,116 @@ public class LevelState extends GameState {
             if(!waterDropsPresent && !henk.isCleaned()){
                 reset();
                 Preferences.levelsUnlocked[level + 1] = true;
+                System.out.println("LEVEL_COMPLETED");
+                DatabaseManager.request(UrlRequest.incrementStat("gamesplayed"));
+                DatabaseManager.request(UrlRequest.incrementStat("gamesfailed"));
+
                 gsm.setState(GameStateManager.LEVELCOMPLETED);
             }
             else if(henk.isCleaned()){
+                System.out.println("GAME_OVER");
+                DatabaseManager.request(UrlRequest.incrementStat("gamesplayed"));
+                DatabaseManager.request(UrlRequest.incrementStat("gameswon"));
+
+
                 reset();
                 gsm.setState(GameStateManager.GAMEOVER);
             }
         }
-        if(selectedObject != null) {
-            selectedObject.drawUpdate();
-        }
+
     }
 
     public void draw(Canvas canvas){
-
+        if(!populated)
+            return;
         canvas.drawBitmap(background,0,0,null);
         for(GameObject o: objects){
             o.draw(canvas);
+        }
+        if(!hoseSpawned){ //ONLY DRAW THE SCROLLBAR IF HOSE ISN4T SPAWNED
+            scrollBar.draw(canvas);
         }
         if(hoseSpawned){
             canvas.drawBitmap(hose,(int) (hosePos * hoseSpeed * GamePanel.X_SCALE), 0, null);
         }
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
-
-        selectedObject.draw(canvas);
+        if(selectedObject !=null)
+            selectedObject.draw(canvas);
         for(GameObject o: toPlace){
             o.draw(canvas);
         }
 
-        if(toPlace.size() > 0){
+        /*if(toPlace.size() > 0){
             Paint p = new Paint();
             p.setARGB(70,70,70,125);
             canvas.drawRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT/3, p);
-        }
+        } */
 
-        //DRAW THE SCROLLBAR
-        /*
-        if(!hoseSpawned){ //ONLY DRAW THE SCROLLBAR IF HOSE ISN4T SPAWNED
-            scrollBar.draw(canvas);
-        }
-        */
+
+
+
 
 
     }
 
+    private long startClickTime = 0;
+    private int MAX_CLICK_DURATION = 200;
+    private long clickDuration =0;
+
     public boolean onTouchEvent(MotionEvent event){
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                clickDuration =0;
                 float x = event.getX() / GamePanel.X_SCALE;
                 float y = event.getY() / GamePanel.Y_SCALE;
 
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     reset();
                     gsm.setState(gsm.LEVELSELECT);
+                    return false;
                 }
                 else if(0 < toPlace.size()) {
+                    System.out.println("IN HERE");
                     selectedObject = toPlace.get(0);
+                    scrollBar.removeObject(selectedObject);
                     selectedObject.setX(x);
-                    if(y > GamePanel.SCREEN_HEIGHT / 3 ){
-                        y = GamePanel.SCREEN_HEIGHT / 3;
-                    }
+                    //if(y > GamePanel.SCREEN_HEIGHT / 3 ){
+                      //  y = GamePanel.SCREEN_HEIGHT / 3;
+                    //}
                     selectedObject.setY(y);
+
                 }
-                break;
+                //return scrollBar.actionDown(event);
+                return true;
 
             case MotionEvent.ACTION_MOVE:
+
                 float xPos = event.getX() / GamePanel.X_SCALE;
                 float yPos = event.getY() / GamePanel.Y_SCALE;
-
-                if(selectedObject != null) {
-                    selectedObject.setX(xPos);
-                    if(yPos > GamePanel.SCREEN_HEIGHT / 3 ){
+                    if (selectedObject != null) {
+                        System.out.println("POSTION X: " + xPos);
+                        selectedObject.setX(xPos);
+                    /*if(yPos > GamePanel.SCREEN_HEIGHT / 3 ){
                         yPos = GamePanel.SCREEN_HEIGHT / 3;
+                    } */
+                        selectedObject.setY(yPos);
                     }
-                    selectedObject.setY(yPos);
-                }
+                    //return scrollBar.actionMove(event);
+                    return true;
 
-                break;
 
             case MotionEvent.ACTION_UP:
-                if(selectedObject != null) {
-                    objects.add(selectedObject);
-                    toPlace.remove(selectedObject);
-                    selectedObject = null;
-                }
+                    if (selectedObject != null) {
+                        System.out.println("HERE");
+                        objects.add(selectedObject);
+                        toPlace.remove(selectedObject);
+                        selectedObject = null;
+                        DatabaseManager.request(UrlRequest.incrementStat("ojbectsplaced"));
+                        return true;
+                    }
+
+                //return scrollBar.actionUp(event);
+                break;
         }
         return true;
     }

@@ -16,7 +16,8 @@ public class LevelSelectButton extends Button{
     public LevelSelectButton(){
         super();
         textSize = (int)(30* GamePanel.X_SCALE);
-        Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.locked_button);
+        Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button); //TODO: Replace this with locked button
+
         tempPicture = Bitmap.createScaledBitmap(tempPicture, 90, 90, false);
         scaleToScreensize(tempPicture);
     }
@@ -29,7 +30,7 @@ public class LevelSelectButton extends Button{
             scaleToScreensize(tempPicture);
         }
         else{
-            Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.locked_button);
+            Bitmap tempPicture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.level_select_button); //TODO: Replace this with locked one
             tempPicture = Bitmap.createScaledBitmap(tempPicture, 90, 90, false);
             scaleToScreensize(tempPicture);
         }

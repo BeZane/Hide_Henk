@@ -3,6 +3,7 @@ package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
@@ -127,8 +128,8 @@ public class LevelWrapper {
         ID = name + "!";
         for(GameObject gameObject:presetObjects){
             ID = ID +gameObject.getType().toString() + "," +
-                    gameObject.getBitmap().getWidth() + "," +
-                    gameObject.getBitmap().getHeight() + "," +
+                    gameObject.getBitmap().getWidth()/GamePanel.X_SCALE + "," +
+                    gameObject.getBitmap().getHeight()/GamePanel.Y_SCALE + "," +
                     gameObject.getX() +"," +
                     gameObject.getY() + ","+
                     gameObject.isPrepareSolid() + ";";
@@ -137,8 +138,8 @@ public class LevelWrapper {
         for(GameObject gameObject:objects){
             System.out.println("GAMEOBJECT: " + gameObject);
             ID = ID +gameObject.getType().toString() + "," +
-                    gameObject.getBitmap().getWidth() + "," +
-                    gameObject.getBitmap().getHeight() + "," +
+                    gameObject.getBitmap().getWidth()/ GamePanel.X_SCALE + "," +
+                    gameObject.getBitmap().getHeight()/GamePanel.Y_SCALE + "," +
                     gameObject.getX() +"," +
                     gameObject.getY() + ","+
                     gameObject.isPrepareSolid() + ";";
