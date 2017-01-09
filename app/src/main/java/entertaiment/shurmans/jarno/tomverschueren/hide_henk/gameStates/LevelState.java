@@ -41,14 +41,13 @@ public class LevelState extends GameState {
     private boolean hoseSpawned;
     private boolean hoseHasSprayed;
     private double hoseSpeed = 3;
-    private boolean objectsLoaded = false;
+    protected boolean objectsLoaded = false;
     protected ScrollBar scrollBar;
     private ObjectManager objectManager = new ObjectManager();
-    protected boolean populated = false;
 
     private int level = 0;
 
-    private int botsingen = 0;
+    private int collisions = 0;
 
     public LevelState(GameStateManager gsm){
         this.gsm = gsm;
@@ -72,12 +71,11 @@ public class LevelState extends GameState {
         //ADD HERE ALL THE OBJECTS BY DOING SCROLLBAR.ADDOBJECT
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
 
-//        populate();
+        populate();
         objectsLoaded = true;
     }
 
     protected void populate(){
-
         //TODO: I WOULD USE THE LEVELWRAPPER CLASS. PREPAREOBJECTS ARE OBJECTS THAT ARE ALREADY IN THE GAME. NORMAL OBJECTS
         //TODO: ARE THE OBJECTS THAT NEED TO BE PLACED
         //TODO read in the file that has info about the level layout.
@@ -98,10 +96,10 @@ public class LevelState extends GameState {
         for(GameObject o: objects){
             if(!object.equals(o)){
                 if(object.checkCollision(o)){
-                    botsingen++;
-                    System.out.println("Collision between " + object.getType() + " hitting " + o.getType() + " and this was nr " + botsingen + " in the chain reaction");
+                    collisions++;
+                    System.out.println("Collision between " + object.getType() + " hitting " + o.getType() + " and this was nr " + collisions + " in the chain reaction");
                     o.update();
-                    if(botsingen > 100){
+                    if(collisions > 100){
                         object.setDx(0);
                         object.setDy(0);
                         return;
@@ -110,12 +108,13 @@ public class LevelState extends GameState {
                 }
             }
         }
-
     }
 
     public void update(){
-        if(!populated)
+        //only start update() function if all objects are loaded and we make sure there is a Henk present
+        if(!objectsLoaded) {
             return;
+        }
         if(henk == null){
             for(GameObject gameObject:objects){
                 if(gameObject.getType() == GameObject.Types.HENK)
@@ -124,19 +123,15 @@ public class LevelState extends GameState {
             if(henk == null)
                 return;
         }
-        if(selectedObject != null) {
-            //MOET GEUPATE WORDEN ANDERS KAN JE HET NIET SLEPEN OVER HET SCHERM
-            //ZET HET EFFE OP SOLID ZODAT HET NIET VALT ALS JE HET VAST HEBT
-            selectedObject.setSolid(true);
-            selectedObject.update();
-        }
+
+        //actual update() function
         boolean hoseMustSpawn = true;
 
         for(int i = 0; i < objects.size(); i++){
             GameObject o = objects.get(i);
             o.update();
             checkCollisions(o);
-            botsingen = 0;
+            collisions = 0;
             if(o.getType() == GameObject.Types.WATERDROP){
                 WaterDrop drop = (WaterDrop)o;
                 if(drop.getTimeLived() > drop.getTimeToLive()){
@@ -156,14 +151,8 @@ public class LevelState extends GameState {
         if(objectsLoaded && toPlace.size() == 0 && hoseMustSpawn){
             hoseSpawned = true;
         }
-        boolean containsHenk = false;
-        for(GameObject gameObject:objects){
-            if(gameObject.getType() == GameObject.Types.HENK)
-                containsHenk = true;
-        }
-        if(!containsHenk && objectsLoaded){
-            System.out.println("FIRST GAME OVER");
-            System.out.println("OBJECTS: " + objects);
+
+       if(!objects.contains(henk) && objectsLoaded){
             reset();
             gsm.setState(GameStateManager.GAMEOVER);
         }
@@ -208,34 +197,38 @@ public class LevelState extends GameState {
                 gsm.setState(GameStateManager.GAMEOVER);
             }
         }
-
+        if(selectedObject != null) {
+            selectedObject.drawUpdate();
+        }
     }
 
     public void draw(Canvas canvas){
-        if(!populated)
+        if(!objectsLoaded) {
             return;
+        }
         canvas.drawBitmap(background,0,0,null);
         for(GameObject o: objects){
             o.draw(canvas);
         }
-        if(!hoseSpawned){ //ONLY DRAW THE SCROLLBAR IF HOSE ISN4T SPAWNED
+        if(!hoseSpawned && ! hoseHasSprayed){ //ONLY DRAW THE SCROLLBAR IF HOSE ISN4T SPAWNED
             scrollBar.draw(canvas);
         }
         if(hoseSpawned){
             canvas.drawBitmap(hose,(int) (hosePos * hoseSpeed * GamePanel.X_SCALE), 0, null);
         }
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
-        if(selectedObject !=null)
+        if(selectedObject !=null) {
             selectedObject.draw(canvas);
+        }
         for(GameObject o: toPlace){
             o.draw(canvas);
         }
 
-        /*if(toPlace.size() > 0){
+        if(toPlace.size() > 0){
             Paint p = new Paint();
             p.setARGB(70,70,70,125);
             canvas.drawRect(0, 0, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT/3, p);
-        } */
+        }
 
 
 
@@ -248,11 +241,10 @@ public class LevelState extends GameState {
     private int MAX_CLICK_DURATION = 200;
     private long clickDuration =0;
 
-    @Override
     public boolean onTouchEvent(MotionEvent event){
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                clickDuration =0;
+                clickDuration = 0;
                 float x = event.getX() / GamePanel.X_SCALE;
                 float y = event.getY() / GamePanel.Y_SCALE;
 
@@ -266,11 +258,10 @@ public class LevelState extends GameState {
                     selectedObject = toPlace.get(0);
                     scrollBar.removeObject(selectedObject);
                     selectedObject.setX(x);
-                    //if(y > GamePanel.SCREEN_HEIGHT / 3 ){
-                      //  y = GamePanel.SCREEN_HEIGHT / 3;
-                    //}
+                    if(y > GamePanel.SCREEN_HEIGHT / 3 ){
+                        y = GamePanel.SCREEN_HEIGHT / 3;
+                    }
                     selectedObject.setY(y);
-
                 }
                 //return scrollBar.actionDown(event);
                 return true;
@@ -279,25 +270,24 @@ public class LevelState extends GameState {
 
                 float xPos = event.getX() / GamePanel.X_SCALE;
                 float yPos = event.getY() / GamePanel.Y_SCALE;
-                    if (selectedObject != null) {
-                        System.out.println("POSTION X: " + xPos);
-                        selectedObject.setX(xPos);
-                    /*if(yPos > GamePanel.SCREEN_HEIGHT / 3 ){
+
+                if(selectedObject != null) {
+                    selectedObject.setX(xPos);
+                    if(yPos > GamePanel.SCREEN_HEIGHT / 3 ){
                         yPos = GamePanel.SCREEN_HEIGHT / 3;
-                    } */
-                        selectedObject.setY(yPos);
                     }
-                    //return scrollBar.actionMove(event);
-                    return true;
+                        selectedObject.setY(yPos);
+                }
+                //return scrollBar.actionMove(event);
+                return true;
 
 
             case MotionEvent.ACTION_UP:
                     if (selectedObject != null) {
-                        //ZET TERUG OP GRAVITY
-                        selectedObject.setSolid(false);
                         System.out.println("HERE");
-                        objects.add(selectedObject);
                         toPlace.remove(selectedObject);
+                        selectedObject.init();
+                        objects.add(selectedObject);
                         selectedObject = null;
                         DatabaseManager.request(UrlRequest.incrementStat("ojbectsplaced"));
                         return true;

@@ -8,32 +8,31 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.RectangleObject;
 
 /**
- * Created by Admin on 8/12/2016.
+ * Created by Admin on 9/01/2017.
  */
 
-public class HorizontalPlank extends RectangleObject {
+public class Barrel extends RectangleObject {
 
-    public HorizontalPlank(double x, double y){
+
+    public Barrel(double x, double y){
         super(x,y);
         init();
     }
 
     @Override
     public void rescaleObject(int newWidth, int newHeight) {
-        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
+        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.barrel);
         picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
-        setWidth(newWidth);
-        setHeight(newHeight);
     }
 
     public void init(){
         super.init();
-        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.plank);
-        picture = Bitmap.createScaledBitmap(picture, 160, 24, false);
+        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.barrel);
+        picture = Bitmap.createScaledBitmap(picture, 80, 160, false);
         calculateDimensions(picture);
         scalePicture(picture);
-        type = Types.HORIZONTAL_PLANK;
-        density = 0.9;
+        type = Types.BARREL;
+        density = 1.1;
         calculateMass();
     }
 

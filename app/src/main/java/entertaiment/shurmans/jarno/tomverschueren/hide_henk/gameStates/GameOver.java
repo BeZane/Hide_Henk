@@ -15,38 +15,27 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Men
  * Created by Admin on 5/01/2017.
  */
 
-public class GameOverState extends GameState {
+public class GameOver extends MenuState {
 
 
-    private Bitmap background;
-    private String[] options = {"Retry", "Level Select", "Main Menu"};
-    private ArrayList<MenuButton> menuButtons = new ArrayList<MenuButton>();
 
-    public GameOverState(GameStateManager gsm){
-        this.gsm = gsm;
-        init();
+    public GameOver(GameStateManager gsm){
+        super(gsm);
+        options[0] = "Retry";
+        options[1] = "Level Select";
+        options[2] = "Main Menu";
     }
 
     public void init(){
-        for(int i = 0; i < options.length; i++){
-            MenuButton menuButton = new MenuButton();
-            menuButton.setX(GamePanel.SCREEN_WIDTH / 2);
-            menuButton.setY((int)(160 * GamePanel.Y_SCALE + i * (menuButton.getPicture().getHeight() + 35 * GamePanel.Y_SCALE)));
-            menuButton.setText(options[i]);
-            menuButtons.add(menuButton);
-
-            Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
-            background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
-        }
+        super.init();
     }
 
-    public void update(){}
+    public void update(){
+        super.update();
+    }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(background, 0, 0, null);
-        for (MenuButton b: menuButtons){
-            b.draw(canvas);
-        }
+       super.draw(canvas);
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -68,7 +57,7 @@ public class GameOverState extends GameState {
                             gsm.setState(GameStateManager.LEVELSELECT);
                         }
                         else if(i == 2){
-                            gsm.setState(GameStateManager.MENUSTATE);
+                            gsm.setState(GameStateManager.MAINMENU);
                         }
                     }
                     i++;

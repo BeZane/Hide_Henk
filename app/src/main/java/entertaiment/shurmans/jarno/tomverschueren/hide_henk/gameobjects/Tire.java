@@ -26,7 +26,8 @@ public class Tire extends CircleObject {
 
     }
 
-    private void init(){
+    public void init(){
+        super.init();
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.tire);
         picture = Bitmap.createScaledBitmap(picture, 200, 200, false);
         radius = picture.getWidth() / 2;

@@ -50,12 +50,12 @@ public class StatsMenu extends GameState {
         canvas.drawBitmap(background,0,0,null);
         //drawing the return button
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
-        int x=(int)(200*GamePanel.X_SCALE),y=(int)(150*GamePanel.Y_SCALE);
+        int x=200, y=200;
         for(StatType statType:StatType.values()) {
             Paint p = new Paint();
             p.setColor(Color.BLACK);
             p.setTextSize(80 * GamePanel.X_SCALE);
-            y = (int) (y+100*GamePanel.Y_SCALE);
+            y = (int) (y+100*GamePanel.X_SCALE);
             canvas.drawText(statType.toShowString() + ":  " + Stats.getStat(statType), x,y, p);
         }
 
@@ -69,7 +69,7 @@ public class StatsMenu extends GameState {
 
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
                     stats = null;
-                    gsm.setState(gsm.MENUSTATE);
+                    gsm.setState(gsm.MAINMENU);
                 }
                 break;
         }

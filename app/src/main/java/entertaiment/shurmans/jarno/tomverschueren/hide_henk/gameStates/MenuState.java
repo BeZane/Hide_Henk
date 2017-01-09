@@ -21,9 +21,9 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Men
 public class MenuState extends GameState{
 
     //layout
-    private Bitmap background;
-    private String[] options = {"START", "STATS", "BUILDER"};
-    private ArrayList<MenuButton> menuButtons = new ArrayList<MenuButton>();
+    protected Bitmap background;
+    protected String[] options = new String[3];
+    protected ArrayList<MenuButton> menuButtons = new ArrayList<MenuButton>();
 
 
 
@@ -61,35 +61,6 @@ public class MenuState extends GameState{
     }
 
     public boolean onTouchEvent(MotionEvent event){
-
-        switch (event.getAction()) {
-
-            case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
-                //check if we pressed a button in the main menu
-                int i = 0;
-                for(MenuButton b : menuButtons){
-                    if(b.contains(x, y)){
-                        if(i == 0){
-                            gsm.setState(GameStateManager.LEVELSELECT);
-                        }
-                        else if(i == 1){
-                            gsm.setState(GameStateManager.STATS);
-                            DatabaseManager.request(UrlRequest.getStats());
-                        }
-                        else if(i == 2){
-                            gsm.setState(GameStateManager.BUILDERMENU);
-                        }
-                    }
-                    i++;
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            default:
-        }
-
         return true;
     }
 

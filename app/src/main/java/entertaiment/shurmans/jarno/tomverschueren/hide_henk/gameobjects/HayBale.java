@@ -5,35 +5,34 @@ import android.graphics.BitmapFactory;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.RectangleObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.CircleObject;
 
 /**
- * Created by Admin on 8/12/2016.
+ * Created by Admin on 9/01/2017.
  */
 
-public class VerticalPlank extends RectangleObject {
+public class HayBale extends CircleObject {
 
-    public VerticalPlank(double x, double y){
+    public HayBale(double x, double y){
         super(x,y);
         init();
     }
 
     @Override
     public void rescaleObject(int newWidth, int newHeight) {
-        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.vertical_plank);
+        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.hay_bale);
         picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
     }
 
     public void init(){
         super.init();
-        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.vertical_plank);
-        picture = Bitmap.createScaledBitmap(picture, 24, 160, false);
-        calculateDimensions(picture);
+        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.hay_bale);
+        picture = Bitmap.createScaledBitmap(picture, 250, 250, false);
+        radius = picture.getWidth() / 2;
         scalePicture(picture);
-        type = Types.VERTICAL_PLANK;
-        density = 0.9;
+        type = Types.HAYBALE;
+        density = 0.2;
         calculateMass();
     }
-
 
 }

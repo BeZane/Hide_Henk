@@ -1,29 +1,25 @@
 package entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.view.Menu;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
-
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
 
 /**
- * Created by Admin on 5/01/2017.
+ * Created by Admin on 8/01/2017.
  */
 
-public class LevelCompleted extends MenuState{
+public class MainMenu extends MenuState {
 
-    public LevelCompleted(GameStateManager gsm){
+
+    public MainMenu(GameStateManager gsm){
         super(gsm);
-        options[0] = "Next Level";
-        options[1] = "Replay Level";
-        options[2] = "Level Select";
+        options[0] = "START";
+        options[1] = "STATS";
+        options[2] = "BUILDER";
     }
 
     public void init(){
@@ -31,14 +27,14 @@ public class LevelCompleted extends MenuState{
     }
 
     public void update(){
-        super.init();
+        super.update();
     }
 
     public void draw(Canvas canvas){
         super.draw(canvas);
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event){
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
@@ -49,13 +45,14 @@ public class LevelCompleted extends MenuState{
                 for(MenuButton b : menuButtons){
                     if(b.contains(x, y)){
                         if(i == 0){
-                            //TODO go to next level
+                            gsm.setState(GameStateManager.LEVELSELECT);
                         }
                         else if(i == 1){
-                            //TODO replay the level
+                            gsm.setState(GameStateManager.STATS);
+                            DatabaseManager.request(UrlRequest.getStats());
                         }
                         else if(i == 2){
-                            gsm.setState(GameStateManager.LEVELSELECT);
+                            gsm.setState(GameStateManager.BUILDERMENU);
                         }
                     }
                     i++;
@@ -65,7 +62,7 @@ public class LevelCompleted extends MenuState{
                 break;
             default:
         }
+
         return true;
     }
-
 }

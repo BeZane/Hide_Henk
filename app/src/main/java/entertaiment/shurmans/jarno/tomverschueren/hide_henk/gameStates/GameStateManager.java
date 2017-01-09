@@ -17,7 +17,7 @@ public class GameStateManager {
     private ArrayList<GameState> gameStates;
     private int currentState;
 
-    public static final int MENUSTATE = 0;
+    public static final int MAINMENU = 0;
     public static final int STATS = 1;
     public static final int LEVELSELECT = 2;
     public static final int LEVEL1 = 3;
@@ -34,8 +34,8 @@ public class GameStateManager {
     public GameStateManager(){
         NameActivity.gameStateManager = this;
         gameStates = new ArrayList<GameState>();
-        currentState = MENUSTATE;
-        gameStates.add(new MenuState(this));
+        currentState = MAINMENU;
+        gameStates.add(new MainMenu(this));
         gameStates.add(new StatsMenu(this));
         gameStates.add(new LevelSelect(this));
         gameStates.add(new Level1State(this));
@@ -43,7 +43,7 @@ public class GameStateManager {
         gameStates.add(new BuildingState(this));
         gameStates.add(new Building2State(this));
         gameStates.add(new Building3State(this));
-        gameStates.add(new GameOverState(this));
+        gameStates.add(new GameOver(this));
         gameStates.add(new LevelCompleted(this));
         gameStates.add(new OnlineSelect(this));
         gameStates.add(new Level(this));

@@ -8,7 +8,6 @@ public class MainThread extends Thread{
 
 
     private int FPS = 30;
-    private double averageFPS;
     private SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean running;
@@ -61,17 +60,12 @@ public class MainThread extends Thread{
             totalTime += System.nanoTime() - startTime;
             frameCount++;
             if (frameCount == FPS) {
-                averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
                 frameCount = 0;
                 totalTime = 0;
-                //System.out.println(averageFPS);
             }
         }
     }
 
-    public boolean getRunning(){
-        return running;
-    }
 
     public void setRunning(boolean running){
         this.running = running;

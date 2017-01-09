@@ -218,9 +218,9 @@ public class ScrollBar {
     public GameObject getSelectedObject(int y){
         GameObject gameObject = scrollingObjects.get(0);
         int dif =1000000000;
-        for(int i=0;scrollingObjects.size()>i;i++){
+        for(int i=0; scrollingObjects.size()>i; i++){
             if(dif> Math.abs(getPoint(i).y-offset-(y))){
-                gameObject = (GameObject)scrollingObjects.get(i);
+                gameObject = scrollingObjects.get(i);
 
                 dif = Math.abs(getPoint(i).y-y);
             }

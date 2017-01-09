@@ -17,24 +17,4 @@ public abstract class GameState {
     protected abstract void draw(Canvas canvas);
     protected abstract boolean onTouchEvent(MotionEvent event);
 
-    /**
-     * Be sure that SCALING_FACTOR_X and SCALING_FACTOR_Y is intialized correctly before using this method!
-     * @param bitmap Put the picture in here that needs to be scaled
-     * @return a scaled picture
-     */
-    protected Bitmap scaleBitMap(Bitmap bitmap){
-        return Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()* GamePanel.SCALING_FACTOR_X), (int)(bitmap.getHeight() * GamePanel.SCALING_FACTOR_Y),false);
-    }
-
-    /**
-     * If your picture needs to stay squared, use this method
-     * @param bitmap
-     * @return
-     */
-    protected Bitmap scaleSquared(Bitmap bitmap){
-        return Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()* GamePanel.SCALING_FACTOR_X), (int)(bitmap.getHeight() * GamePanel.SCALING_FACTOR_X),false);
-    }
-
-
-
 }
