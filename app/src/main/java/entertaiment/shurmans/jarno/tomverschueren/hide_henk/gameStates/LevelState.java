@@ -87,7 +87,7 @@ public class LevelState extends GameState {
         System.out.println(offlineLevelIDs.size() + "I: + " + level);
         System.out.println("LEVEL: " + offlineLevelIDs.get(level));
         lastLoadedID = offlineLevelIDs.get(level);
-        level = level;
+        this.level = level;
     }
 
 
