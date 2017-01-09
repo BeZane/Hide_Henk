@@ -12,6 +12,9 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Barrel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Bricks;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HayBale;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
@@ -62,7 +65,10 @@ public class Building2State extends GameState {
         scrollBar.setWIDTH((int)(GamePanel.SCREEN_WIDTH /1.5));
         scrollBar.addObject(new HorizontalPlank(0, 0));
         scrollBar.addObject(new VerticalPlank(0, 0));
+        scrollBar.addObject(new Barrel(0,0));
+     /*   scrollBar.addObject(new HayBale(0,0));
         scrollBar.addObject(new Tire(0,0));
+        scrollBar.addObject(new Bricks(0,0)); */
 
         scrollBar.setType(ScrollBar.ScrollBarType.MIDDLE);
     }

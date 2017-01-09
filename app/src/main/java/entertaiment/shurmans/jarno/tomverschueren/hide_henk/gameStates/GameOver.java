@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
@@ -51,7 +52,8 @@ public class GameOver extends MenuState {
                 for(MenuButton b : menuButtons){
                     if(b.contains(x, y)){
                         if(i == 0){
-                            gsm.setState(GameStateManager.LEVEL1);
+                            LevelState level = (LevelState)gsm.setState(GameStateManager.ONLINELEVEL);
+                            level.populate();
                         }
                         else if(i == 1){
                             gsm.setState(GameStateManager.LEVELSELECT);

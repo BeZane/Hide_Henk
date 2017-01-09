@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.Util.Stats;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.Level;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.LevelState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.OnlineSelect;
 
 /**
@@ -67,7 +67,7 @@ public class DatabaseManager {
                             try {
                                 System.out.println(response);
                                 System.out.println(response.getJSONObject(0).getString("id"));
-                                Level.lastLoadedID = response.getJSONObject(0).getString("id");
+                                LevelState.lastLoadedID = response.getJSONObject(0).getString("id");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

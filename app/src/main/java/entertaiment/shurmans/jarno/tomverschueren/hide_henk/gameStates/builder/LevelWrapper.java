@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Barrel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Bricks;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HayBale;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
@@ -81,6 +84,21 @@ public class LevelWrapper {
                 object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
                 object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
                 presetObjects.add(object);
+            }else if(presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.BARREL.toString())){
+                Barrel object = new Barrel(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
+                object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
+                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
+                presetObjects.add(object);
+            }else if(presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.HAYBALE.toString())){
+                HayBale object = new HayBale(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
+                object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
+                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
+                presetObjects.add(object);
+            }else if(presetObjectInfo[0].equalsIgnoreCase(GameObject.Types.BRICKS.toString())){
+                Bricks object = new Bricks(Float.parseFloat(presetObjectInfo[3]), Float.parseFloat(presetObjectInfo[4]));
+                object.setSolid(Boolean.valueOf(presetObjectInfo[5]));
+                object.rescaleObject((int) (Float.parseFloat(presetObjectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(presetObjectInfo[2]) * GamePanel.Y_SCALE));
+                presetObjects.add(object);
             } else {
 
             }
@@ -108,6 +126,21 @@ public class LevelWrapper {
                 objects.add(object);
             } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.TIRE.toString())) {
                 Tire object = new Tire(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
+                object.setSolid(Boolean.valueOf(objectInfo[5]));
+                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
+                objects.add(object);
+            } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.BRICKS.toString())) {
+                Bricks object = new Bricks(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
+                object.setSolid(Boolean.valueOf(objectInfo[5]));
+                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
+                objects.add(object);
+            } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.HAYBALE.toString())) {
+                HayBale object = new HayBale(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
+                object.setSolid(Boolean.valueOf(objectInfo[5]));
+                object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
+                objects.add(object);
+            } else if (objectInfo[0].equalsIgnoreCase(GameObject.Types.BARREL.toString())) {
+                Barrel object = new Barrel(Float.parseFloat(objectInfo[3]), Float.parseFloat(objectInfo[4]));
                 object.setSolid(Boolean.valueOf(objectInfo[5]));
                 object.rescaleObject((int) (Float.parseFloat(objectInfo[1]) * GamePanel.X_SCALE), (int) (Float.parseFloat(objectInfo[2]) * GamePanel.Y_SCALE));
                 objects.add(object);

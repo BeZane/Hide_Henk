@@ -22,7 +22,7 @@ public class Level1State extends LevelState {
 
 
     @Override
-    protected void populate(){
+    public void populate(){
 
         //environment
         henk = new Henk(650, 520);

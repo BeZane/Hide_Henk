@@ -34,6 +34,7 @@ public class LevelSelect extends GameState {
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
         previous = Bitmap.createScaledBitmap(previous, 140, 140, false);
+        unlockedButtons.clear();
         addButtons();
     }
 
@@ -86,7 +87,7 @@ public class LevelSelect extends GameState {
                 float y = event.getY();
 
                 if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
-                    gsm.setState(gsm.MENUSTATE);
+                    gsm.setState(gsm.MAINMENU);
                 }
                 int i = 0;
                 for(LevelSelectButton b : unlockedButtons){
@@ -94,11 +95,9 @@ public class LevelSelect extends GameState {
                         //gsm.setState(GameStateManager.LEVEL1);
                     }
                     if(b.contains(x,y) && b.isUnlocked()){
-                        System.out.println("LEVEL1 STARTING");
-                        Level level = (Level)gsm.setState(GameStateManager.ONLINELEVEL);
+                        LevelState level = (LevelState) gsm.setState(GameStateManager.ONLINELEVEL);
 
                         level.setLastLoadedID(i);
-                        System.out.println("HEY");
                         level.populate();
                        //TODO Load the i-nd level
                     }

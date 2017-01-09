@@ -16,8 +16,12 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameState;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.GameStateManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Barrel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Bricks;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HayBale;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.VerticalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.WaterDrop;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.DoneButton;
@@ -64,6 +68,9 @@ public class BuildingState extends GameState {
         scrollBar.addObject(new HorizontalPlank(0, 0));
         scrollBar.addObject(new Henk(0, 0));
         scrollBar.addObject(new VerticalPlank(0, 0));
+        //scrollBar.addObject(new HayBale(0,0));
+        //scrollBar.addObject(new Barrel(0,0));
+        //scrollBar.addObject(new Bricks(0,0));
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
         zoomInButton = new ZoomInButton();
         zoomInButton.setX((int)(50*GamePanel.X_SCALE));
@@ -172,11 +179,19 @@ public class BuildingState extends GameState {
                             objectManager.getLastSelected().setPrepareSolid(true);
                         }
                     }else if(doneButton.contains(x,y)){
-                        LevelWrapper levelWrapper = new LevelWrapper();
-                        levelWrapper.setPresetObjects(new ArrayList<GameObject>(objectManager.getObjects()));
-                        GameState gameState = gsm.setState(GameStateManager.BUILDING2);
-                        Building2State building2State = (Building2State)gameState;
-                        building2State.setLevelWrapper(levelWrapper);
+                        boolean containsHenk = false;
+                        for(GameObject gameObject:objectManager.getObjects()){
+                            if(gameObject.getType() == GameObject.Types.HENK) {
+                                containsHenk = true;
+                            }
+                        }
+                        if(containsHenk) {
+                            LevelWrapper levelWrapper = new LevelWrapper();
+                            levelWrapper.setPresetObjects(new ArrayList<GameObject>(objectManager.getObjects()));
+                            GameState gameState = gsm.setState(GameStateManager.BUILDING2);
+                            Building2State building2State = (Building2State) gameState;
+                            building2State.setLevelWrapper(levelWrapper);
+                        }
                     }
                     return scrollBar.actionUp(event);
                 }

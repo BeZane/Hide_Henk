@@ -16,6 +16,7 @@ public class Barrel extends RectangleObject {
 
     public Barrel(double x, double y){
         super(x,y);
+
         init();
     }
 

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Barrel;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Bricks;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HayBale;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.HorizontalPlank;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Tire;
@@ -235,6 +238,12 @@ public class ScrollBar {
                 return new VerticalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case HORIZONTAL_PLANK:
                 return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            case BARREL:
+                return new Barrel(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+            case HAYBALE:
+                return  new HayBale(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+            case BRICKS:
+                return  new Bricks(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case SPECIAL:
                 return gameObject;
             default:
@@ -265,11 +274,17 @@ public class ScrollBar {
             case WATERDROP:
                 return new WaterDrop(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case VERTICAL_PLANK:
-                return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+                return new VerticalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case HORIZONTAL_PLANK:
                 return new HorizontalPlank(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
             case TIRE:
                 return new Tire(0,0);
+            case BRICKS:
+                return new Bricks(0,0);
+            case HAYBALE:
+                return new HayBale(0,0);
+            case BARREL:
+                return new Barrel(0,0);
             default:
                 return null;
 

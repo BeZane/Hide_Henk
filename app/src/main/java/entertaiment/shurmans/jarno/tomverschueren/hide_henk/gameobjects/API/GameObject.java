@@ -64,6 +64,10 @@ public abstract class GameObject {
         return prepareSolid;
     }
 
+    public Bitmap getBitmap(){
+        return picture;
+    }
+
 
 
 

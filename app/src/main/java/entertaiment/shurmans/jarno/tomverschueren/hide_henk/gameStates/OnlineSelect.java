@@ -50,8 +50,8 @@ public class OnlineSelect extends GameState {
 
     @Override
     protected void update() {
-        if(!Level.lastLoadedID.equalsIgnoreCase("")){
-            Level gameState = (Level) gsm.setState(GameStateManager.ONLINELEVEL);
+        if(!LevelState.lastLoadedID.equalsIgnoreCase("")){
+            LevelState gameState = (LevelState) gsm.setState(GameStateManager.ONLINELEVEL);
             gameState.populate();
 
         }

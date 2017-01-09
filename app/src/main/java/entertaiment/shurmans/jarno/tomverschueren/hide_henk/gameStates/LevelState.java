@@ -14,6 +14,7 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.DatabaseManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.database.UrlRequest;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.LevelWrapper;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameStates.builder.ObjectManager;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.GameObject;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.Henk;
@@ -27,6 +28,9 @@ import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.Scr
  */
 
 public class LevelState extends GameState {
+
+    public static String lastLoadedID = "";
+    private ArrayList<String> offlineLevelIDs = new ArrayList<>();
 
     //fields
     protected ArrayList<GameObject> objects = new ArrayList<GameObject>();
@@ -53,7 +57,47 @@ public class LevelState extends GameState {
         this.gsm = gsm;
     }
 
+
+
+
+
+
+
+
+    public void populate(){
+
+        LevelWrapper levelWrapper = new LevelWrapper();
+        levelWrapper.loadFromString(lastLoadedID);
+        scrollBar.clear();
+        objects.clear();
+        //System.out.println("POPULATING");
+        scrollBar.addAllObjects(levelWrapper.getObjects());
+        toPlace.addAll(levelWrapper.getObjects());
+        System.out.println("SIZE:" +toPlace.size());
+        System.out.println("X:" + levelWrapper.getPresetObjects().get(0).getX());
+        //System.out.println("SCROLLINGBAROBJECTS: " + scrollBar.getObjects().toString());
+        objects.addAll(levelWrapper.getPresetObjects());
+
+        lastLoadedID = "";
+        objectsLoaded = true;
+
+    }
+
+    public void setLastLoadedID(int level){
+        System.out.println(offlineLevelIDs.size() + "I: + " + level);
+        System.out.println("LEVEL: " + offlineLevelIDs.get(level));
+        lastLoadedID = offlineLevelIDs.get(level);
+    }
+
+
     public void init(){
+        if(offlineLevelIDs.isEmpty()) {
+            //offlineLevelIDs.add("derde!HORIZONTAL_PLANK,229.0301,34.0,499.95501708984375,595.87646484375,true;VERTICAL_PLANK,23.54515,160.0,601.4005126953125,621.89208984375,true;HENK,99.88852,100.0,619.6070556640625,532.4853515625,true;VERTICAL_PLANK,23.54515,160.0,724.5401611328125,444.4189453125,true;VERTICAL_PLANK,23.54515,160.0,496.112060546875,445.4296875,true;!VERTICAL_PLANK,159.82164,24.0,897.0,540.0,false;VERTICAL_PLANK,159.82164,24.0,897.0,540.0,false;HORIZONTAL_PLANK,159.82164,24.0,897.0,540.0,false;");
+            offlineLevelIDs.add("eerstelevel!HORIZONTAL_PLANK,159.82164,24.0,715.9699096679688,388.36669921875,true;HORIZONTAL_PLANK,159.82164,24.0,455.39300537109375,392.36572265625,true;HENK,99.88852,100.0,662.4163818359375,516.46728515625,true;!BRICKS,119.86623,120.0,0.0,0.0,false;");
+            offlineLevelIDs.add("tweedelevel!HORIZONTAL_PLANK,159.82164,24.0,659.2391357421875,464.43603515625,true;HENK,99.88852,100.0,772.7216186523438,396.36474609375,false;VERTICAL_PLANK,23.54515,160.0,986.141357421875,478.4326171875,true;HORIZONTAL_PLANK,159.82164,24.0,839.69921875,647.9296875,false;HORIZONTAL_PLANK,159.82164,24.0,487.54180908203125,465.435791015625,true;VERTICAL_PLANK,23.54515,160.0,820.9030151367188,486.45263671875,true;VERTICAL_PLANK,23.54515,160.0,989.3812866210938,310.95703125,true;!TIRE,200.0,200.0,0.0,0.0,false;TIRE,200.0,200.0,0.0,0.0,false");
+            offlineLevelIDs.add("derde2!HORIZONTAL_PLANK,274.69342,40.666668,493.9381408691406,609.89501953125,true;VERTICAL_PLANK,23.54515,160.0,743.812744140625,441.38671875,true;VERTICAL_PLANK,23.54515,160.0,496.112060546875,444.4189453125,true;HENK,99.88852,100.0,629.2433471679688,556.50146484375,true;!VERTICAL_PLANK,23.54515,160.0,897.0,540.0,false;VERTICAL_PLANK,23.54515,160.0,897.0,540.0,false;HORIZONTAL_PLANK,159.82164,24.0,897.0,540.0,false;");
+
+        }
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
         background = Bitmap.createScaledBitmap(tempBackground, GamePanel.SCREEN_WIDTH, GamePanel.SCREEN_HEIGHT, false);
         previous = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.previous);
@@ -71,16 +115,11 @@ public class LevelState extends GameState {
         //ADD HERE ALL THE OBJECTS BY DOING SCROLLBAR.ADDOBJECT
         scrollBar.setType(ScrollBar.ScrollBarType.RIGHT_SIDE);
 
-        populate();
+        //populate();
         objectsLoaded = true;
     }
 
-    protected void populate(){
-        //TODO: I WOULD USE THE LEVELWRAPPER CLASS. PREPAREOBJECTS ARE OBJECTS THAT ARE ALREADY IN THE GAME. NORMAL OBJECTS
-        //TODO: ARE THE OBJECTS THAT NEED TO BE PLACED
-        //TODO read in the file that has info about the level layout.
-        //TODO set the int level to the level we are currently playing.
-    }
+
 
     private void reset(){
         objects = new ArrayList<>();
@@ -89,6 +128,8 @@ public class LevelState extends GameState {
         hoseSpawned = false;
         objectsLoaded = false;
         hoseHasSprayed = false;
+        objectsLoaded = false;
+        henk.makeDirty();
     }
 
     private void checkCollisions(GameObject object){
@@ -150,6 +191,11 @@ public class LevelState extends GameState {
 
         if(objectsLoaded && toPlace.size() == 0 && hoseMustSpawn){
             hoseSpawned = true;
+            for(GameObject object:objects){
+                object.setSolid(true);
+                object.setDx(0);
+                object.setDy(0);
+            }
         }
 
        if(!objects.contains(henk) && objectsLoaded){
@@ -194,6 +240,7 @@ public class LevelState extends GameState {
 
 
                 reset();
+
                 gsm.setState(GameStateManager.GAMEOVER);
             }
         }

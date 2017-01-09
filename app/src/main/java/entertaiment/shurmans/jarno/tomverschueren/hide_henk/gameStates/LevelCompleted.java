@@ -52,7 +52,8 @@ public class LevelCompleted extends MenuState{
                             //TODO go to next level
                         }
                         else if(i == 1){
-                            //TODO replay the level
+                            LevelState levelState =(LevelState) gsm.setState(GameStateManager.ONLINELEVEL);
+                            levelState.populate();
                         }
                         else if(i == 2){
                             gsm.setState(GameStateManager.LEVELSELECT);
