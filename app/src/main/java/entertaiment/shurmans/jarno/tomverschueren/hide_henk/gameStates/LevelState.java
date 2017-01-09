@@ -41,7 +41,7 @@ public class LevelState extends GameState {
     private boolean hoseSpawned;
     private boolean hoseHasSprayed;
     private double hoseSpeed = 3;
-    private boolean objectsLoaded = false;
+    protected boolean objectsLoaded = false;
     protected ScrollBar scrollBar;
     private ObjectManager objectManager = new ObjectManager();
 
@@ -111,6 +111,7 @@ public class LevelState extends GameState {
     }
 
     public void update(){
+        //only start update() function if all objects are loaded and we make sure there is a Henk present
         if(!objectsLoaded) {
             return;
         }
@@ -123,6 +124,7 @@ public class LevelState extends GameState {
                 return;
         }
 
+        //actual update() function
         boolean hoseMustSpawn = true;
 
         for(int i = 0; i < objects.size(); i++){
@@ -283,8 +285,9 @@ public class LevelState extends GameState {
             case MotionEvent.ACTION_UP:
                     if (selectedObject != null) {
                         System.out.println("HERE");
-                        objects.add(selectedObject);
                         toPlace.remove(selectedObject);
+                        selectedObject.init();
+                        objects.add(selectedObject);
                         selectedObject = null;
                         DatabaseManager.request(UrlRequest.incrementStat("ojbectsplaced"));
                         return true;

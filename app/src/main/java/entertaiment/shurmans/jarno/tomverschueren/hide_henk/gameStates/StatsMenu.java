@@ -50,7 +50,7 @@ public class StatsMenu extends GameState {
         canvas.drawBitmap(background,0,0,null);
         //drawing the return button
         canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
-        int x=200,y=200;
+        int x=200, y=200;
         for(StatType statType:StatType.values()) {
             Paint p = new Paint();
             p.setColor(Color.BLACK);

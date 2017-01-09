@@ -23,7 +23,8 @@ public class WaterDrop extends CircleObject{
     public int getTimeToLive(){return timeToLive;};
     public int getTimeLived(){return timeLived;};
 
-    private void init(){
+    public void init(){
+        super.init();
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.water_drop);
         picture = Bitmap.createScaledBitmap(picture, 30, 30, false);
         radius = picture.getWidth() / 2;

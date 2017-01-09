@@ -41,7 +41,7 @@ public abstract class GameObject {
     //collision detection
     public enum Shapes {RECTANGLE, CIRCLE};
     protected Shapes shape;
-    public enum Types{HENK, VERTICAL_PLANK, HORIZONTAL_PLANK, WATERDROP, TIRE,SPECIAL};
+    public enum Types{HENK, VERTICAL_PLANK, HORIZONTAL_PLANK, WATERDROP, TIRE, SPECIAL, HAYBALE, BRICKS, BARREL};
     protected Types type;
 
 
@@ -50,6 +50,8 @@ public abstract class GameObject {
         this.y = y;
     }
 
+    //override this method in concrete classes
+    public void init(){ solid = false; };
     /**
      * Used to save the solid state of an object to build the level
      * @param b
@@ -219,12 +221,11 @@ public abstract class GameObject {
             }
         }
 
-        //we don't actually want to move in our current direction just yet
-        x -= tempDx;
-        y -= tempDy;
-
         if(collision){
         }
+
+        x -= tempDx;
+        y -= tempDy;
 
         return collision;
 
@@ -234,6 +235,7 @@ public abstract class GameObject {
         @param o1: the gameobject we have collision with
      */
     protected void calculateNewVector(double x1, double y1, GameObject o1){
+
         if(solid){
             return;
         }
@@ -293,6 +295,7 @@ public abstract class GameObject {
             System.out.println(o1.type + " v = (" + o1.dx + "," + o1.dy + ")" );
 
         }
+
 
     }
 

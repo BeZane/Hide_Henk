@@ -20,6 +20,7 @@ public class Level extends LevelState {
 
 
     public void populate(){
+
         LevelWrapper levelWrapper = new LevelWrapper();
         levelWrapper.loadFromString(lastLoadedID);
         scrollBar.clear();
@@ -33,7 +34,8 @@ public class Level extends LevelState {
         objects.addAll(levelWrapper.getPresetObjects());
 
         lastLoadedID = "";
-        populated =true;
+        objectsLoaded = true;
+
     }
 
 

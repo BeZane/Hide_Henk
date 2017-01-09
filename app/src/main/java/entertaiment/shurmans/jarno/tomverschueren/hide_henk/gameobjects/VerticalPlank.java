@@ -24,7 +24,8 @@ public class VerticalPlank extends RectangleObject {
         picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
     }
 
-    private void init(){
+    public void init(){
+        super.init();
         Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.vertical_plank);
         picture = Bitmap.createScaledBitmap(picture, 24, 160, false);
         calculateDimensions(picture);

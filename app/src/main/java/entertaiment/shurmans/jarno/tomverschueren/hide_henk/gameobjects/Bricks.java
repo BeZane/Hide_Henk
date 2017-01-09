@@ -5,34 +5,33 @@ import android.graphics.BitmapFactory;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
-import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.CircleObject;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.gameobjects.API.RectangleObject;
 
 /**
- * Created by Admin on 17/12/2016.
+ * Created by Admin on 9/01/2017.
  */
 
-public class Tire extends CircleObject {
+public class Bricks extends RectangleObject {
 
-    public Tire(double x, double y){
+    public Bricks(double x, double y){
         super(x,y);
         init();
     }
 
     @Override
     public void rescaleObject(int newWidth, int newHeight) {
-        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.tire);
+        Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.brick_wall);
         picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
     }
 
     public void init(){
         super.init();
-        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.tire);
-        picture = Bitmap.createScaledBitmap(picture, 200, 200, false);
-        radius = picture.getWidth() / 2;
+        Bitmap picture = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.brick_wall);
+        picture = Bitmap.createScaledBitmap(picture, 120, 120, false);
+        calculateDimensions(picture);
         scalePicture(picture);
-        type = Types.TIRE;
-        density = 1.5;
+        type = Types.BRICKS;
+        density = 0.9;
         calculateMass();
     }
-
 }
