@@ -19,18 +19,9 @@ public abstract class RectangleObject extends GameObject {
         setShape(Shapes.RECTANGLE);
     }
 
-    public boolean touches(Point point){
-        if(getRectangle().contains(point.x,point.y)) {
-            return true;
-        }else {
-            return false;
-        }
-
-    }
-
     public boolean contains(float x, float y){
-        if((this.x-20)<x && x<this.x+getBitmap().getWidth()+20
-                && (this.y-20)<y && y<(this.y+getBitmap().getHeight()+20))
+        if((this.x-20)<x && x<this.x+getPicture().getWidth()+20
+                && (this.y-20)<y && y<(this.y+getPicture().getHeight()+20))
             return true;
         return false;
     }
@@ -46,23 +37,13 @@ public abstract class RectangleObject extends GameObject {
         height = picture.getHeight();
     }
 
-    public Rect getRectangle(){
-        return new Rect((int)x,(int)y,(int)(x+width),(int)(y+height));
-    }
-
     public double getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     public double getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
 }

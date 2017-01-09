@@ -23,6 +23,7 @@ public class Barrel extends RectangleObject {
     public void rescaleObject(int newWidth, int newHeight) {
         Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.barrel);
         picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
+        calculateDimensions(picture);
     }
 
     public void init(){

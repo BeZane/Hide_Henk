@@ -77,7 +77,7 @@ public abstract class GameObject {
     public void setDx(double xSpeed){ dx = xSpeed;}
     public void setDy(double ySpeed){ dy = ySpeed;}
     public void setSolid(Boolean b){ solid = b;}
-    public Bitmap getBitmap(){
+    public Bitmap getPicture(){
         return picture;
     }
     public void setPicture(Bitmap picture){
@@ -226,8 +226,7 @@ public abstract class GameObject {
 
         x -= tempDx;
         y -= tempDy;
-
-        return collision;
+       return collision;
 
     }
     /*
@@ -257,7 +256,7 @@ public abstract class GameObject {
         while(forceDirection < 0){
             forceDirection += 2*Math.PI;
         }
-        //Rolling of another object
+        //Rolling of another objectup
         if(speed < 1 && Math.abs(Math.cos(forceDirection)) > 0.001 && Math.sin(forceDirection) > 0){
             dx += Math.cos(forceDirection) * GRAVITY;
             dy = 0;
@@ -311,10 +310,6 @@ public abstract class GameObject {
         //rotationMatrix.postRotate((float)rotation);
         drawUpdate();
     };
-
-    public boolean isSolid(){
-        return solid;
-    }
 
     public void drawUpdate(){
         drawX = x * GamePanel.X_SCALE;

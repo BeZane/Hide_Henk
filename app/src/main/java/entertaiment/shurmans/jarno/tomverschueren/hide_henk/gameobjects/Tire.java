@@ -22,8 +22,7 @@ public class Tire extends CircleObject {
     public void rescaleObject(int newWidth, int newHeight) {
         Bitmap newBitmap = BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.tire);
         picture = Bitmap.createScaledBitmap(newBitmap, newWidth, newHeight, false);
-        radius = newWidth/2;
-
+        radius = picture.getWidth() / 2;
     }
 
     public void init(){
@@ -35,7 +34,6 @@ public class Tire extends CircleObject {
         type = Types.TIRE;
         density = 1.5;
         calculateMass();
-
     }
 
 }
