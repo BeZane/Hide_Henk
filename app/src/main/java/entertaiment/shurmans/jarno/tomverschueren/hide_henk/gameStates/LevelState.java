@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.shapes.Shape;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -53,15 +54,10 @@ public class LevelState extends GameState {
 
     private int collisions = 0;
 
+
     public LevelState(GameStateManager gsm){
         this.gsm = gsm;
     }
-
-
-
-
-
-
 
 
     public void populate(){
@@ -182,7 +178,7 @@ public class LevelState extends GameState {
                 }
             }
             if(o.getDx() > 0.1 || o.getDy() > 0.1){
-                hoseMustSpawn = false;
+               hoseMustSpawn = false;
             }
             if(o.getY() > 1500){
                 objects.remove(i);
@@ -266,7 +262,7 @@ public class LevelState extends GameState {
         if(hoseSpawned){
             canvas.drawBitmap(hose,(int) (hosePos * hoseSpeed * GamePanel.X_SCALE), 0, null);
         }
-        canvas.drawBitmap(previous, GamePanel.SCREEN_WIDTH - previous.getWidth() - 10, 10, null);
+        canvas.drawBitmap(previous, 10, 9, null);
         if(selectedObject !=null) {
             selectedObject.draw(canvas);
         }
@@ -298,7 +294,7 @@ public class LevelState extends GameState {
                 float x = event.getX() / GamePanel.X_SCALE;
                 float y = event.getY() / GamePanel.Y_SCALE;
 
-                if(x > GamePanel.SCREEN_WIDTH - previous.getWidth() - 10 && y < 10 + previous.getHeight()){
+                if(x < previous.getWidth() + 10 && y < 10 + previous.getHeight()){
                     reset();
                     gsm.setState(gsm.LEVELSELECT);
                     return false;
@@ -322,11 +318,21 @@ public class LevelState extends GameState {
                 float yPos = event.getY() / GamePanel.Y_SCALE;
 
                 if(selectedObject != null) {
-                    selectedObject.setX(xPos);
-                    if(yPos > GamePanel.SCREEN_HEIGHT / 3 ){
-                        yPos = GamePanel.SCREEN_HEIGHT / 3;
+                    if(selectedObject.getShape() == GameObject.Shapes.CIRCLE){
+                        selectedObject.setX(xPos);
                     }
+                    else {
+                        selectedObject.setX(xPos - selectedObject.getPicture().getWidth() / 2);
+                    }
+                    if(yPos + selectedObject.getPicture().getHeight() / 2 > GamePanel.SCREEN_HEIGHT / 3 ){
+                        yPos = GamePanel.SCREEN_HEIGHT / 3 - selectedObject.getPicture().getHeight() / 2;
+                    }
+                    if(selectedObject.getShape() == GameObject.Shapes.CIRCLE){
                         selectedObject.setY(yPos);
+                    }
+                    else {
+                        selectedObject.setY(yPos - selectedObject.getPicture().getHeight() / 2);
+                    }
                 }
                 //return scrollBar.actionMove(event);
                 return true;
