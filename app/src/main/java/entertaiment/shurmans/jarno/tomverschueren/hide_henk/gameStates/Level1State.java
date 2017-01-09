@@ -25,7 +25,7 @@ public class Level1State extends LevelState {
     public void populate(){
 
         //environment
-        henk = new Henk(650, 520);
+        henk = new Henk(500, 400);
         henk.setSolid(false);
         HorizontalPlank p1 = new HorizontalPlank(740, 420);
         p1.setSolid(true);
@@ -33,7 +33,7 @@ public class Level1State extends LevelState {
         p2.setSolid(true);
         HorizontalPlank p3 = new HorizontalPlank(420, 420);
         p3.setSolid(true);
-        VerticalPlank p4 = new VerticalPlank(910, 260);
+        VerticalPlank p4 = new VerticalPlank(390, 260);
         p4.setSolid(true);
         objects.add(henk);
         objects.add(p1);

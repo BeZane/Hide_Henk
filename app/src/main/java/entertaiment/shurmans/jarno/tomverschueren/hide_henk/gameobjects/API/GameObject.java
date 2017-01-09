@@ -268,8 +268,8 @@ public abstract class GameObject {
         //Bouncing off a solid object
         else if(o1.solid){   //the direction of the our object after collision
             if(forceDirection *180 / Math.PI % 90 == 0 ) {
-                dy += -Math.sin(forceDirection) * dy * 2;
-                dx += Math.cos(forceDirection) * dx * 2;
+                dy += -Math.sin(forceDirection) * Math.abs(dy) * 2;
+                dx += Math.cos(forceDirection) * Math.abs(dx) * 2;
                 dy = dy * bouncingFactor;
                 dx = dx * bouncingFactor;
             }

@@ -94,13 +94,14 @@ public class LevelSelect extends GameState {
                     if(b.contains(x,y) && i == 0){
                         //gsm.setState(GameStateManager.LEVEL1);
                     }
+
                     if(b.contains(x,y) && b.isUnlocked()){
                         LevelState level = (LevelState) gsm.setState(GameStateManager.ONLINELEVEL);
 
                         level.setLastLoadedID(i);
                         level.populate();
-                       //TODO Load the i-nd level
                     }
+
                     i++;
                 }
 

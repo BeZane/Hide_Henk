@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.GamePanel;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.R;
+import entertaiment.shurmans.jarno.tomverschueren.hide_henk.options.Preferences;
 import entertaiment.shurmans.jarno.tomverschueren.hide_henk.screenBuilderAPI.MenuButton;
 
 /**
@@ -49,7 +50,13 @@ public class LevelCompleted extends MenuState{
                 for(MenuButton b : menuButtons){
                     if(b.contains(x, y)){
                         if(i == 0){
-                            //TODO go to next level
+                            LevelState levelState =(LevelState) gsm.setState(GameStateManager.ONLINELEVEL);
+                            int j = 0;
+                            while(Preferences.levelsUnlocked[j] && j < Preferences.levelsUnlocked.length){
+                                j++;
+                            }
+                            levelState.setLastLoadedID(j - 1);
+                            levelState.populate();
                         }
                         else if(i == 1){
                             LevelState levelState =(LevelState) gsm.setState(GameStateManager.ONLINELEVEL);
