@@ -129,8 +129,8 @@ public class LevelWrapper {
         ID = name.replaceAll(" ", "=") + "!";
         for (GameObject gameObject : presetObjects) {
             ID = ID + gameObject.getType().toString() + "," +
-                    gameObject.getBitmap().getWidth() * GamePanel.X_SCALE + "," +
-                    gameObject.getBitmap().getHeight() * GamePanel.Y_SCALE + "," +
+                    gameObject.getPicture().getWidth() * GamePanel.X_SCALE + "," +
+                    gameObject.getPicture().getHeight() * GamePanel.Y_SCALE + "," +
                     gameObject.getX() + "," +
                     gameObject.getY() + "," +
                     gameObject.isPrepareSolid() + ";";
@@ -139,8 +139,8 @@ public class LevelWrapper {
         for (GameObject gameObject : objects) {
             System.out.println("GAMEOBJECT: " + gameObject);
             ID = ID + gameObject.getType().toString() + "," +
-                    gameObject.getBitmap().getWidth() * GamePanel.X_SCALE + "," +
-                    gameObject.getBitmap().getHeight() * GamePanel.Y_SCALE + "," +
+                    gameObject.getPicture().getWidth() * GamePanel.X_SCALE + "," +
+                    gameObject.getPicture().getHeight() * GamePanel.Y_SCALE + "," +
                     gameObject.getX() + "," +
                     gameObject.getY() + "," +
                     gameObject.isPrepareSolid() + ";";

@@ -63,9 +63,9 @@ public class ObjectManager {
      */
     public void resizeLastGameObject(float multiplier){
         GameObject gameObject = getLastSelected();
-        if(gameObject.getBitmap().getWidth() < 5 || gameObject.getBitmap().getHeight() <5)
+        if(gameObject.getPicture().getWidth() < 5 || gameObject.getPicture().getHeight() <5)
             return;
-        gameObject.rescaleObject((int)(gameObject.getBitmap().getWidth()*multiplier),(int)(gameObject.getBitmap().getHeight()*multiplier));
+        gameObject.rescaleObject((int)(gameObject.getPicture().getWidth()*multiplier),(int)(gameObject.getPicture().getHeight()*multiplier));
     }
 
 

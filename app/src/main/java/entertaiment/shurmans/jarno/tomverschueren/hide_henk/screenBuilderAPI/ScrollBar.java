@@ -98,7 +98,7 @@ public class ScrollBar {
     }
 
     public void addObject(GameObject gameObject){
-        gameObject.setPicture(resizeBitMap(gameObject.getBitmap()));
+        gameObject.setPicture(resizeBitMap(gameObject.getPicture()));
         scrollingObjects.add(gameObject);
     }
 
@@ -193,7 +193,7 @@ public class ScrollBar {
         //TODO: Add the other enums
         switch (type){
             case RIGHT_SIDE:
-                point.x = SCREEN_WIDTH-(WIDTH/2)-(scrollingObjects.get(number).getBitmap().getWidth()/2);
+                point.x = SCREEN_WIDTH-(WIDTH/2)-(scrollingObjects.get(number).getPicture().getWidth()/2);
                 if(scrollingObjects.get(number).getShape() == GameObject.Shapes.CIRCLE){
                     point.x = SCREEN_WIDTH-WIDTH/2;
                 }
@@ -201,7 +201,7 @@ public class ScrollBar {
                 point.y = SCREEN_HEIGHT/(2*shownAmount)+HEIGHT/shownAmount*number;
                 break;
             case MIDDLE:
-                point.x = SCREEN_WIDTH/2-(scrollingObjects.get(number).getBitmap().getWidth()/2);
+                point.x = SCREEN_WIDTH/2-(scrollingObjects.get(number).getPicture().getWidth()/2);
                 if(scrollingObjects.get(number).getShape() == GameObject.Shapes.CIRCLE){
                     point.x = (SCREEN_WIDTH)/2;
                 }

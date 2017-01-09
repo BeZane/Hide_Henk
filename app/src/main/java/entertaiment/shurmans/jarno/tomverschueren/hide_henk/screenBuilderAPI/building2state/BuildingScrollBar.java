@@ -63,11 +63,11 @@ public class BuildingScrollBar extends ScrollBar {
             scrollingObjects.get(number).setSolid(true);
             scrollingObjects.get(number).draw(canvas);
             if(scrollingObjects.get(number).getShape() == GameObject.Shapes.CIRCLE) {
-                zoomIn.setX((int) ((point.x - 50*GamePanel.X_SCALE - scrollingObjects.get(number).getBitmap().getWidth() / 2)));
-                zoomOut.setX((int) ((point.x + 50*GamePanel.Y_SCALE + scrollingObjects.get(number).getBitmap().getWidth() / 2)));
+                zoomIn.setX((int) ((point.x - 50*GamePanel.X_SCALE - scrollingObjects.get(number).getPicture().getWidth() / 2)));
+                zoomOut.setX((int) ((point.x + 50*GamePanel.Y_SCALE + scrollingObjects.get(number).getPicture().getWidth() / 2)));
             }else{
                 zoomIn.setX((int) ((point.x - 50*GamePanel.X_SCALE)));
-                zoomOut.setX((int) ((point.x + 50*GamePanel.Y_SCALE + scrollingObjects.get(number).getBitmap().getWidth())));
+                zoomOut.setX((int) ((point.x + 50*GamePanel.Y_SCALE + scrollingObjects.get(number).getPicture().getWidth())));
             }
             zoomIn.setY((int)(point.y-offset));
             zoomOut.setY((int)(point.y-offset));
