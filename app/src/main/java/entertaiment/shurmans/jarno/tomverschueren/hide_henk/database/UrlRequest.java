@@ -68,7 +68,17 @@ public class UrlRequest {
     }
 
     public static String incrementStat(String stat){
-        return "http://studev.groept.be/api/a16_sd507/incrementstat/" + stat + "/" + stat + "/" + Preferences.uuid.toString();
+        if(stat.equalsIgnoreCase("gameswon"))
+            return "http://studev.groept.be/api/a16_sd507/incrementgameswon/" + Preferences.uuid.toString();
+        else if(stat.equalsIgnoreCase("gamesfailed"))
+            return "http://studev.groept.be/api/a16_sd507/incrementgamesfailed/" + Preferences.uuid.toString();
+        else if(stat.equalsIgnoreCase("ojbectsplaced"))
+            return "http://studev.groept.be/api/a16_sd507/incrementojbectsplaced/" + Preferences.uuid.toString();
+        else if(stat.equalsIgnoreCase("gamesplayed"))
+            return "http://studev.groept.be/api/a16_sd507/incrementgamesplayed/" + Preferences.uuid.toString();
+        else if(stat.equalsIgnoreCase("gamesmade"))
+            return "http://studev.groept.be/api/a16_sd507/incrementgamesmade/" + Preferences.uuid.toString();
+        return null;
     }
 
 

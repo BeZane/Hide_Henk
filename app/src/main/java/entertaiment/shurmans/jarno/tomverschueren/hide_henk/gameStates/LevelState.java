@@ -65,7 +65,7 @@ public class LevelState extends GameState {
 
 
     public void populate(){
-
+        henk = null;
         LevelWrapper levelWrapper = new LevelWrapper();
         levelWrapper.loadFromString(lastLoadedID);
         scrollBar.clear();
@@ -80,13 +80,14 @@ public class LevelState extends GameState {
 
         lastLoadedID = "";
         objectsLoaded = true;
-
+        System.out.println("POPULATION");
     }
 
     public void setLastLoadedID(int level){
         System.out.println(offlineLevelIDs.size() + "I: + " + level);
         System.out.println("LEVEL: " + offlineLevelIDs.get(level));
         lastLoadedID = offlineLevelIDs.get(level);
+        level = level;
     }
 
 
@@ -94,8 +95,8 @@ public class LevelState extends GameState {
         if(offlineLevelIDs.isEmpty()) {
             //offlineLevelIDs.add("derde!HORIZONTAL_PLANK,229.0301,34.0,499.95501708984375,595.87646484375,true;VERTICAL_PLANK,23.54515,160.0,601.4005126953125,621.89208984375,true;HENK,99.88852,100.0,619.6070556640625,532.4853515625,true;VERTICAL_PLANK,23.54515,160.0,724.5401611328125,444.4189453125,true;VERTICAL_PLANK,23.54515,160.0,496.112060546875,445.4296875,true;!VERTICAL_PLANK,159.82164,24.0,897.0,540.0,false;VERTICAL_PLANK,159.82164,24.0,897.0,540.0,false;HORIZONTAL_PLANK,159.82164,24.0,897.0,540.0,false;");
             offlineLevelIDs.add("eerstelevel!HORIZONTAL_PLANK,159.82164,24.0,715.9699096679688,388.36669921875,true;HORIZONTAL_PLANK,159.82164,24.0,455.39300537109375,392.36572265625,true;HENK,99.88852,100.0,662.4163818359375,516.46728515625,true;!BRICKS,119.86623,120.0,0.0,0.0,false;");
-            offlineLevelIDs.add("tweedelevel!HORIZONTAL_PLANK,159.82164,24.0,659.2391357421875,464.43603515625,true;HENK,99.88852,100.0,772.7216186523438,396.36474609375,false;VERTICAL_PLANK,23.54515,160.0,986.141357421875,478.4326171875,true;HORIZONTAL_PLANK,159.82164,24.0,839.69921875,647.9296875,false;HORIZONTAL_PLANK,159.82164,24.0,487.54180908203125,465.435791015625,true;VERTICAL_PLANK,23.54515,160.0,820.9030151367188,486.45263671875,true;VERTICAL_PLANK,23.54515,160.0,989.3812866210938,310.95703125,true;!TIRE,200.0,200.0,0.0,0.0,false;TIRE,200.0,200.0,0.0,0.0,false");
             offlineLevelIDs.add("derde2!HORIZONTAL_PLANK,274.69342,40.666668,493.9381408691406,609.89501953125,true;VERTICAL_PLANK,23.54515,160.0,743.812744140625,441.38671875,true;VERTICAL_PLANK,23.54515,160.0,496.112060546875,444.4189453125,true;HENK,99.88852,100.0,629.2433471679688,556.50146484375,true;!VERTICAL_PLANK,23.54515,160.0,897.0,540.0,false;VERTICAL_PLANK,23.54515,160.0,897.0,540.0,false;HORIZONTAL_PLANK,159.82164,24.0,897.0,540.0,false;");
+            offlineLevelIDs.add("tweedelevel!HORIZONTAL_PLANK,159.82164,24.0,659.2391357421875,464.43603515625,true;HENK,99.88852,100.0,772.7216186523438,396.36474609375,false;VERTICAL_PLANK,23.54515,160.0,986.141357421875,478.4326171875,true;HORIZONTAL_PLANK,159.82164,24.0,839.69921875,647.9296875,false;HORIZONTAL_PLANK,159.82164,24.0,487.54180908203125,465.435791015625,true;VERTICAL_PLANK,23.54515,160.0,820.9030151367188,486.45263671875,true;VERTICAL_PLANK,23.54515,160.0,989.3812866210938,310.95703125,true;!TIRE,200.0,200.0,0.0,0.0,false;TIRE,200.0,200.0,0.0,0.0,false");
 
         }
         Bitmap tempBackground =  BitmapFactory.decodeResource(GamePanel.RESOURCES, R.drawable.background_ingame1);
@@ -126,6 +127,7 @@ public class LevelState extends GameState {
         toPlace = new ArrayList<>();
         hosePos = -hose.getWidth();
         hoseSpawned = false;
+        //henk = null;
         objectsLoaded = false;
         hoseHasSprayed = false;
         objectsLoaded = false;
@@ -200,6 +202,7 @@ public class LevelState extends GameState {
 
        if(!objects.contains(henk) && objectsLoaded){
             reset();
+           System.out.println("FIRST GAMEOVER");
             gsm.setState(GameStateManager.GAMEOVER);
         }
 
@@ -229,14 +232,14 @@ public class LevelState extends GameState {
                 Preferences.levelsUnlocked[level + 1] = true;
                 System.out.println("LEVEL_COMPLETED");
                 DatabaseManager.request(UrlRequest.incrementStat("gamesplayed"));
-                DatabaseManager.request(UrlRequest.incrementStat("gamesfailed"));
+                DatabaseManager.request(UrlRequest.incrementStat("gameswon"));
 
                 gsm.setState(GameStateManager.LEVELCOMPLETED);
             }
             else if(henk.isCleaned()){
                 System.out.println("GAME_OVER");
                 DatabaseManager.request(UrlRequest.incrementStat("gamesplayed"));
-                DatabaseManager.request(UrlRequest.incrementStat("gameswon"));
+                DatabaseManager.request(UrlRequest.incrementStat("gamesfailed"));
 
 
                 reset();

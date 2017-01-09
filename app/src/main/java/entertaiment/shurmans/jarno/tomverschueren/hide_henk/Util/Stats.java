@@ -23,7 +23,7 @@ public class Stats {
     }
 
     public static void convert(JSONArray jsonArray){
-
+        stats.clear();
         for(StatType statType:StatType.values()) {
             try{
             stats.add(new Stat(statType,jsonArray.getJSONObject(0).getInt(statType.toDatabaseString())));
