@@ -65,10 +65,10 @@ public class Building2State extends GameState {
         scrollBar.setWIDTH((int)(GamePanel.SCREEN_WIDTH /1.5));
         scrollBar.addObject(new HorizontalPlank(0, 0));
         scrollBar.addObject(new VerticalPlank(0, 0));
-        scrollBar.addObject(new Barrel(0,0));
-     /*   scrollBar.addObject(new HayBale(0,0));
+        //scrollBar.addObject(new Barrel(0,0));
+     //   scrollBar.addObject(new HayBale(0,0));
         scrollBar.addObject(new Tire(0,0));
-        scrollBar.addObject(new Bricks(0,0)); */
+       // scrollBar.addObject(new Bricks(0,0)); */
 
         scrollBar.setType(ScrollBar.ScrollBarType.MIDDLE);
     }

@@ -123,6 +123,7 @@ public class LevelState extends GameState {
         hosePos = -hose.getWidth();
         hoseSpawned = false;
         //henk = null;
+        lastLoadedID = "";
         objectsLoaded = false;
         hoseHasSprayed = false;
         objectsLoaded = false;

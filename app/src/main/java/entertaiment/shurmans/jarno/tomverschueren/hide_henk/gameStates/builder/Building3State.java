@@ -41,6 +41,7 @@ public class Building3State extends GameState {
         System.out.println("INSERTING");
         //gsm.setState(GameStateManager.BUILDERMENU);
         NameActivity.done = false;
+        DatabaseManager.request(UrlRequest.incrementStat("gamesmade"));
     }
 
     @Override
